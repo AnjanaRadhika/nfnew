@@ -104,7 +104,7 @@
       if(mysqli_query($link, $query) or die(mysqli_error($link))) {
 				$lastid = mysqli_insert_id($link);
 
-				if(isset($_FILES)){
+				if(!empty($_FILES['files'])){
 							$files = $_FILES['files'];
 							$return[] = array('status' => 'error', 'field' => ''.print_r($files).'');
 							$fcount = count($_FILES['files']['name']);
@@ -132,7 +132,15 @@
 									}
 								}
 							}
+	      } else {
+					$query = "INSERT INTO `images`(`imagename`, `imagepath`, `itemid`)" .
+							"VALUES('No Image','uploads/No_Image_Available.png',".$lastid.")";
+					if(mysqli_query($link, $query) or die(mysqli_error($link))) {
+						$return[] = array('status' => 'success', 'field' => 'dbimages');
+					} else {
+						$return[] = array('status' => 'error', 'field' => 'dbimages');
 	      }
+				}
         $return[] = array('status' => 'success', 'field' => 'itemForm');
       } else {
         $return[] = array('status' => 'error', 'field' => 'itemForm');

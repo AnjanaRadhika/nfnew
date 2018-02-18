@@ -34,17 +34,15 @@ footer {
 .navbar-dark .navbar-nav > .active > a:focus {
     background-color: #080808;
 }
+
 #head {
   font-family: 'Fira Sans Condensed', sans-serif!important;
 	font-weight:bold;
 	font-stretch:ultra-expanded;
 	font-size:140%;
-  color:#9d9d9d;
-	text-align: center;
-	cursor:pointer;
-}
-#head:hover {
   color:white;
+	text-align: center;
+	cursor:context-menu;
 }
 h2 {
 	font-size:300%;
@@ -71,6 +69,8 @@ min-height:50%;
 .content {
 	background-color:transparent;
 	text-align:center;
+	margin:0px;
+	padding: 64px 32px 32px 32px;
 }
 .cellimg {
 	padding:5px;
@@ -530,6 +530,36 @@ input[type=number]::-webkit-outer-spin-button {
 #upload ul li.error p{
     color:red;
 }
+
+.title-large {
+	font-size: 20px;
+	margin: 10px 0 5px;
+	line-height: 23px;
+	color: #141517;
+}
+.title-small {
+	 color: #141517;
+	 font-size: 16px;
+	 font-weight: 400;
+	 line-height: 20px;
+	 margin: 6px 0 0;
+ }
+.title-x-small {
+	font-size: 18px;
+	margin: 0px;
+}
+.title-large a, .title-small a, .title-x-small a{
+	color: inherit;
+}
+.pagination>li>a, .pagination>li>span {
+	border-radius: 50% !important;
+	margin: 0 5px;
+}
+.itemimage {
+	height:25%;
+	width:100%;
+}
+
 /*
 	Media Queries
 */

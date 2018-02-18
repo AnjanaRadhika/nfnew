@@ -5,9 +5,9 @@
 			<a class="navbar-left">
 				<img style="max-width:7%;" src="images/logo.ico">
 			</a>
-			<a id="head" class="navbar-brand" rel="home" href="#">
+			<span id="head" class="navbar-brand" rel="home" >
 				NeighbourhoodFarmers
-			</a>
+			</span>
 			<button class="navbar-toggler pull-right" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 			</button>
@@ -15,7 +15,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="nav-content">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link active" href="home.php"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="home.php"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
 				<li class="nav-item"><a class="nav-link" href="home.php?action=post"><i class="fa fa-bullhorn" aria-hidden="true"></i>  Post an Ad</a></li>
 				<li class="nav-item"><a class="nav-link" href="home.php?action=about"><i class="fa fa-users" aria-hidden="true"></i>  About</a></li>
 				<li class="nav-item"><a class="nav-link" href="home.php?action=contact"><i class="fa fa-comments-o" aria-hidden="true"></i>  Contact Us</a></li>

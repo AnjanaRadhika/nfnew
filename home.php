@@ -32,15 +32,20 @@
 									if(array_key_exists('name', $_SESSION)) {
 										include('leftnav.php');
 									}
-								} else {
-									include('images.php');
 								}
+
+
 								if($_GET['action'] == 'post') {
+										include('images.php');
 										include('postitem.php');
 								} else if($_GET['action'] == 'about') {
+										include('images.php');
 										include('aboutus.php');
 								} else if($_GET['action'] == 'contact') {
+										include('images.php');
 										include('contactus.php');
+								} else if($_GET['action'] == 'search') {
+										include('itemlist.php');
 								}
 								include('contentadv.php');
 						} else {

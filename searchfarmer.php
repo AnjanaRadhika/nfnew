@@ -7,13 +7,13 @@
 	<div class="jumbotron content">
 		<br /><br />
 		<h2>FRESH FROM FARMERS</h2><br />
-		<form class="navbar-form navbar-left" role="search">
+		<form class="navbar-form navbar-left" role="search" method="post" action="home.php?action=search">
 			<div class="form-group-sm">
 				<div class="input-group">
-					<input type="text" class="form-control form-element" placeholder="Search Location">
-					<input type="text" class="form-control form-element" placeholder="Search Item">
+					<input type="text" name="location" class="form-control form-element" placeholder="Search Location">
+					<input type="text" name="itemsearch" class="form-control form-element" placeholder="Search Item">
 					<span class="input-group-btn">
-						<button class="btn btn-success btn-sm form-element"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
+						<button class="btn btn-success btn-sm form-element" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
 					</span>
 				</div>
 			</div>
