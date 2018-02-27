@@ -10,6 +10,7 @@
 	<link rel="shortcut icon" href="images/logo.ico">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
 
@@ -28,24 +29,26 @@
 						<?php //include('leftnav.php'); ?>
 						<?php
 						if(array_key_exists('action',$_GET)) {
+							if($_GET['action'] == 'search') {
+									include('itemlist.php');
+							} else if(strpos($_GET['action'], 'detail') !== false) {
+									include('itemdetail.php');
+							} else {
 								if(!empty($_SESSION)) {
 									if(array_key_exists('name', $_SESSION)) {
 										include('leftnav.php');
 									}
+								} else {
+										include('images.php');
 								}
-
+							}
 
 								if($_GET['action'] == 'post') {
-										include('images.php');
 										include('postitem.php');
 								} else if($_GET['action'] == 'about') {
-										include('images.php');
 										include('aboutus.php');
 								} else if($_GET['action'] == 'contact') {
-										include('images.php');
 										include('contactus.php');
-								} else if($_GET['action'] == 'search') {
-										include('itemlist.php');
 								}
 								include('contentadv.php');
 						} else {
@@ -87,6 +90,7 @@
 	<script src="js/jquery.ui.widget.js"></script>
 	<script src="js/jquery.iframe-transport.js"></script>
 	<script src="js/jquery.fileupload.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
  	<?php
 		if(!empty($script)) {

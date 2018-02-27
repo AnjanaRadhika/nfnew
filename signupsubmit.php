@@ -50,6 +50,8 @@
 						<p>Some problem occured while signing up. Please try again later!</p>
 						</div>';
 		}
+		session_unset();
+		session_destroy();
 		CloseCon($link);
 	}
 	?>

@@ -1,14 +1,13 @@
 <?php
 	include('db_connection.php');
-	session_start();
 	$pwdchangestatus =$script=$error=$active="";
 	if($link = OpenCon()) {
-		if(!empty($_GET) && isset($_POST)) {
-			echo $_SERVER['QUERY_STRING'];
+		if(!empty($_GET)) {
 			parse_str(urldecode(base64_decode($_SERVER['QUERY_STRING'])),$string);
 			$key=$string['key'];
 			$email=rtrim($string['email'],'7');
-			if(array_key_exists('updatepassword', $_POST) && $_POST['updatepassword']==="Update Password") {
+		} else if(!empty($_POST)) {
+			if(array_key_exists('updatepassword', $_POST) && $_POST['updatepassword']==="Update") {
 				if($_POST['newpassword']==="" or $_POST['confirmpassword']==="" ){
 					$pwdchangestatus .= '<div class="alert-danger">Please enter the new password and confirm. </div>';
 				} else {
@@ -17,6 +16,8 @@
 									<p>Passwords do not match. Please try again!</p>
 									</div>';
 					} else {
+						$email = $_POST['email'];
+						$key = $_POST['key'];
 						$query = "SELECT `activate` FROM `users` "
 								." WHERE `email`='".$email."' and `username`='".$key."'";
 						$result = mysqli_query($link, $query);
@@ -104,7 +105,7 @@
 		<section class="container" style="text-align:center">
 			<div class="popup">
 			<br>
-				<form class="form" action="#" id="changepwdform" method="post">
+				<form class="form" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" id="changepwdform" method="post">
 					<h2>Change Password</h2>
 					<label for="newpassword">New Password : <span>*</span></label>
 					<div class="input-group">
@@ -119,6 +120,8 @@
 					<div class="input-group">
 						<input class="form-control" type="password" name="confirmpassword" id="confirmpassword" style="width:15%" placeholder="************" required />
 					</div>
+					<input type="hidden" name="key" value="<?php echo $key; ?>" />
+					<input type="hidden" name="email" value="<?php echo $email; ?>" />
 					<br/>
 					<div id="message" style="text-align:center"></div>
 					<input type="submit" class="btn" name="updatepassword" value="Update" />
@@ -136,14 +139,14 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">X</span>
 						</button>
-					</div>
+					</div><br />
 					<form id="changepwd" class="centered" action="home.php"><br/><br/>
 							<?php if(isset($pwdchangestatus)) echo $pwdchangestatus;?>
 						<div align="center">
 						<input type="submit" class="btn" value="Home" />
 						<input type="button" class="btn cancel" data-dismiss="modal" value="Cancel"/>
 						</div>
-					</form>
+					</form><br />
 				</div>
 			</div>
 		</div>
@@ -157,13 +160,80 @@
 		<script src="js/tether.min.js"></script>
 	  <script src="js/bootstrap.min.js"></script>
 
-	<script type="text/javascript" src="js/script.js"></script>
+
 	<script type="text/javascript">
 		$('#newpassword, #confirmpassword').on('keyup', function () {
 		  if ($('#newpassword').val() == $('#confirmpassword').val()) {
 			$('#message').html('Matching').css('color', 'green');
 		  } else
 			$('#message').html('Not Matching').css('color', 'red');
+		});
+
+		$("#signuppassword, #newpassword").bind("keyup", function () {
+		 
+			   //Regular Expressions.
+			    var regex = [];
+			    regex.push("[A-Z]"); //Uppercase Alphabet.
+			    regex.push("[a-z]"); //Lowercase Alphabet.
+			    regex.push("[0-9]"); //Digit.
+			    regex.push("[$@$!%*#?&]"); //Special Character.
+			 
+			    var passed = 0;
+			 
+			    //Validate for each Regular Expression.
+			    for (var i = 0; i < regex.length; i++) {
+			       if (new RegExp(regex[i]).test($(this).val())) {
+			             passed++;
+			        }
+			    }
+			 
+			 
+			    //Validate for length of Password.
+			    if (passed > 2 && $(this).val().length > 8) {
+			        passed++;
+			    }
+			 
+			     //Display status.
+			    var color = "";
+			    var strength = "";
+				var width = "";
+
+			            switch (passed) {
+			                case 0:
+			                case 1:
+			                    strength = "<p>Weak</p>";
+			                    color = "darkorange";
+								width = "25%";
+
+			                    break;
+			                case 2:
+			                    strength = "<p>Good</p>";
+			                    color = "darkcyan";
+								width = "50%";
+
+			                    break;
+			                case 3:
+			                case 4:
+			                    strength = "<p>Strong</p>";
+			                    color = "darkturquoise";
+								width = "75%";
+
+			                    break;
+			                case 5:
+			                    strength = "<p>Very Strong</p>";
+			                    color = "#4CAF50";
+								width = "100%";
+
+			                    break;
+			            }
+
+			$(".progressbar").css("width", width);
+			$(".progressbar").css("background", color);
+			$(".progressbar").css("color", "white");
+			$(".progressbar").css("border-radius", "5px");
+			$(".progressbar").css("text-align", "center");
+			$(".progressbar").html(strength);
+
 		});
 	</script>
  	<?php

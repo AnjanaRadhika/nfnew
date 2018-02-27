@@ -42,6 +42,8 @@
 					<p>Some problem occured. Please try again later!</p>
 					</div>';
 	}
+	session_unset();
+	session_destroy();
 	?>
 <!DOCTYPE html>
 

@@ -12,8 +12,11 @@ if($link = OpenCon()) {
 ?>
     <div class="col-lg-7 col-md-7 col-sm-7">
       <div class="content-box">
-    		<h3>POST ITEM</h3><br />
+    		<h3>Post Advertisement</h3><br />
         <div id="successmessage">
+
+        </div>
+        <div id="sqlerror">
 
         </div>
         <hr />
@@ -50,14 +53,14 @@ if($link = OpenCon()) {
                     <textarea class="form-control" name="itemdesc" id="itemdesc" placeholder="Item Description"></textarea>
                 </div>
             </div>
-            <div class="form-row">
+            <div class="form-row" style="display:inline">
               <div class="form-group">
                     <label for="quantity">Quantity *</label>
                     <div class="input-group">
-                    <input type="Number" class="form-control form-element col-md-5" name="quantity" id="quantity" required>
-                    <div class="invalid-feedback col-md-3">
+                    <input type="Number" class="form-control form-element col-md-4" name="quantity" id="quantity" required>
+                    <!--<div class="invalid-feedback col-md-4">
                       Please enter the quantity
-                    </div>
+                    </div>-->
                     <input type="hidden" id="measurements" name="measurements" value="" />
                     <select form="itemForm" id="measurements-list" class="form-control form-element custom-select col-md-4" onChange="$('#measurements').val($('#measurements-list').val());">
                         <option value=""></option>
@@ -70,11 +73,18 @@ if($link = OpenCon()) {
                         }
                         ?>
                     </select>
-                    <div class="invalid-feedback col-md-3">
+                    <!--<div class="invalid-feedback col-md-4">
                       Please enter the measurement.
+                    </div>-->
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label for="amount">Price range:</label>
+                    <input type="text" name="amount" id="amount" readonly style="border:0; background-color:#daeee3; color:#f6931f; font-weight:bold;">
+                    <div class="input-group">
+                      <div class="form-control col-md-8" id="slider-range" style="position:relative;top:10px;left:8px;"></div>
               </div>
+            </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -180,9 +190,7 @@ if($link = OpenCon()) {
 
             </div>
           </div>
-          <div id="res">
 
-          </div>
           <button class="btn btn-success button-submit form-element" type="submit">Post Adv</button>
 
           </form>

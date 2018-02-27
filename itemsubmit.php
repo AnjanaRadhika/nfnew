@@ -1,12 +1,43 @@
 <?php
 	include('db_connection.php');
+	session_start();
+
 	$return = [];
+
+	function getLocation($zip){
+	    $arrContextOptions=array(
+	      "ssl"=>array(
+	      "verify_peer"=>false,
+	      "verify_peer_name"=>false
+	      )
+	    );
+	    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($zip)."&sensor=false";
+	    $result_string = file_get_contents($url, false, stream_context_create($arrContextOptions));
+	    $result = json_decode($result_string, true);
+	    $address = $result['results'][0]['formatted_address'];
+	    $address = preg_replace('/\d+/', '', $address );
+	    $location[0] = $address;
+	    $location[1] = $result['results'][0]['geometry']['location'];
+	    //return $result['results'][0]['formatted_address'] //Thiruvananthapuram, Kerala 695012, India;
+	    return $location;
+	}
+
   if($link = OpenCon()) {
+			if(!empty($_SESSION)) {
+				if(array_key_exists('id', $_SESSION)) {
+					$user=$_SESSION['id'];
+				} else {
+					$user='Guest';
+				}
+			} else {
+				$user='Guest';
+			}
 
       $itemname = $_POST['item_name'];
       $category = $_POST['category'];
       $itemdesc = $_POST['itemdesc'];
       $quantity = $_POST['quantity'];
+			$amount = $_POST['amount'];
       $measurements = $_POST['measurements'];
       $country = $_POST['country'];
       $state = $_POST['state'];
@@ -16,7 +47,9 @@
       $address2 = $_POST['address2'];
       $city = $_POST['city'];
       $zipcode = $_POST['zipcode'];
-      $today = date('Y-m-d H:i:s');
+			$location = getLocation($zipcode);
+			$latitude = $location[1]['lat'];
+			$longitude = $location[1]['lng'];
 
       if ($itemname == "") {
           $return[] = array('status' => 'error', 'field' => 'item_name');
@@ -82,12 +115,13 @@
       $allowed = array('png', 'jpg', 'jpeg', 'jfif', 'gif','zip');
 
       $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`,"."
-        `measurementid`, `contactperson`, `contactno`, `address1`, `address2`, `city`, `zipcode`,"."
-        `stateid`, `countryid`, `postedby`, `posteddate`, `updatedby`, `updateddate`)"."
+        `pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, `address2`, `city`, `zipcode`,"."
+        `stateid`, `countryid`, `location`, `postedby`, `updatedby`)"."
         VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
 				. mysqli_real_escape_string($link, $itemname)."','"
         . mysqli_real_escape_string($link, $itemdesc)."',"
-        . mysqli_real_escape_string($link, floatval($quantity)).","
+        . mysqli_real_escape_string($link, floatval($quantity)).",'"
+				. mysqli_real_escape_string($link, $amount)."',"
         . mysqli_real_escape_string($link, intval($measurements)).",'"
         . mysqli_real_escape_string($link, $contact_person)."','"
         . mysqli_real_escape_string($link, $phone)."','"
@@ -96,9 +130,8 @@
         . mysqli_real_escape_string($link, $city)."','"
         . mysqli_real_escape_string($link, $zipcode)."',"
         . mysqli_real_escape_string($link, intval($state)).","
-        . mysqli_real_escape_string($link, intval($country)).",'Guest','"
-				. $today ."','Guest','"
-        . $today ."')";
+        . mysqli_real_escape_string($link, intval($country))
+				.",'".$location[0]."','".$user."','".$user."')";
 
 
       if(mysqli_query($link, $query) or die(mysqli_error($link))) {
@@ -106,10 +139,9 @@
 
 				if(!empty($_FILES['files'])){
 							$files = $_FILES['files'];
-							$return[] = array('status' => 'error', 'field' => ''.print_r($files).'');
+
 							$fcount = count($_FILES['files']['name']);
 
-							$return[] = array('status' => 'error', 'field' => '{"filecount" : '.$fcount.'}');
 							for($i=0;$i<$fcount;$i++) {
 								if($_FILES['files']['error'][$i] == 0){
 					      	$extension = pathinfo($_FILES['files']['name'][$i], PATHINFO_EXTENSION);

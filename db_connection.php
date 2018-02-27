@@ -28,4 +28,8 @@ function CloseCon($conn)
      return $resultset;
  }
 
+ function getRowCount($link, $query) {
+   return mysqli_num_rows(mysqli_query($link, $query));
+ }
+
 ?>

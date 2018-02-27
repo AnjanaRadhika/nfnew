@@ -17,7 +17,7 @@
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="home.php"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
 				<li class="nav-item"><a class="nav-link" href="home.php?action=post"><i class="fa fa-bullhorn" aria-hidden="true"></i>  Post an Ad</a></li>
-				<li class="nav-item"><a class="nav-link" href="home.php?action=about"><i class="fa fa-users" aria-hidden="true"></i>  About</a></li>
+				<li class="nav-item"><a class="nav-link" href="home.php?action=about"><i class="fa fa-users" aria-hidden="true"></i>  About Us</a></li>
 				<li class="nav-item"><a class="nav-link" href="home.php?action=contact"><i class="fa fa-comments-o" aria-hidden="true"></i>  Contact Us</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
@@ -29,11 +29,7 @@
 						$beforename="<a class='nav-link active'><i class='fa fa-user-circle'></i> ";
 						$aftername="</a></li><li class='nav-item'><a href='home.php?logout=1' class='nav-link'><i class='fa fa-sign-out' aria-hidden='true'></i> Sign Out </a>";
 						if(!empty($_GET)) {
-							if(array_key_exists('key', $_GET)) {
-								parse_str($_SERVER['QUERY_STRING'],$string);
-								$name=urldecode(base64_decode($string['key']));
-								echo $beforename." ".$name.$aftername;
-							} else if(array_key_exists('logout',$_GET)) {
+							if(array_key_exists('logout',$_GET)) {
 								if($_GET['logout'] == 1) {
 									session_unset();
 									session_destroy();
@@ -43,21 +39,26 @@
 											</div>";
 									exit();
 								}
-						 }else {
-									echo $signin;
 								}
-						} else {
+
+							if(array_key_exists('key', $_GET)) {
+									parse_str($_SERVER['QUERY_STRING'],$string);
+									$name=urldecode(base64_decode($string['key']));
+									echo $beforename." ".$name.$aftername;
+							}
+						}
 							if(!empty($_SESSION)) {
 								if(array_key_exists('name', $_SESSION)) {
 									$name=$_SESSION['name'];
 									echo $beforename.$name.$aftername;
-								} else {
+								}
+								if(array_key_exists('signedin', $_SESSION) && $_SESSION['signedin'] === false) {
 									echo $signin;
 								}
 							} else {
 								echo $signin;
 							}
-						}
+
 						?>
 				</li>
 			</ul>

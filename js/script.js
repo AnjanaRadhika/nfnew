@@ -6,6 +6,29 @@ $(document).ajaxStart(function() {
     $('body *').css('cursor','');
 });
 
+//To reset the modal forms on closing or dismissing
+$('body').on('hidden.bs.modal', '.modal', function () {
+    $(this).find('.alert-danger').text('');
+    $(this).find('form')[0].reset();
+});
+
+$( "#slider-range" ).slider({
+  range: true,
+  min: 0,
+  max: 500,
+  values: [ 75, 300 ],
+  slide: function( event, ui ) {
+    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+  }
+});
+
+$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+$('ul li a').click(function() {
+  $(this).closest('ul').find('a').removeClass('active');
+  $(this).addClass('active');
+});
+
 	$("#signuppassword, #newpassword").bind("keyup", function () {
 
 	   //Regular Expressions.
@@ -235,17 +258,16 @@ function postForm(itemForm) {
   			success: function (response) {
         var successbool = "true";
 				var invalidfields = [];
-        //submitbtn.show();
-				if(response) {
-					$('#res').html(response);
-				}
-				var jsonObj = response;
-        console.log(jsonObj);
+
+        $('#sqlerror').html("");
+        $('#sqlerror').removeClass("alert alert-danger");
+
+        try {
+    				var jsonObj = $.parseJSON(response);
 
         for (var i = 0; i < jsonObj.length; i++) {
            var status = jsonObj[i].status;
            var field = jsonObj[i].field;
-           //alert(status + ' -->' + field);
 
            if (status == "error") {
 								$('#successmessage').removeClass("alert alert-danger");
@@ -273,12 +295,23 @@ function postForm(itemForm) {
              successbool = "false";
            }
         }
+        } catch(e) {
+            successbool = "false";
+  					$('#sqlerror').html(response);
+            $('#sqlerror').addClass("alert alert-danger");
+        }
 				$('#successmessage').removeClass("alert alert-danger");
 				$('#successmessage').removeClass("alert alert-success");
 				$('#fileerror').removeClass("alert alert-danger");
         if (successbool=="true") {
             $('.itemForm')[0].reset();
             $("#fileupload").find(".files").empty();
+            $( "#amount" ).val( "$75 - $300");
+            $( "#slider-range" ).slider({
+              range: true,
+              min: 0,
+              max: 500,
+              values: [ 75, 300 ]});
 						$('#successmessage').html("<p>Post Adv completed successfully!</p>");
 						$('#successmessage').addClass("alert alert-success");
         } else {
@@ -359,4 +392,65 @@ $('#contactForm').submit(function(e){
 		}
 	});
 	$('#contactsubmit').removeClass('disabled');
+});
+
+//pagination item search results
+$('#myPager>li>a.page').click(function(e) {
+    var nextpage, prevpage;
+    var pagelinkid, pagenextid,  pageprevid;
+
+    if($(this).attr('id')==='next') {
+        nextpage = parseInt($('#curpage').val()) + 1;
+        prevpage = parseInt($('#curpage').val());
+        pagelinkid = '#pagelink'+nextpage;
+        pagenextid =  '#page'+nextpage;
+        pageprevid =  '#page'+prevpage;
+        $(pagelinkid).addClass('active');
+        $(this).removeClass('active');
+        $('#curpage').val(nextpage);
+        $(pageprevid).hide();
+        $(pagenextid).show();
+    } else if($(this).attr('id')==='prev') {
+        prevpage = parseInt($('#curpage').val());
+        nextpage = parseInt($('#curpage').val()) - 1;
+        pagelinkid = '#pagelink'+nextpage;
+        pagenextid =  '#page'+nextpage;
+        pageprevid =  '#page'+prevpage;
+        $(pagelinkid).addClass('active');
+        $(this).removeClass('active');
+        $('#curpage').val(nextpage);
+        $(pageprevid).hide();
+        $(pagenextid).show();
+    } else {
+        $('#curpage').val($(this).text());
+        var showpageid = '#page'+parseInt($(this).text());
+        var numpages = parseInt($('#numpages').val());
+        for(var i = 1;i<numpages + 1; i++) {
+          if(i === parseInt($(this).text())){
+            $(showpageid).show();
+          } else {
+            $('#page'+i).hide();
+          }
+        }
+    }
+    var lastpage = parseInt($('#numpages').val());
+    if(parseInt($('#curpage').val()) > 1) {
+        $('#prev').removeClass('disabled');
+    } else if(parseInt($('#curpage').val()) == 1) {
+        $('#prev').addClass('disabled');
+    }
+    if(parseInt($('#curpage').val()) == lastpage) {
+        $('#next').addClass('disabled');
+    } else if(parseInt($('#curpage').val()) == lastpage - 1) {
+        $('#next').removeClass('disabled');
+    }
+    $('body, html').animate({scrollTop:$('.searchItemForm').parent().parent().offset().top - 200}, 'slow');
+});
+
+//item status update
+$('#itemdetailform').submit(function(e) {
+  if($('#itemstatus').val()==="") {
+    $('#status-list').addClass('is-invalid');
+    return false;
+  }
 });

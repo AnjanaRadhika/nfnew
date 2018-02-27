@@ -1,5 +1,5 @@
-<div class="modal" id="termsofusediv" aria-labelledby="termsofusediv" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+<div class="modal modal-open fade" id="termsofusediv" tabindex="-1" role="dialog" aria-labelledby="termsofusediv" aria-hidden="true">
+  <div class="modal-dialog" role="document">
 	<div class="modal-content">
 	  <div class="modal-header">
 		<h2 class="modal-title">Terms Of Use</h2>

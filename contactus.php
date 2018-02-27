@@ -1,7 +1,7 @@
 <div class="col-md-7">
   <div class="content-box">
         <form id="contactForm" class="contactForm" method="post" role="form">
-          <h3>Contact Form</h3><br />
+          <h3>Contact Us</h3><br />
           <div id="contactsuccess">
 
           </div><hr />

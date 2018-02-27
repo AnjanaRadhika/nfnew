@@ -9,7 +9,9 @@ footer {
     background-color:mediumseagreen;
     text-align:center;
 }
+
 .disabled {
+		cursor:not-allowed;
 		pointer-events:none;
 		color:#AAA;
     background:#F5F5F5;
@@ -291,9 +293,7 @@ textarea{
   height: 80%;
   overflow-y: auto;
 }
-#termsofusediv .modal-dialog{
-    overflow-y: initial !important
-}
+
 .forgotpopup {
 	left: 35%;
 	top: 15%;
@@ -551,9 +551,32 @@ input[type=number]::-webkit-outer-spin-button {
 .title-large a, .title-small a, .title-x-small a{
 	color: inherit;
 }
-.pagination>li>a, .pagination>li>span {
+ul#myPager {
+	padding: 0px;
+	margin: 0px;
+	width:auto;
+	text-align: center;
+}
+.pagination>li>a {
+	border: 1px solid lightgray;
 	border-radius: 50% !important;
+	padding: 10px;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
 	margin: 0 5px;
+	cursor:pointer;
+}
+.pagination>li>a.active {
+	background-color:steelblue!important;
+	color:white!important;
+	cursor:context-menu;
+	text-decoration:none;
+}
+
+.pagination>li>a:hover {
+	background-color:lightgray;
+	text-decoration:none;
 }
 .itemimage {
 	height:25%;

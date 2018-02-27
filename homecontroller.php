@@ -1,7 +1,6 @@
 <?php
   include('db_connection.php');
 	session_start();
-	$_SESSION = array();
 
 	$error=$script=$forgotpwderror=$loginerror=$hash="";
 
@@ -71,7 +70,7 @@
 						$loginerror .= '<div class="alert-danger" >Password is required.</div>';
 						$_SESSION['signedin'] = false;
 					} else {
-						$query = "SELECT `activate`, `password`, `username` FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['username'])
+						$query = "SELECT `id`, `activate`, `password`, `username`, `role` FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['username'])
 									."'";
 						$result = mysqli_query($link, $query);
 						if(mysqli_num_rows($result) > 0) {
@@ -81,6 +80,8 @@
 								if(password_verify($_POST['password'], $hash)) {
 									$_SESSION['name'] = $row['username'];
 									$_SESSION['email'] = $_POST['username'];
+                  $_SESSION['id'] = $row['id'];
+                  $_SESSION['role'] = $row['role'];
 									$_SESSION['signedin'] = true;
 								} else {
 									$loginerror .= '<div class="alert-danger">Invalid credentials. Please try again.</div>';

@@ -31,6 +31,10 @@
           <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
           </div>
       </div><br />
+      <?php
+      if(array_key_exists('action',$_GET)) {
+        if($_GET['action'] == 'post') {
+      ?>
       <div class="widget row image-tile">
           <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
           </div>
@@ -55,5 +59,6 @@
           <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
           </div>
       </div><br />
+      <?php } } ?>
   </div>
 </div>
