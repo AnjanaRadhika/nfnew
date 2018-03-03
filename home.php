@@ -49,6 +49,8 @@
 										include('aboutus.php');
 								} else if($_GET['action'] == 'contact') {
 										include('contactus.php');
+								} else if($_GET['action'] == 'userlist') {
+										include('userlist.php');
 								}
 								include('contentadv.php');
 						} else {
