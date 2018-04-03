@@ -1,7 +1,7 @@
 <?php
 
 	session_start();
-  $hosturl = "localhost/nfnew";
+  $hosturl = "neighbourhoodfarmerstest-com.stackstaging.com/nfnew";
 	if(array_key_exists('last_activity', $_SESSION) && array_key_exists('expire_time', $_SESSION)) {
 		if( $_SESSION['last_activity'] < time()-$_SESSION['expire_time'] ) { //have we expired?
 		    //redirect to logout.php
