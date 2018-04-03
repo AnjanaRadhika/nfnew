@@ -31,7 +31,7 @@
 									</div>';
 						}
 
-						if($active) {
+						if($active==1) {
 							echo("<script>console.log('inside active')</script>");
 							$query = "UPDATE `users` SET `password`= '"
 							.mysqli_real_escape_string($link, password_hash($_POST['newpassword'],PASSWORD_DEFAULT))

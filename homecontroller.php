@@ -57,7 +57,7 @@
 						$result = mysqli_query($link, $query);
 						if(mysqli_num_rows($result) > 0) {
 							$row=mysqli_fetch_array($result);
-							if($row['activate']) {
+							if($row['activate']==1) {
 								$_SESSION['name'] = $row['username'];
 								$_SESSION['forgotemail'] = $_POST['forgotemail'];
 								$_SESSION['forgotpwdsubmitted'] = true;
@@ -85,7 +85,7 @@
 						$result = mysqli_query($link, $query);
 						if(mysqli_num_rows($result) > 0) {
 							$row=mysqli_fetch_array($result);
-							if($row['activate']) {
+							if($row['activate']==1) {
 								$hash=$row['password'];
 								if(password_verify($_POST['password'], $hash)) {
 									$_SESSION['name'] = $row['username'];

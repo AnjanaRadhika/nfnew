@@ -19,7 +19,7 @@
 				parse_str(urldecode(base64_decode($_SERVER['QUERY_STRING'])),$string);
 				$key=$string['key'];
 				$email=rtrim($string['email'],'7');
-				$query = "UPDATE `users` SET `activate`= true WHERE `email`='".$email."' and `username`='".$key."' LIMIT 1";
+				$query = "UPDATE `users` SET `activate`= 1 WHERE `email`='".$email."' and `username`='".$key."' LIMIT 1";
 				echo $query;
 				if(mysqli_query($link, $query)) {
 					$activatemsg="<div class='alert alert-success'>
