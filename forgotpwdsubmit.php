@@ -2,6 +2,18 @@
 
 	session_start();
   $hosturl = "localhost/nfnew";
+	if(array_key_exists('last_activity', $_SESSION) && array_key_exists('expire_time', $_SESSION)) {
+		if( $_SESSION['last_activity'] < time()-$_SESSION['expire_time'] ) { //have we expired?
+		    //redirect to logout.php
+				//redirect to logout.php
+        session_unset();
+        session_destroy();
+        header("location:home.php");
+        exit();
+		} else{ //if we haven't expired:
+		    $_SESSION['last_activity'] = time(); //this was the moment of last activity.
+		}
+	}
 	if(!empty($_SESSION)) {
 		$name=$_SESSION['name'];
 		$email=$_SESSION['forgotemail'];

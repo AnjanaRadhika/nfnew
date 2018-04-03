@@ -113,6 +113,7 @@
                   <form id="itemdetailform" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?action=detail">
                     <input name="itemid" type="hidden" value="<?php echo $item['itemid']?>"  />
                     <input name="itemstatus" id="itemstatus" type="hidden" value=""  />
+                    <input type="hidden" name="amount" id="amount">
                     <select id="status-list" class="form-control form-element custom-select" onChange="$('#itemstatus').val($('#status-list').val());">
                       <option value="">Select Status</option>
                       <?php
@@ -127,6 +128,18 @@
                       Please choose a status.
                     </div>
                     <br /><br />
+                    <select id="pricerange-list" class="form-control  custom-select" onChange="$('#amount').val($('#pricerange-list').val());">
+                        <option value="">Select Price Range</option>
+                        <option value="">0 - 100</option>
+                        <option value="">100 - 250</option>
+                        <option value="">250 - 500</option>
+                        <option value="">> 500</option>
+                    </select>
+                    <br /><br />
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="expirydate" id="expirydate"/>
+                      <div class="input-group-addon dateicon"><i class="fa fa-calendar"></i>&nbsp;</div>
+                    </div><br /><br />
                     <button class="btn btn-success button-submit form-element" type="submit">Update</button>
                   </form>
 

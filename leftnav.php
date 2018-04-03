@@ -1,17 +1,42 @@
-<div class="leftNav col-lg-3 col-md-3 col-sm-3 col-sm-pull-6">
-	<br /><br /><br /><br />
-	<ul class="menu list-unstyled">
-		<li class="sidebar-nav"> <a href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> My Posts</a></li>
-		<li class="sidebar-nav"> <a href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> My Wishlist</a></li>
-		<li class="sidebar-nav"> <a href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Change Password</a></li>
-		<?php
-		if(!empty($_SESSION)) {
-			if(array_key_exists('role', $_SESSION) && $_SESSION['role']==='Admin') {
-		?>
-		<hr>
-		<li class="sidebar-nav"> <a href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> User Maintenance</a></li>
-		<li class="sidebar-nav"> <a href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Site Maintenance</a></li>
-		<?php
-		} } ?>
-	</ul>
+<div id="signindiv" class="modal modal-open fade" tabindex="-1" role="dialog" aria-labelledby="signindiv" aria-hidden="true">
+	<div class="modal-dialog popup" role="document">
+	<div class="modal-content">
+		 <div class="modal-header">
+			 <h2 class="modal-title">Sign In</h2>
+			 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				 <span aria-hidden="true">X</span>
+			 </button>
+		 </div>
+		  <div class="modal-body">
+				<form class="form" action="home.php" id="login" method="post">
+					<?php
+					if(isset($loginerror)){
+						echo $loginerror;
+					}
+					?>
+					<div class="input-group">
+						<span class="input-group-prepend">
+				    	<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+				    <input id="username" type="text" class="form-control" name="username" placeholder="Enter Email Address" required>
+				  </div>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-prepend">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+						<input type="password" class="form-control" name="password" id="password" placeholder="************" required /><br/>
+					</div>
+					<br/>
+					<input type="submit" class="btn" id="loginbtn" name="login" value="Login"/>
+					<input type="button" class="btn cancel" data-dismiss="modal" value="Cancel"/>
+					<br/></br/>
+					<span id="forgot" data-toggle="modal" data-target="#forgotpassworddiv" data-dismiss="modal">Forgot Password?</span>
+					<hr/>
+					<div align="center"><span id="signupclick" data-toggle="modal" data-target="#signupdiv" data-dismiss="modal">Sign up</span> if you are not a member</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
 </div>

@@ -1,7 +1,18 @@
 <?php
 	include('db_connection.php');
 	session_start();
-
+	if(array_key_exists('last_activity', $_SESSION) && array_key_exists('expire_time', $_SESSION)) {
+		if( $_SESSION['last_activity'] < time()-$_SESSION['expire_time'] ) { //have we expired?
+		    //redirect to logout.php
+				//redirect to logout.php
+        session_unset();
+        session_destroy();
+        header("location:home.php");
+        exit();
+		} else{ //if we haven't expired:
+		    $_SESSION['last_activity'] = time(); //this was the moment of last activity.
+		}
+	}
 	$return = [];
 
 	function getLocation($zip){
@@ -47,6 +58,7 @@
       $address2 = $_POST['address2'];
       $city = $_POST['city'];
       $zipcode = $_POST['zipcode'];
+			$expirydate = $_POST['expirydate'];
 			$location = getLocation($zipcode);
 			$latitude = $location[1]['lat'];
 			$longitude = $location[1]['lng'];
@@ -111,12 +123,17 @@
           $return[] = array('status' => 'success', 'field' => 'phone');
       }
 
+			if ($expirydate == "") {
+          $return[] = array('status' => 'error', 'field' => 'expirydate');
+      } else {
+          $return[] = array('status' => 'success', 'field' => 'expirydate');
+      }
       // A list of permitted file extensions
       $allowed = array('png', 'jpg', 'jpeg', 'jfif', 'gif','zip');
 
       $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`,"."
         `pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, `address2`, `city`, `zipcode`,"."
-        `stateid`, `countryid`, `location`, `postedby`, `updatedby`)"."
+        `stateid`, `countryid`, `location`, `postedby`, `updatedby`, `expirydate`)"."
         VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
 				. mysqli_real_escape_string($link, $itemname)."','"
         . mysqli_real_escape_string($link, $itemdesc)."',"
@@ -131,7 +148,8 @@
         . mysqli_real_escape_string($link, $zipcode)."',"
         . mysqli_real_escape_string($link, intval($state)).","
         . mysqli_real_escape_string($link, intval($country))
-				.",'".$location[0]."','".$user."','".$user."')";
+				.",'".$location[0]."','".$user."','".$user."',STR_TO_DATE('"
+				. mysqli_real_escape_string($link, $expirydate)."', '%d-%m-%Y'))";
 
 
       if(mysqli_query($link, $query) or die(mysqli_error($link))) {
@@ -171,7 +189,7 @@
 						$return[] = array('status' => 'success', 'field' => 'dbimages');
 					} else {
 						$return[] = array('status' => 'error', 'field' => 'dbimages');
-	      }
+					}
 				}
         $return[] = array('status' => 'success', 'field' => 'itemForm');
       } else {

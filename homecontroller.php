@@ -1,7 +1,17 @@
 <?php
   include('db_connection.php');
 	session_start();
-
+  if(array_key_exists('last_activity', $_SESSION) && array_key_exists('expire_time', $_SESSION)) {
+		if( $_SESSION['last_activity'] < time()-$_SESSION['expire_time'] ) { //have we expired?
+		    //redirect to logout.php
+        session_unset();
+        session_destroy();
+        header("location:home.php");
+        exit();
+		} else{ //if we haven't expired:
+		    $_SESSION['last_activity'] = time(); //this was the moment of last activity.
+		}
+	}
 	$error=$script=$forgotpwderror=$loginerror=$hash="";
 
 	if($link = OpenCon()) {
@@ -83,6 +93,8 @@
                   $_SESSION['id'] = $row['id'];
                   $_SESSION['role'] = $row['role'];
 									$_SESSION['signedin'] = true;
+                  $_SESSION['last_activity'] = time(); //your last activity was now, having logged in.
+                  $_SESSION['expire_time'] = 60*60; //expire time in seconds: three hours (you must change this)
 								} else {
 									$loginerror .= '<div class="alert-danger">Invalid credentials. Please try again.</div>';
 									$_SESSION['signedin'] = false;

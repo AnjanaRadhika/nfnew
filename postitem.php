@@ -10,7 +10,7 @@ if($link = OpenCon()) {
   CloseCon($link);
 }
 ?>
-    <div class="col-lg-7 col-md-7 col-sm-7">
+    <div class="col-lg-7 col-md-7 col-sm-7"><br />
       <div class="content-box">
     		<h3>Post Advertisement</h3><br />
         <div id="successmessage">
@@ -24,7 +24,7 @@ if($link = OpenCon()) {
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="item_name">Item Name *</label>
-                <input type="text" class="form-control form-element " name="item_name" id="item_name" placeholder="Item Name" required>
+                <input type="text" class="form-control  " name="item_name" id="item_name" placeholder="Item Name" required>
                 <div class="invalid-feedback">
                   Please enter the Item Name.
                 </div>
@@ -32,7 +32,7 @@ if($link = OpenCon()) {
               <div class="form-group col-md-8">
                 <label for="category-list">Item Category *</label>
                 <input type="hidden" name="category" id="category" value="" />
-                <select id="category-list" class="form-control form-element custom-select" onChange="$('#category').val($('#category-list').val());">
+                <select id="category-list" class="form-control  custom-select" onChange="$('#category').val($('#category-list').val());">
                     <option value="">Select Category</option>
                     <?php
                     foreach($results as $category) {
@@ -57,12 +57,12 @@ if($link = OpenCon()) {
               <div class="form-group">
                     <label for="quantity">Quantity *</label>
                     <div class="input-group">
-                    <input type="Number" class="form-control form-element col-md-4" name="quantity" id="quantity" required>
+                    <input type="Number" class="form-control  col-md-4" name="quantity" id="quantity" required>
                     <!--<div class="invalid-feedback col-md-4">
                       Please enter the quantity
                     </div>-->
                     <input type="hidden" id="measurements" name="measurements" value="" />
-                    <select form="itemForm" id="measurements-list" class="form-control form-element custom-select col-md-4" onChange="$('#measurements').val($('#measurements-list').val());">
+                    <select form="itemForm" id="measurements-list" class="form-control  custom-select col-md-4" onChange="$('#measurements').val($('#measurements-list').val());">
                         <option value=""></option>
                         <?php
                         foreach($results1 as $measurements) {
@@ -78,19 +78,34 @@ if($link = OpenCon()) {
                     </div>-->
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="amount">Price range:</label>
-                    <input type="text" name="amount" id="amount" readonly style="border:0; background-color:#daeee3; color:#f6931f; font-weight:bold;">
-                    <div class="input-group">
-                      <div class="form-control col-md-8" id="slider-range" style="position:relative;top:10px;left:8px;"></div>
-              </div>
             </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="amount">Price Range:</label>
+                <input type="hidden" name="amount" id="amount">
+                <div class="input-group">
+                  <select id="pricerange-list" class="form-control  custom-select" onChange="$('#amount').val($('#pricerange-list').val());">
+                      <option value="">Select Price Range</option>
+                      <option value="">0 - 100</option>
+                      <option value="">100 - 250</option>
+                      <option value="">250 - 500</option>
+                      <option value="">> 500</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="expiry">Expiry Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="expirydate" id="expirydate"/>
+                  <div class="input-group-addon dateicon"><i class="fa fa-calendar"></i>&nbsp;</div>
+                </div>
+              </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="country-list">Country *</label>
                 <input type="hidden" name="country" id="country" value="" />
-                <select id="country-list" class="form-control form-element custom-select" onChange="getState(this.value);">
+                <select id="country-list" class="form-control  custom-select" onChange="getState(this.value);">
                     <option value="">Select Country</option>
                     <?php
                     foreach($results2 as $country) {
@@ -107,7 +122,7 @@ if($link = OpenCon()) {
               <div class="form-group col-md-6">
                 <label for="state-list">State *</label>
                 <input type="hidden" id="state" name="state" value="" />
-                <select form="itemForm" id="state-list" class="form-control form-element custom-select" onChange="$('#state').val($('#state-list').val());">
+                <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="$('#state').val($('#state-list').val());">
                     <option value="">Select State</option>
                 </select>
                 <div class="invalid-feedback col-md-6">
@@ -120,12 +135,12 @@ if($link = OpenCon()) {
                    <label>Phone *</label>
                    <input type="hidden" id="phone" name="phone" value="" />
                    <div class="input-group" onKeyDown="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
-                           <input type="tel" id="tel1" class="form-control form-element" value="" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel2" class="form-control form-element" value="" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel3" class="form-control form-element" value="" size="4" maxlength="4" required="required" title="" >
+                           <input type="tel" id="tel1" class="form-control " value="" size="3" maxlength="3" required="required" title="" >-
+                           <input type="tel" id="tel2" class="form-control " value="" size="3" maxlength="3" required="required" title="" >-
+                           <input type="tel" id="tel3" class="form-control " value="" size="4" maxlength="4" required="required" title="" >
                            &nbsp;
                            <span class="input-group-btn">
-                             <button class="btn btn-success btn-sm form-element"><i class="fa fa-phone" aria-hidden="true"></i> SMS Verification Code</button>
+                             <button class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> SMS Verification Code</button>
                            </span>
                    </div>
                    <div class="invalid-feedback col-md-9">
@@ -137,7 +152,7 @@ if($link = OpenCon()) {
                 </div>
                 <div class="form-group col-md-3">
                   <label for="code">Verification Code</label>
-                  <input type="Number" class="form-control form-element" name="code" id="code" placeholder="Enter OTP">
+                  <input type="Number" class="form-control " name="code" id="code" placeholder="Enter OTP">
                   <div class="invalid-feedback col-md-3">
                     Verification failed!
                   </div>
@@ -146,28 +161,28 @@ if($link = OpenCon()) {
           <div class="form-row">
             <div class="form-group col-md-8">
               <label for="contact_person">Contact Person *</label>
-              <input type="text" class="form-control form-element" name="contact_person" id="contact_person" placeholder="Contact Person" required>
+              <input type="text" class="form-control " name="contact_person" id="contact_person" placeholder="Contact Person" required>
 
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <label>Address </label>
-              <input type="text" class="form-control form-element" name="address1" placeholder="Address"><br />
-              <input type="text" class="form-control form-element" name="address2" placeholder="Address">
+              <input type="text" class="form-control " name="address1" placeholder="Address"><br />
+              <input type="text" class="form-control " name="address2" placeholder="Address">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="city">City *</label>
-              <input type="text" class="form-control form-element" name="city" id="city" placeholder="City" required>
+              <input type="text" class="form-control " name="city" id="city" placeholder="City" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the city.
               </div>
             </div>
             <div class="form-group col-md-6">
               <label for="zipcode">Zipcode *</label>
-              <input type="Number" class="form-control form-element" name="zipcode" id="zipcode" placeholder="Zipcode" required>
+              <input type="Number" class="form-control " name="zipcode" id="zipcode" placeholder="Zipcode" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the zipcode.
               </div>
@@ -178,7 +193,7 @@ if($link = OpenCon()) {
                 <div id="drop">
           				Browse or Drop images here to upload
 
-          				<a class="btn btn-success btn-sm form-element">Browse</a>
+          				<a class="btn btn-success btn-sm ">Browse</a>
           				<input id="fileupload" type="file" name="upl[]" multiple />
           			</div>
 
@@ -191,7 +206,7 @@ if($link = OpenCon()) {
             </div>
           </div>
 
-          <button class="btn btn-success button-submit form-element" type="submit">Post Adv</button>
+          <button class="btn btn-success button-submit " type="submit">Post Adv</button>
 
           </form>
         </div>

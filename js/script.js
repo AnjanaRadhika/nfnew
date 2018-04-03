@@ -12,25 +12,8 @@ $('body').on('hidden.bs.modal', '.modal', function () {
     $(this).find('form')[0].reset();
 });
 
-$( "#slider-range" ).slider({
-  range: true,
-  min: 0,
-  max: 500,
-  values: [ 75, 300 ],
-  slide: function( event, ui ) {
-    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-  }
-});
-
-$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-$('ul li a').click(function() {
-  $(this).closest('ul').find('a').removeClass('active');
-  $(this).addClass('active');
-});
-
-	$("#signuppassword, #newpassword").bind("keyup", function () {
-
+$("#signuppassword, #newpassword").bind("keyup", function () {
+ 
 	   //Regular Expressions.
 	    var regex = [];
 	    regex.push("[A-Z]"); //Uppercase Alphabet.
@@ -94,7 +77,7 @@ $('ul li a').click(function() {
 	$(".progressbar").css("text-align", "center");
 	$(".progressbar").html(strength);
 
-	});
+});
 
 var ul = $('#upload ul');
 var filesList = [];
@@ -265,36 +248,36 @@ function postForm(itemForm) {
         try {
     				var jsonObj = $.parseJSON(response);
 
-        for (var i = 0; i < jsonObj.length; i++) {
-           var status = jsonObj[i].status;
-           var field = jsonObj[i].field;
+            for (var i = 0; i < jsonObj.length; i++) {
+               var status = jsonObj[i].status;
+               var field = jsonObj[i].field;
 
-           if (status == "error") {
-								$('#successmessage').removeClass("alert alert-danger");
- 								$('#successmessage').removeClass("alert alert-success");
- 								$('#fileerror').removeClass("alert alert-danger");
-						 if(field == "category" || field == "measurements" || field == "country" || field == "state") {
-							 $('.itemForm select[id="' + field + '-list"]').addClass('is-invalid');
-						 } else if(field == "phone") {
-							 $('.itemForm input[id="tel1"]').addClass('is-invalid');
-							 $('.itemForm input[id="tel2"]').addClass('is-invalid');
-							 $('.itemForm input[id="tel3"]').addClass('is-invalid');
-						 } else if(field == "imagesextn") {
-									$('#fileerror').html("<p>Sorry, only JPG, JPEG, JFIF, PNG, GIF & ZIP files are allowed!</p>");
-									$('#fileerror').addClass("alert alert-danger");
-						 } else if(field == "images") {
-							 $('#fileerror').html("<p>Sorry, your file was not uploaded!</p>");
-							 $('#fileerror').addClass("alert alert-danger");
-						 } else if(field == "itemForm") {
-								$('#successmessage').html("<p>Some problem occured. Please try again later!</p>");
-								$('#successmessage').addClass("alert alert-danger");
-						 } else {
-             		$('.itemForm input[name="' + field + '"]').addClass('is-invalid');
-					 		}
-						 invalidfields[i] = field;
-             successbool = "false";
-           }
-        }
+               if (status == "error") {
+    								$('#successmessage').removeClass("alert alert-danger");
+     								$('#successmessage').removeClass("alert alert-success");
+     								$('#fileerror').removeClass("alert alert-danger");
+    						 if(field == "category" || field == "measurements" || field == "country" || field == "state") {
+    							 $('.itemForm select[id="' + field + '-list"]').addClass('is-invalid');
+    						 } else if(field == "phone") {
+    							 $('.itemForm input[id="tel1"]').addClass('is-invalid');
+    							 $('.itemForm input[id="tel2"]').addClass('is-invalid');
+    							 $('.itemForm input[id="tel3"]').addClass('is-invalid');
+    						 } else if(field == "imagesextn") {
+    									$('#fileerror').html("<p>Sorry, only JPG, JPEG, JFIF, PNG, GIF & ZIP files are allowed!</p>");
+    									$('#fileerror').addClass("alert alert-danger");
+    						 } else if(field == "images") {
+    							 $('#fileerror').html("<p>Sorry, your file was not uploaded!</p>");
+    							 $('#fileerror').addClass("alert alert-danger");
+    						 } else if(field == "itemForm") {
+    								$('#successmessage').html("<p>Some problem occured. Please try again later!</p>");
+    								$('#successmessage').addClass("alert alert-danger");
+    						 } else {
+                 		$('.itemForm input[name="' + field + '"]').addClass('is-invalid');
+    					 		}
+    						 invalidfields[i] = field;
+                 successbool = "false";
+               }
+            }
         } catch(e) {
             successbool = "false";
   					$('#sqlerror').html(response);
@@ -306,12 +289,6 @@ function postForm(itemForm) {
         if (successbool=="true") {
             $('.itemForm')[0].reset();
             $("#fileupload").find(".files").empty();
-            $( "#amount" ).val( "$75 - $300");
-            $( "#slider-range" ).slider({
-              range: true,
-              min: 0,
-              max: 500,
-              values: [ 75, 300 ]});
 						$('#successmessage').html("<p>Post Adv completed successfully!</p>");
 						$('#successmessage').addClass("alert alert-success");
         } else {
@@ -338,7 +315,7 @@ function postForm(itemForm) {
 var formdata = {};
 
 $('#characterLeft').text('140 characters left');
-$('#message').keydown(function () {
+$('#message,#description').keydown(function () {
 		$('#characterLeft').css("color","red");
 		var max = 140;
 		var len = $(this).val().length;
@@ -366,9 +343,9 @@ $('#contactForm').submit(function(e){
 		data: formdata,
 		url: 'contactsubmit.php',
 		success: function (response) {
-			if(response) {
+			/*if(response) {
 				$('#res').html(response);
-			}
+			}*/
 				var jsonObj = $.parseJSON(response);
 				for (var i = 0; i < jsonObj.length; i++) {
 					 var status = jsonObj[i].status;
@@ -393,6 +370,37 @@ $('#contactForm').submit(function(e){
 	});
 	$('#contactsubmit').removeClass('disabled');
 });
+
+$('#wishForm').submit(function(e){
+	e.preventDefault();
+	$('#addwish').addClass('disabled');
+	$.each($('.wishForm input'), function(i, v) {
+			if (v.type !== 'submit') {
+					formdata[v.name] = v.value;
+			}
+	});
+	formdata.description = $('#description').val();
+
+// New Wish
+	$.ajax({
+		type: "POST",
+		data: formdata,
+		url: 'addwish.php',
+    dataType: 'HTML' ,
+		success: function (response) {
+					 $('#addwishmsg').html(response);
+		},
+		complete:function(){
+      $('.wishForm')[0].reset();
+      $('body, html').animate({scrollTop:$('.wishForm').parent().parent().offset().top - 200}, 'slow');
+   	},
+		error: function(err) {
+			alert("error " + err.status + " " + err.statusText);
+		}
+	});
+	$('#addwish').removeClass('disabled');
+});
+
 
 //pagination item search results
 $('#myPager>li>a.page').click(function(e) {
@@ -434,6 +442,7 @@ $('#myPager>li>a.page').click(function(e) {
         }
     }
     var lastpage = parseInt($('#numpages').val());
+
     if(parseInt($('#curpage').val()) > 1) {
         $('#prev').removeClass('disabled');
     } else if(parseInt($('#curpage').val()) == 1) {
@@ -454,3 +463,112 @@ $('#itemdetailform').submit(function(e) {
     return false;
   }
 });
+
+//edit user Detail
+$('.edituserbtn').click(function(e){
+  e.preventDefault();
+  var userid = $(this).data('userid');
+  $.ajax({
+    url: 'userlistsubmit.php',
+    data: {userid: userid, action: 'edituser'},
+    type: 'GET',
+    dataType: 'HTML'
+  }).done(function(res){
+    $('#userlist').find('.usersearch').hide();
+    $('#userlist').find('.content-box').html(res);
+  });
+});
+
+$('.deleteuserbtn').click(function(e){
+  $('#hdnuserid').val($(this).data('userid'));
+});
+
+//Add to Wishlist
+$('.btnaddwish').click(function(e){
+      e.preventDefault();
+      var itemid = $(this).data('item');
+      $.ajax({
+        url: 'addtowishlist.php?itemid='+itemid,
+        type: 'GET',
+        dataType: 'HTML'
+      }).done(function(res){
+        $('#msgdiv').find('#msg').html(res);
+        $('#msgdiv').modal('show');
+      });
+});
+
+//Remove Wishlist
+$('.btndelwish').click(function(e){
+      e.preventDefault();
+      var wishid = $(this).data('wish');
+      $.ajax({
+        url: 'delwishlist.php?wishid='+wishid,
+        type: 'GET',
+        dataType: 'HTML'
+      }).done(function(res){
+        $('#msgdiv').find('#msg').html(res);
+        $('#msgdiv').modal('show');
+      });
+});
+
+//Hide wish message modal hidden.bs.modal
+$('#msgdiv').on('hidden.bs.modal', function(e){
+    window.location.href = window.location.href;
+});
+
+//Add item
+$('.btnadd').click(function(e){
+  e.preventDefault();
+  var txtField = $(this).parents('form:first').find('input[type=text]');
+  if(txtField.val()=="") {
+    alert('Enter the value for ' + txtField.attr('placeholder'));
+    txtField.focus();
+    return;
+  }
+  $.ajax({
+    url: 'addvalues.php',
+    data:'newcategory='+txtField.val(),
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    txtField.val("");
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//Remove item
+$('.btnremove').click(function(e){
+  e.preventDefault();
+  var optField = $(this).parents('form:first').find('select');
+  var txtField = $(this).parents('form:first').find('input[type=text]');
+  if(optField.val()=="") {
+    alert('Select the value for ' + txtField.attr('placeholder') + ' to remove');
+    optField.focus();
+    return;
+  }
+  $.ajax({
+    url: 'removevalues.php',
+    data:'categories='+optField.val(),
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    optField.val("");
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//datePicker
+$('#expirydate')
+    .datepicker({
+        format: 'dd-mm-yyyy',
+        todayHighlight: true,
+        orientation: "top auto",
+        autoclose: true
+
+    })
+    .on('changeDate', function(e) {
+        $('#expirydate').datepicker('hide');
+
+    });

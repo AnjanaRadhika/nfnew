@@ -1,3 +1,4 @@
+
 <?php include('homecontroller.php');
 		$logout_success="";
 	?>
@@ -11,6 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.css">
+	<link rel="stylesheet" href="css/datepicker.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
 
@@ -31,6 +33,8 @@
 						if(array_key_exists('action',$_GET)) {
 							if($_GET['action'] == 'search') {
 									include('itemlist.php');
+							} else if($_GET['action'] == 'myposts') {
+									include('myposts.php');
 							} else if(strpos($_GET['action'], 'detail') !== false) {
 									include('itemdetail.php');
 							} else {
@@ -51,6 +55,16 @@
 										include('contactus.php');
 								} else if($_GET['action'] == 'userlist') {
 										include('userlist.php');
+								} else if($_GET['action'] == 'site') {
+										include('sitemaintenance.php');
+								} else if($_GET['action'] == 'wishlist') {
+											include('wishlist.php');
+								} else if($_GET['action'] == 'mywishlist') {
+											include('mywishlist.php');
+								} else if($_GET['action'] == 'newwish') {
+											include('newwish.php');
+								} else if($_GET['action'] == 'change') {
+										include('userchangepwd.php');
 								}
 								include('contentadv.php');
 						} else {
@@ -63,7 +77,7 @@
 
 						<?php //include('contentadv.php'); ?>
 
-                </div>
+        </div>
     </section>
     <!--Section End-->
 
@@ -79,8 +93,12 @@
 	<!--Forgot Password Form -->
 	<?php include('forgotpwd.php'); ?>
 
+	<!--Message Div-->
+	<?php include('msgdiv.php'); ?>
+
 	<!--Terms of Use -->
 	<?php include('termsofuse.php'); ?>
+
 
 
   <script src="js/jquery.min.js"></script>
@@ -93,10 +111,18 @@
 	<script src="js/jquery.iframe-transport.js"></script>
 	<script src="js/jquery.fileupload.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript">
+
+	</script>
  	<?php
 		if(!empty($script)) {
 			echo $script;
+			session_unset();
+			session_destroy();
+			header("location:home.php");
+			exit();
 		}
 	?>
 

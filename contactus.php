@@ -1,4 +1,4 @@
-<div class="col-md-7">
+<div class="col-md-7"><br />
   <div class="content-box">
         <form id="contactForm" class="contactForm" method="post" role="form">
           <h3>Contact Us</h3><br />
@@ -7,17 +7,17 @@
           </div><hr />
     			<div class="form-row">
             <div class="form-group col-md-12">
-						        <input type="text" class="form-control form-element" name="name" placeholder="Name" required>
+						        <input type="text" class="form-control " name="name" placeholder="Name" required>
             </div>
 					</div>
 					<div class="form-row">
             <div class="form-group col-md-12">
-						        <input type="text" class="form-control form-element" name="email" placeholder="Email" required>
+						        <input type="text" class="form-control " name="email" placeholder="Email" required>
             </div>
 					</div>
 					<div class="form-row">
             <div class="form-group col-md-12">
-						        <input type="text" class="form-control form-element" name="subject" placeholder="Subject" required>
+						        <input type="text" class="form-control " name="subject" placeholder="Subject" required>
             </div>
 					</div>
           <div class="form-row">
@@ -29,7 +29,7 @@
           <div id="res">
 
           </div>
-        <button id="contactsubmit" class="btn btn-success form-element" type="submit">Submit</button>
+        <button id="contactsubmit" class="btn btn-success " type="submit">Submit</button>
         </form>
   </div>
 </div>

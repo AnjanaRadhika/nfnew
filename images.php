@@ -35,30 +35,30 @@
       if(array_key_exists('action',$_GET)) {
         if($_GET['action'] == 'post') {
       ?>
-      <div class="widget row image-tile">
-          <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
-          </div>
-          <div class="tile col-8" style="background: url('images/cows.jfif') no-repeat center top; background-size: cover;">
-          </div>
-      </div><br />
-      <div class="widget row image-tile">
-          <div class="tile col-8" style="background: url('images/pappaya.jpg') no-repeat center top; background-size: cover;">
-          </div>
-          <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
-          </div>
-      </div><br />
-      <div class="widget row image-tile">
-          <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
-          </div>
-          <div class="tile col-8" style="background: url('images/hens.jfif') no-repeat center top; background-size: cover;">
-          </div>
-      </div><br />
-      <div class="widget row image-tile">
-          <div class="tile col-8" style="background: url('images/farmer1.jfif') no-repeat center top; background-size: cover;">
-          </div>
-          <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
-          </div>
-      </div><br />
+          <div class="widget row image-tile">
+              <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
+              </div>
+              <div class="tile col-8" style="background: url('images/cows.jfif') no-repeat center top; background-size: cover;">
+              </div>
+          </div><br />
+          <div class="widget row image-tile">
+              <div class="tile col-8" style="background: url('images/pappaya.jpg') no-repeat center top; background-size: cover;">
+              </div>
+              <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
+              </div>
+          </div><br />
+          <div class="widget row image-tile">
+              <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
+              </div>
+              <div class="tile col-8" style="background: url('images/hens.jfif') no-repeat center top; background-size: cover;">
+              </div>
+          </div><br />
+          <div class="widget row image-tile">
+              <div class="tile col-8" style="background: url('images/farmer1.jfif') no-repeat center top; background-size: cover;">
+              </div>
+              <div class="col-4" style="background: none no-repeat center top; background-size: cover;">
+              </div>
+          </div><br />
       <?php } } ?>
   </div>
 </div>

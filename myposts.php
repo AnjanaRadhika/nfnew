@@ -4,14 +4,19 @@ if($link = OpenCon()) {
                                   inner join itemcategory ctg on itm.categoryid = ctg.categoryid
 where img.imageid = (select max(img1.imageid) from images img1 where img1.itemid = itm.itemid)
 and itm.status is null ";
+  if(!empty($_SESSION)) {
+    if(array_key_exists('id', $_SESSION)) {
+      $query = $query." and postedby = '".$_SESSION['id']."'";
+    }
+  }
   if(!empty($_POST)){
     if(array_key_exists('location', $_POST)) {
-      $query = $query . " and ((itm.city like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
-                        . " or (itm.location like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))";
+      $query = $query . " and ((itm.city like '%" . $_POST['location'] ."%')"
+                        . " or (itm.location like '%" . $_POST['location'] ."%'))";
     }
     if(array_key_exists('itemsearch', $_POST)) {
-      $query = $query . " and ((itm.itemname like '%" . mysqli_real_escape_string($link,$_POST['itemsearch']) ."%')"
-                          . " or (ctg.categoryname like '%" . mysqli_real_escape_string($link,$_POST['itemsearch']) ."%'))";
+      $query = $query . " and ((itm.itemname like '%" . $_POST['itemsearch'] ."%')"
+                          . " or (ctg.categoryname like '%" . $_POST['itemsearch'] ."%'))";
     }
   }
 
@@ -31,30 +36,16 @@ and itm.status is null ";
   CloseCon($link);
 }
 
-function isFavItem($userid, $itemid) {
-  if($link = OpenCon()) {
-    $query = "SELECT * FROM wishlist WHERE createdby = " . $userid
-            . " and favitemid = " . $itemid . " LIMIT 1";
-    $results = runQuery($link,$query);
-    $rowcount = getRowCount($link, $query);
-    CloseCon($link);
-  }
-  if($rowcount > 0 )
-    return true;
-  else {
-    return false;
-  }
-}
 ?>
  <div class="col-md-12">
    	<div class="jumbotron content col-lg-10 col-md-10 col-sm-10">
-   		<form class="searchItemForm" method="post" action="home.php?action=search" role="search">
+   		<form class="searchItemForm" method="post" action="home.php?action=myposts" role="search">
    			<div class="form-group-sm">
    				<div class="input-group">
-   					<input type="text" name="location" class="form-control " placeholder="Search Location">
-   					<input type="text" name="itemsearch" class="form-control " placeholder="Search Item">
+   					<input type="text" name="location" class="form-control form-element" placeholder="Search Location">
+   					<input type="text" name="itemsearch" class="form-control form-element" placeholder="Search Item">
    					<span class="input-group-btn">
-   						<button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
+   						<button class="btn btn-success btn-sm form-element" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
    					</span>
    				</div>
    			</div>
@@ -83,23 +74,16 @@ function isFavItem($userid, $itemid) {
               <div id="page<?php echo $cur ?>" class="row itemlist" style="<?php echo $pagestyle ?>">
           <?php  }  ?>
                   <div class="col-md-3">
-                    <div class="card"> <a href=<?php echo $url ?> ><img class="img-fluid itemimage" src="<?php echo $item["imagepath"] ?>" alt="<?php echo $item["imagename"] ?>"></a>
+                    <div class="card"> <img class="img-fluid itemimage" src="<?php echo $item["imagepath"] ?>" alt="<?php echo $item["imagename"] ?>">
                       <div class="card-body">
-                        <div class="itemdtl">
+                        <div>
                           <input type="hidden" name="itemid" value=<?php echo $item['itemid'] ?> />
-                          <input type="hidden" name="itemname" value=<?php echo $item['itemname'] ?> />
+                          <input type="hidden" name="itemname" value=<?php $item['itemname'] ?> />
                           <h2 class="title-small"><a href=<?php echo $url ?> ><strong> <?php echo $item["itemname"] ?></strong></a></h2>
                           <h2 class="title-small"><?php echo $item["itemdesc"] ?></h2>
                           <h2 class="title-small"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; <?php echo $item["contactperson"] ?> @ <?php echo $item["contactno"] ?></h2>
                         </div>
                         <p class="card-text"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["city"] ?></em></small></p>
-                        <?php if(!empty($_SESSION)) {
-                                  if(array_key_exists('id', $_SESSION)) {
-                                    if(isFavItem($_SESSION['id'], $item['itemid'])) { ?>
-                                        <div> <button class="btn btnaddwish badge badge-pill badge-danger disabled"  ?><i id="icoheart" class="fa fa-heart"></i> <del> Add to Favorites </del></button> </div>
-                                    <?php } else {?>
-                                        <div> <button class="btn btnaddwish badge badge-pill badge-danger" data-toggle="modal" data-item=<?php echo $item['itemid'];  ?> ><i id="icoheart" class="fa fa-heart-o"></i> Add to Favorites</button> </div>
-                      <?php } } }?>
                       </div>
                     </div>
                   </div>
@@ -118,6 +102,6 @@ function isFavItem($userid, $itemid) {
       <div class="alert alert-danger" style="width:100%">
           <p>Search did not return any items!</p>
       </div>
-    <?php } ?>
+<?php } ?>
   </div>
  </div>
