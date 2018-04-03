@@ -36,7 +36,7 @@
 			$to = $email; // you should run that through a cleaning function or clean it some how
 			$query = "INSERT INTO `users`(`username`,`email`, `password`, `role`) VALUES('" . mysqli_real_escape_string($link, $_SESSION['name'])."','"
 				. mysqli_real_escape_string($link, $_SESSION['email'])."','"
-				.mysqli_real_escape_string($link, password_hash($_SESSION['password'],PASSWORD_DEFAULT))."','Seller')";
+				.mysqli_real_escape_string($link, password_hash($_SESSION['password'],PASSWORD_DEFAULT))."','User')";
 
 			if(mysqli_query($link, $query)) {
 				$sent=mail($to,$subject,$message,$headers);
