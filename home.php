@@ -33,6 +33,8 @@
 						if(array_key_exists('action',$_GET)) {
 							if($_GET['action'] == 'search') {
 									include('itemlist.php');
+							} else if($_GET['action'] == 'terms') {
+									include('termsofuse.php');
 							} else if($_GET['action'] == 'myposts') {
 									include('myposts.php');
 							} else if(strpos($_GET['action'], 'detail') !== false) {
@@ -95,10 +97,6 @@
 
 	<!--Message Div-->
 	<?php include('msgdiv.php'); ?>
-
-	<!--Terms of Use -->
-	<?php include('termsofuse.php'); ?>
-
 
 
   <script src="js/jquery.min.js"></script>
