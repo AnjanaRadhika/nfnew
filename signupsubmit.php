@@ -97,7 +97,7 @@
 				</div>
 			</div>
 		</nav>
-		<br /><br /><br />
+		<br />
 		<section class="container messagebody">
 			<div class="message centered">
 				<?php echo $mail_sent;?>

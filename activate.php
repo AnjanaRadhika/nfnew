@@ -1,24 +1,12 @@
 <?php
 	include('db_connection.php');
-	session_start();
-	if(array_key_exists('last_activity', $_SESSION) && array_key_exists('expire_time', $_SESSION)) {
-		if( $_SESSION['last_activity'] < time()-$_SESSION['expire_time'] ) { //have we expired?
-				//redirect to logout.php
-        session_unset();
-        session_destroy();
-        header("location:home.php");
-        exit();
-		} else{ //if we haven't expired:
-		    $_SESSION['last_activity'] = time(); //this was the moment of last activity.
-		}
-	}
 	$activatemsg="";
 	if($link = OpenCon()) {
 			if(!empty($_GET)) {
 				echo $_SERVER['QUERY_STRING'];
 				parse_str(urldecode(base64_decode($_SERVER['QUERY_STRING'])),$string);
 				$key=$string['key'];
-				$email=rtrim($string['email'],'7');
+				$email=substr($string['email'],0, -3);
 				$query = "UPDATE `users` SET `activate`= 1 WHERE `email`='".$email."' and `username`='".$key."' LIMIT 1";
 				echo $query;
 				if(mysqli_query($link, $query)) {
@@ -74,7 +62,7 @@
 				</div>
 			</div>
 		</nav>
-		<br /><br /><br />
+		<br />
 		<section class="container messagebody">
 			<div class="message centered">
 				<?php echo $activatemsg;?>

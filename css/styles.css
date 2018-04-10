@@ -9,20 +9,23 @@ html {
 }
 body {
    margin:0;
-   padding:0;
+   padding: 0;
    height:100%;
 }
 section {
-	 padding-top:5%;
-   padding-bottom:5%;   /* Height of the footer */
+	 padding-top:2%;
+   padding-bottom:2%;   /* Height of the footer */
 }
 footer {
-    height:20%;
+    height:5%;
+		position:fixed;
     background-color:mediumseagreen;
     text-align:center;
+		bottom:0;
+		z-index: 3;
 }
 .navbar-header {
-	width: 32%;
+	width: 40%;
 }
 .dropdown-menu>li>a {
     color: rgba(255,255,255,.5);
@@ -94,6 +97,48 @@ footer {
     background-color: #080808;
 }
 
+#tag {
+	-webkit-transform: rotate(45deg);
+     -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+       -o-transform: rotate(45deg);
+          transform: rotate(45deg);
+    clip: rect(0px, 141.421px, 70.7107px, 0px);
+    height: 141.421px;
+    position: absolute;
+    right: -20.7107px;
+    top: -20.7107px;
+    width: 141.421px;
+    z-index: 1;
+}
+
+#price {
+	color: white;
+ -webkit-transform: rotate(-45deg);
+     -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+       -o-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+		font-family: "HelveticaNeue-CondensedBold", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-weight: 700;
+    left: 20px;
+    top: 20px;
+    display: block;
+    height: 100px;
+    position: relative;
+    width: 100px;
+		opacity: 0.8;
+    z-index: 2;
+}
+
+#price span {
+	position: relative;
+  top: 10px;
+  left: 10px;
+  display: block;
+  text-align: center;
+}
+
 #head {
   font-family: 'Fira Sans Condensed', sans-serif!important;
 	font-weight:bold;
@@ -106,6 +151,7 @@ footer {
 h2 {
 	font-size:300%;
 	color:#C2561A;
+	text-align: center;
 }
 h3 {
 	font-size:200%;
@@ -135,12 +181,12 @@ min-height:25%;
 	background-color:transparent;
 	text-align:center;
 	margin:0px;
-	padding: 64px 32px 32px 32px;
+	padding: 32px 32px 32px 32px;
 }
 .cellimg {
 	padding:5px;
 	width:95%;
-	height:120px;
+	height: 120px;
 }
 #picturetable {
 	border:collapse;
@@ -149,6 +195,9 @@ min-height:25%;
 td + td { border-left: 2px ridge mediumseagreen; }
 tr + tr { border-top: 2px ridge mediumseagreen; }
 tr.hide-row { display:none; visibility:hidden; }
+#picturetable td {
+	border-top:0px!important;
+}
 
 .menu li a {
     border-color: #ddd;
@@ -410,6 +459,15 @@ textarea{
 #sendbtn {
 	width:20%;
 }
+.termslink:hover, #toplink:hover {
+	color:white;
+	font-weight: bold;
+}
+#toplink {
+	color:lightgray;
+	background-color: seagreen;
+	padding:0px 2px 0px 2px;
+}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -449,6 +507,9 @@ input[type=number]::-webkit-outer-spin-button {
  }
  #social-em:hover {
      color: #f39c12;
+ }
+ #social-yt:hover {
+	 	 color: red;
  }
 /* Image widget */
 .widget-container .widget {
@@ -697,6 +758,10 @@ ul#myPager {
 	Media Queries
 */
 @media screen and (max-width: 992px) {
+	footer {
+		height: 5%;
+		font-size: 75%;
+	}
   .popup{
       left:10%;
       width:80%;
@@ -715,8 +780,9 @@ ul#myPager {
 	}
 }
 @media only screen and (max-width: 768px) {
-	.navbar-header {
-		width: 40%;
+	footer {
+		height: 7%;
+		font-size: 75%;
 	}
 	.navbar-toggler-icon {
 		height: 35px;
@@ -725,7 +791,6 @@ ul#myPager {
 	#head {display:none; visibility:hidden;}
 	div.leftNav {display:none; visibility:hidden;}
 	.table { width: 100%;}
-	tr.hide-row { display:table-row; visibility:visible;}
 	tr td.hide-col	{ display:none; visibility:hidden; }
 	html {
 		-ms-text-size-adjust:80%;
@@ -734,8 +799,9 @@ ul#myPager {
 	}
 }
 @media only screen and (max-width: 420px) {
-	.navbar-header {
-		width: 40%;
+	footer {
+		height: 7%;
+		font-size: 75%;
 	}
 	.navbar-toggler-icon {
 		height: 35px;
@@ -743,7 +809,6 @@ ul#myPager {
 	}
 	#head {display:none; visibility:hidden;}
 	div.leftNav {display:none; visibility:hidden;}
-	tr.hide-row { display:table-row; visibility:visible;}
 	tr td.hide-col	{ display:none; visibility:hidden; }
 	html {
 		-ms-text-size-adjust:80%;
@@ -752,8 +817,9 @@ ul#myPager {
 	}
 }
 @media only screen and (max-width: 320px) {
-	.navbar-header {
-		width: 40%;
+	footer {
+		height: 7%;
+		font-size: 65%;
 	}
 	.navbar-toggler-icon {
 		height: 35px;
@@ -761,7 +827,6 @@ ul#myPager {
 	}
 	#head {display:none; visibility:hidden;}
 	div.leftNav {display:none; visibility:hidden;}
-	tr.hide-row { display:table-row; visibility:visible;}
 	tr td.hide-col, #head	{ display:none; visibility:hidden; }
 	html {
 		-ms-text-size-adjust:80%;

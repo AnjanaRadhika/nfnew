@@ -73,6 +73,11 @@ if($link = OpenCon()) {
                         }
                         ?>
                     </select>
+                    <input type="hidden" id="sellorbuy" name="sellorbuy" value="For Sale" />
+          					<select  form="itemForm" id="sellorbuy-list" class="form-control  custom-select col-md-3" onChange="$('#sellorbuy').val($('#sellorbuy-list').val());">
+          						<option value="For Sale" selected> For Sale</option>
+          						<option value="To Buy"> To Buy</option>
+          					</select>
                     <!--<div class="invalid-feedback col-md-4">
                       Please enter the measurement.
                     </div>-->
@@ -97,7 +102,7 @@ if($link = OpenCon()) {
                 <label for="expiry">Expiry Date:</label>
                 <div class="input-group">
                   <input type="text" class="form-control" name="expirydate" id="expirydate"/>
-                  <div class="input-group-addon dateicon"><i class="fa fa-calendar"></i>&nbsp;</div>
+                  <div class="input-group-addon dateicon"><a class="icon-cal"><i class="fa fa-calendar"></i></a>&nbsp;</div>
                 </div>
               </div>
             </div>

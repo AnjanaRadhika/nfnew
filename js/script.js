@@ -405,27 +405,29 @@ $('#wishForm').submit(function(e){
 //pagination item search results
 $('#myPager>li>a.page').click(function(e) {
     var nextpage, prevpage;
-    var pagelinkid, pagenextid,  pageprevid;
+    var pagenextlinkid, pageprevlinkid, pagenextid,  pageprevid;
 
     if($(this).attr('id')==='next') {
         nextpage = parseInt($('#curpage').val()) + 1;
         prevpage = parseInt($('#curpage').val());
-        pagelinkid = '#pagelink'+nextpage;
+        pagenextlinkid = '#pagelink'+nextpage;
+        pageprevlinkid = '#pagelink'+prevpage;
         pagenextid =  '#page'+nextpage;
         pageprevid =  '#page'+prevpage;
-        $(pagelinkid).addClass('active');
-        $(this).removeClass('active');
+        $(pagenextlinkid).addClass('active');
+        $(pageprevlinkid).removeClass('active');
         $('#curpage').val(nextpage);
         $(pageprevid).hide();
         $(pagenextid).show();
     } else if($(this).attr('id')==='prev') {
         prevpage = parseInt($('#curpage').val());
         nextpage = parseInt($('#curpage').val()) - 1;
-        pagelinkid = '#pagelink'+nextpage;
+        pagenextlinkid = '#pagelink'+nextpage;
+        pageprevlinkid = '#pagelink'+prevpage;
         pagenextid =  '#page'+nextpage;
         pageprevid =  '#page'+prevpage;
-        $(pagelinkid).addClass('active');
-        $(this).removeClass('active');
+        $(pagenextlinkid).addClass('active');
+        $(pageprevlinkid).removeClass('active');
         $('#curpage').val(nextpage);
         $(pageprevid).hide();
         $(pagenextid).show();
@@ -572,3 +574,8 @@ $('#expirydate')
         $('#expirydate').datepicker('hide');
 
     });
+
+$('#cal').click( function(e){
+  $('#expirydate')
+      .datepicker('show');
+});

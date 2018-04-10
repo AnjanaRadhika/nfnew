@@ -48,6 +48,7 @@
       $category = $_POST['category'];
       $itemdesc = $_POST['itemdesc'];
       $quantity = $_POST['quantity'];
+			$sellorbuy = $_POST['sellorbuy'];
 			$amount = $_POST['amount'];
       $measurements = $_POST['measurements'];
       $country = $_POST['country'];
@@ -131,13 +132,14 @@
       // A list of permitted file extensions
       $allowed = array('png', 'jpg', 'jpeg', 'jfif', 'gif','zip');
 
-      $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`,"."
+      $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`, `sellorbuy`, "."
         `pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, `address2`, `city`, `zipcode`,"."
         `stateid`, `countryid`, `location`, `postedby`, `updatedby`, `expirydate`)"."
         VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
 				. mysqli_real_escape_string($link, $itemname)."','"
         . mysqli_real_escape_string($link, $itemdesc)."',"
         . mysqli_real_escape_string($link, floatval($quantity)).",'"
+				. mysqli_real_escape_string($link, $sellorbuy)."','"
 				. mysqli_real_escape_string($link, $amount)."',"
         . mysqli_real_escape_string($link, intval($measurements)).",'"
         . mysqli_real_escape_string($link, $contact_person)."','"

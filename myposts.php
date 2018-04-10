@@ -18,6 +18,11 @@ and itm.status is null ";
       $query = $query . " and ((itm.itemname like '%" . $_POST['itemsearch'] ."%')"
                           . " or (ctg.categoryname like '%" . $_POST['itemsearch'] ."%'))";
     }
+    if(array_key_exists('sellorbuy', $_POST)) {
+      if($_POST['sellorbuy'] != 'Both') {
+        $query = $query . " and itm.sellorbuy = '" . mysqli_real_escape_string($link,$_POST['sellorbuy']) ."'";
+      }
+    }
   }
 
   $results = runQuery($link,$query);
@@ -42,10 +47,16 @@ and itm.status is null ";
    		<form class="searchItemForm" method="post" action="home.php?action=myposts" role="search">
    			<div class="form-group-sm">
    				<div class="input-group">
-   					<input type="text" name="location" class="form-control form-element" placeholder="Search Location">
-   					<input type="text" name="itemsearch" class="form-control form-element" placeholder="Search Item">
+   					<input type="text" name="location" class="form-control" placeholder="Search Location">
+   					<input type="text" name="itemsearch" class="form-control" placeholder="Search Item">
+            <input type="hidden" id="sellorbuy" name="sellorbuy" value="Both" />
+  					<select id="sellorbuy-list" class="form-control  custom-select col-md-2" onChange="$('#sellorbuy').val($('#sellorbuy-list').val());">
+  						<option value="Both"> Select All</option>
+  						<option value="For Sale"> For Sale</option>
+  						<option value="To Buy"> To Buy</option>
+  					</select>
    					<span class="input-group-btn">
-   						<button class="btn btn-success btn-sm form-element" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
+   						<button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
    					</span>
    				</div>
    			</div>
