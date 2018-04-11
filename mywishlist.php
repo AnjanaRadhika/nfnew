@@ -138,4 +138,3 @@ function getInterval($createddate) {
      </ul>
    </div>
  </div>
-</div>

@@ -148,6 +148,6 @@ and itm.status is null ";
         </div>
   <?php } ?>
     </div>
+     <?php include('contentadvlist.php'); ?>
  </div>
- <?php include('contentadvlist.php'); ?>
 </div>
