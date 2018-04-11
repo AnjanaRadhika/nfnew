@@ -67,9 +67,9 @@ function getInterval($createddate) {
 }
  ?>
 
- <div id="wishlist" class="col-lg-7 col-md-7 col-sm-7"><br />
+ <div id="wishlist" class="col-lg-6 col-md-6 col-sm-6">
    <div class="content-box">
-       <h3>WishList</h3><br />
+       <h3>My WishList</h3><br />
        <hr />
        <?php
          if(!empty($results)) {
@@ -126,15 +126,16 @@ function getInterval($createddate) {
           </div>
         <?php  }  ?>
    </div>
+   <div class="text-center">
+     <ul class="pagination pager d-inline-flex" id="myPager">
+       <li><a href="#" id="prev" class="page disabled">«</a></li>
+       <?php for($cur=1;$cur<$pages + 1; $cur++) {
+                 $pageclass = $cur == 1 ? "page active" : "page";
+             ?>
+           <li><a id="pagelink<?php echo $cur ?>" href="#page<?php echo $cur ?>" class="<?php echo $pageclass ?>"><?php echo $cur ?></a></li>
+       <?php } ?>
+       <li><a id="next" href="#" class="page <?php echo $disabled ?>" >»</a></li>
+     </ul>
+   </div>
  </div>
- <div class="text-center">
-   <ul class="pagination pager d-inline-flex" id="myPager">
-     <li><a href="#" id="prev" class="page disabled">«</a></li>
-     <?php for($cur=1;$cur<$pages + 1; $cur++) {
-               $pageclass = $cur == 1 ? "page active" : "page";
-           ?>
-         <li><a id="pagelink<?php echo $cur ?>" href="#page<?php echo $cur ?>" class="<?php echo $pageclass ?>"><?php echo $cur ?></a></li>
-     <?php } ?>
-     <li><a id="next" href="#" class="page <?php echo $disabled ?>" >»</a></li>
-   </ul>
- </div>
+</div>

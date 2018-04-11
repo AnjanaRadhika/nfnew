@@ -36,7 +36,7 @@ if($link = OpenCon()) {
   	CloseCon($link);
 }
  ?>
-<div class="col-lg-7 col-md-7 col-sm-7">
+<div class="col-lg-6 col-md-6 col-sm-6">
   <div class="content-box">
     <h3>Change Password</h3><br />
     <div id="successmessage">

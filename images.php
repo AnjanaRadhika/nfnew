@@ -1,5 +1,4 @@
 <div class="leftNav col-lg-3 col-md-3 col-sm-3 col-sm-pull-6">
-  <br /><br />
   <div class="widget-container">
       <div class="widget row image-tile">
           <div class="tile col-8" style="background: url('images/coconuttree.jfif') no-repeat center top; background-size: cover;">

@@ -22,10 +22,16 @@
 		<?php include('nav.php'); ?>
 
     <!--Section Start-->
-    <section class="container">
-        <div class="row"><br /><br />
+    <section class="container"><br />
+			<?php
+			if(array_key_exists('action',$_GET)) {
+			?>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="horiadv row"><br /><br />
 			<!-- Row for advertisement -->
         </div>
+			</div>
+			<?php } ?>
         <div class="row">
 
 						<?php //include('leftnav.php'); ?>
@@ -39,6 +45,7 @@
 									include('myposts.php');
 							} else if(strpos($_GET['action'], 'detail') !== false) {
 									include('itemdetail.php');
+									include('contentadv.php');
 							} else {
 								if(!empty($_SESSION)) {
 									if(array_key_exists('name', $_SESSION)) {
@@ -47,7 +54,7 @@
 								} else {
 										include('images.php');
 								}
-							}
+
 
 								if($_GET['action'] == 'post') {
 										include('postitem.php');
@@ -59,8 +66,6 @@
 										include('userlist.php');
 								} else if($_GET['action'] == 'site') {
 										include('sitemaintenance.php');
-								} else if($_GET['action'] == 'wishlist') {
-											include('wishlist.php');
 								} else if($_GET['action'] == 'mywishlist') {
 											include('mywishlist.php');
 								} else if($_GET['action'] == 'newwish') {
@@ -69,6 +74,7 @@
 										include('userchangepwd.php');
 								}
 								include('contentadv.php');
+							}
 						} else {
 							 	include('searchfarmer.php');
 						}
@@ -80,6 +86,15 @@
 						<?php //include('contentadv.php'); ?>
 
         </div>
+				<?php
+				if(array_key_exists('action',$_GET)) {
+				?>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="horiadv row"><br /><br />
+				<!-- Row for advertisement -->
+					</div>
+				</div>
+				<?php } ?>
     </section>
     <!--Section End-->
 
@@ -119,7 +134,6 @@
 			echo $script;
 			session_unset();
 			session_destroy();
-			header("location:home.php");
 			exit();
 		}
 	?>

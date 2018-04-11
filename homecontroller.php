@@ -27,6 +27,9 @@
 					} else if($_POST['password']==""){
 						$error .= '<div class="alert-danger" >Password is required.</div>';
 						$_SESSION['signupsubmitted'] = false;
+          } else if($_POST['password'] != $_POST['confirmpassword']){
+            $error .= '<div class="alert-danger" >Passwords do not match.</div>';
+            $_SESSION['signupsubmitted'] = false;
 					} else {
 						$query = "SELECT * FROM `users` WHERE `username` = '".mysqli_real_escape_string($link, $_POST['name'])."'";
 						$result = mysqli_query($link, $query);

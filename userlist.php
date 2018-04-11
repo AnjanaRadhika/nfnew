@@ -36,7 +36,7 @@ if($link = OpenCon()) {
 }
  ?>
 
- <div id="userlist" class="col-lg-7 col-md-7 col-sm-7">
+ <div id="userlist" class="col-lg-6 col-md-6 col-sm-6">
    <div class="usersearch">
      <br /><br />
      <form class="searchUserForm" method="post" action="home.php?action=userlist" role="search">

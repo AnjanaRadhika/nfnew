@@ -23,18 +23,21 @@
 						</div>
 						<br/>
 						<div class="input-group">
-							<input type="password" class="form-control" name="password" id="signuppassword" placeholder="************" required />
+							<input type="password" class="form-control" name="password" id="signuppassword" placeholder="Enter Password *" required />
+						</div>
+						<br />
+						<div class="input-group">
+							<input class="form-control" type="password" name="confirmpassword" id="retypepassword" placeholder="Confirm Password *" required />
 						</div>
 						<br />
 						<div class="bar" style="width:100%;height:22px;background:lightgrey;border:solid 0.5px;border-radius:5px;">
 							<div class="progressbar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 						</div>
-						<br/>
+
 						By registering, I accept the NeighbourhoodFarmers.com
 						<a href="home.php?action=terms"><span id="termsofuseclick">Terms Of Use</span></a><br/>
 						<input type="submit" name="signup-submit" class="btn" value="Sign Up" />
-						<input type="button" class="btn cancel" data-dismiss="modal" value="Cancel" />
-						<hr/>
+						<input type="button" class="btn cancel" data-dismiss="modal" value="Cancel" /><hr />
 						<div align="center"><span class="signinclick" data-toggle="modal" data-target="#signindiv" data-dismiss="modal">Sign in</span> if you are already a member</div>
 					</form>
 				</div>

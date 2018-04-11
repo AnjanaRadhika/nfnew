@@ -78,6 +78,8 @@
 								}
 								if(array_key_exists('signedin', $_SESSION) && $_SESSION['signedin'] === false) {
 									echo $signin;
+								} else if(array_key_exists('signupsubmitted', $_SESSION) && $_SESSION['signupsubmitted'] === false) {
+									echo $signin;
 								}
 							} else {
 								echo $signin;

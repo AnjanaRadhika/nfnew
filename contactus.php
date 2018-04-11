@@ -1,4 +1,4 @@
-<div class="col-md-7"><br />
+<div class="col-md-6">
   <div class="content-box">
         <form id="contactForm" class="contactForm" method="post" role="form">
           <h3>Contact Us</h3><br />

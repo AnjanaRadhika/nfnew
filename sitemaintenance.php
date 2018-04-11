@@ -12,9 +12,9 @@ if($link = OpenCon()) {
   CloseCon($link);
 }
 ?>
-<div class="col-md-7"><br />
+<div class="col-md-6"><br />
   <div>
-    <h3>Site Settings</h3><br />
+    <h3>Site Settings</h3><hr />
     <div class="block">
       <span class="pull-left"><strong>Item Category</strong></span>
       <span class="pull-right">

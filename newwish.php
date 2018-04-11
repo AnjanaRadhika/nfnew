@@ -5,7 +5,7 @@ if($link = OpenCon()) {
   CloseCon($link);
 }
  ?>
-<div class="col-md-7"><br />
+<div class="col-md-6">
   <div class="content-box">
         <form id="wishForm" class="wishForm" method="post" role="form">
           <h3>New Wish</h3><br />

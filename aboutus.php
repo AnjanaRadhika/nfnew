@@ -1,4 +1,4 @@
-<div class="col-md-7"><br />
+<div class="col-md-6">
 	<div class="content-box">
 		<h3>Why Neighbourhood Farmer's ? </h3><br /><hr />
 		<p class="text-justify" style="padding:5px;">Last few years has been revolutionary and people across the country
