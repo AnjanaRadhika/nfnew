@@ -3,6 +3,7 @@ $return = [];
 if(!empty($_POST)){
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $phone = $_POST['phone'];
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
@@ -15,6 +16,9 @@ if(!empty($_POST)){
 
 		//$to = 'admin@neighbourhoodfarmers.com';
     $to = 'anjana.rajeevv@gmail.com';
+    $message = $message. '<p>
+    Please contact me at +91'.$phone.'.
+    </p>';
 
 		$sent=mail($to,$subject,$message,$headers);
 		if(!$sent) {

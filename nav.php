@@ -63,22 +63,22 @@
 											</div>";
 									exit();
 								}
-								}
-
-							if(array_key_exists('key', $_GET)) {
+							} else if(array_key_exists('key', $_GET)) {
 									parse_str($_SERVER['QUERY_STRING'],$string);
 									$name=urldecode(base64_decode($string['key']));
 									echo $beforename." ".$name.$aftername;
+							} else {
+									echo $signin;
 							}
-						}
-							if(!empty($_SESSION)) {
+						} else if(!empty($_SESSION)) {
 								if(array_key_exists('name', $_SESSION)) {
 									$name=$_SESSION['name'];
 									echo $beforename.$name.$aftername;
-								}
-								if(array_key_exists('signedin', $_SESSION) && $_SESSION['signedin'] === false) {
+								} else if(array_key_exists('signedin', $_SESSION) && $_SESSION['signedin'] === false) {
 									echo $signin;
 								} else if(array_key_exists('signupsubmitted', $_SESSION) && $_SESSION['signupsubmitted'] === false) {
+									echo $signin;
+								} else {
 									echo $signin;
 								}
 							} else {

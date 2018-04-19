@@ -5,8 +5,10 @@ if($link = OpenCon()) {
   $results = runQuery($link,$query);
   $query ="SELECT * FROM measurements";
   $results1 = runQuery($link,$query);
-  $query ="SELECT * FROM countries";
-  $results2 = runQuery($link,$query);
+/*  $query ="SELECT * FROM countries";
+  $results2 = runQuery($link,$query);*/
+  $query ="SELECT * FROM states WHERE countryid = '101'";
+  $results2 = runQuery($link, $query);
   CloseCon($link);
 }
 ?>
@@ -85,7 +87,7 @@ if($link = OpenCon()) {
                   </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label for="amount">Price Range:</label>
                 <input type="hidden" name="amount" id="amount">
                 <div class="input-group">
@@ -98,70 +100,78 @@ if($link = OpenCon()) {
                   </select>
                 </div>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
+                <label for="expiry">Effective Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="effectivedate" id="effectivedate"/>
+                  <div class="input-group-addon dateicon"><a id="cal1"><i class="fa fa-calendar"></i></a>&nbsp;</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
                 <label for="expiry">Expiry Date:</label>
                 <div class="input-group">
                   <input type="text" class="form-control" name="expirydate" id="expirydate"/>
-                  <div class="input-group-addon dateicon"><a class="icon-cal"><i class="fa fa-calendar"></i></a>&nbsp;</div>
+                  <div class="input-group-addon dateicon"><a id="cal"><i class="fa fa-calendar"></i></a>&nbsp;</div>
                 </div>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="country-list">Country *</label>
-                <input type="hidden" name="country" id="country" value="" />
-                <select id="country-list" class="form-control  custom-select" onChange="getState(this.value);">
-                    <option value="">Select Country</option>
-                    <?php
-                    foreach($results2 as $country) {
-                    ?>
-                    <option value="<?php echo $country["countryid"]; ?>"><?php echo $country["countryname"]; ?></option>
-                    <?php
-                    }
-                    ?>
-                </select>
-                <div class="invalid-feedback col-md-6">
-                  Please choose the Country.
-                </div>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="state-list">State *</label>
-                <input type="hidden" id="state" name="state" value="" />
-                <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="$('#state').val($('#state-list').val());">
-                    <option value="">Select State</option>
-                </select>
-                <div class="invalid-feedback col-md-6">
-                  Please choose the State.
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-9">
+                <div class="form-group col-md-12">
                    <label>Phone *</label>
                    <input type="hidden" id="phone" name="phone" value="" />
-                   <div class="input-group" onKeyDown="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
-                           <input type="tel" id="tel1" class="form-control " value="" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel2" class="form-control " value="" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel3" class="form-control " value="" size="4" maxlength="4" required="required" title="" >
+                   <div class="input-group" onKeyUp="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
+                           <input type="tel" id="tel1" class="form-control" value="" size="3" maxlength="3" required="required" title="" >-
+                           <input type="tel" id="tel2" class="form-control" value="" size="3" maxlength="3" required="required" title="" >-
+                           <input type="tel" id="tel3" class="form-control" value="" size="4" maxlength="4" required="required" title="" >
+                           <div class="invalid-feedback">
+                             Please enter the phone number.
+                           </div>
+                           <div class="valid-feedback">
+                             Number Verified!
+                           </div>
                            &nbsp;
                            <span class="input-group-btn">
-                             <button class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> SMS Verification Code</button>
+                             <button id="showdiv" class="btn btn-success" data-toggle="modal" data-target="#verifydiv"><i class="fa fa-phone" aria-hidden="true"></i> Verify Phone</button>
                            </span>
                    </div>
-                   <div class="invalid-feedback col-md-9">
-                     Please enter the phone number.
-                   </div>
                 </div>
-                <div class="form-group col-md-3">
+                <!-- Verify Phone Number -->
+                <div id="verifydiv" class="modal modal-open fade" tabindex="-1" role="dialog" aria-labelledby="msgdiv" aria-hidden="true">
+                  <div class="modal-dialog popup" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h2 class="modal-title">
+                          Verify Mobile
+                        </h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">X</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <form name="verifymodal" id="verifymodal" class="centered" action="getverificationcode.php">
+                          <div class="form-group col-md-12">
+                            <div id="msgsuccess">
 
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="code">Verification Code</label>
-                  <input type="Number" class="form-control " name="code" id="code" placeholder="Enter OTP">
-                  <div class="invalid-feedback col-md-3">
-                    Verification failed!
+                            </div>
+                            <input type="hidden" id="hdnmobno" name="mob_number" value="" />
+                            <label for="code">Enter the 6 digit OTP send to <span id="verifyphone"></span> </label>
+                            <input type="tel" class="form-control" name="code" id="code" maxlength="6" placeholder="Enter OTP Code" required>
+                            <div class="invalid-feedback col-md-12">
+                              Verification failed!
+                            </div>
+                          </div>
+                          <div align="center">
+                            <input id="btnvalidate" type="button" class="btn cancel" value="Validate"/>
+                            <input id="phonevalid"  name="phonevalid" type="hidden" value="0"/><br /><br />
+                            <strong><a id="resendotp" href="#">Resend One-Time Password</a></strong><br />
+                            Entered a wrong number?
+                          </div>
+                        </form>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <!-- End Modal -->
           </div>
           <div class="form-row">
             <div class="form-group col-md-8">
@@ -183,6 +193,25 @@ if($link = OpenCon()) {
               <input type="text" class="form-control " name="city" id="city" placeholder="City" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the city.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="state-list">State *</label>
+              <input type="hidden" id="state" name="state" value="" />
+              <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="$('#state').val($('#state-list').val());">
+                  <option value="">Select State</option>
+                  <?php
+                  foreach($results2 as $state) {
+                  ?>
+                  <option value="<?php echo $state["stateid"]; ?>"><?php echo $state["statename"]; ?></option>
+                  <?php
+                  }
+                  ?>
+              </select>
+              <div class="invalid-feedback col-md-6">
+                Please choose the State.
               </div>
             </div>
             <div class="form-group col-md-6">

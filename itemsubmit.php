@@ -51,7 +51,7 @@
 			$sellorbuy = $_POST['sellorbuy'];
 			$amount = $_POST['amount'];
       $measurements = $_POST['measurements'];
-      $country = $_POST['country'];
+      $country = '101';
       $state = $_POST['state'];
       $phone = $_POST['phone'];
       $contact_person = $_POST['contact_person'];

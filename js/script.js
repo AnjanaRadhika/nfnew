@@ -183,17 +183,6 @@ function getState(val) {
 	});
 }
 
-function sendVerificationCode(val) {
-	$.ajax({
-	type: "POST",
-	url: "getverificationcode.php",
-	data:'mob_number='+val,
-	dataType: json}).done(function(response){
-
-	});
-}
-
-
 //post item form ready
 $(function() {
 
@@ -360,6 +349,7 @@ $('#contactForm').submit(function(e){
 						 	$('#contactsuccess').addClass("alert alert-success");
 					 }
 				 }
+         $('#characterLeft').text('140 characters left');
 		},
 		complete:function(){
       $('body, html').animate({scrollTop:$('.contactForm').parent().parent().offset().top - 200}, 'slow');
@@ -434,12 +424,15 @@ $('#myPager>li>a.page').click(function(e) {
     } else {
         $('#curpage').val($(this).text());
         var showpageid = '#page'+parseInt($(this).text());
+        var showpagelinkid = '#pagelink'+parseInt($(this).text());
         var numpages = parseInt($('#numpages').val());
         for(var i = 1;i<numpages + 1; i++) {
           if(i === parseInt($(this).text())){
             $(showpageid).show();
+            $(showpagelinkid).addClass('active');
           } else {
             $('#page'+i).hide();
+            $('#pagelink'+i).removeClass('active');
           }
         }
     }
@@ -578,4 +571,99 @@ $('#expirydate')
 $('#cal').click( function(e){
   $('#expirydate')
       .datepicker('show');
+});
+
+$('#effectivedate')
+    .datepicker({
+        format: 'dd-mm-yyyy',
+        todayHighlight: true,
+        orientation: "top auto",
+        autoclose: true
+
+    })
+    .on('changeDate', function(e) {
+        $('#effectivedate').datepicker('hide');
+
+    });
+
+$('#cal1').click( function(e){
+  $('#effectivedate')
+      .datepicker('show');
+});
+
+//Resend OTP
+$("#resendotp").on('click', function(){
+  phone = $('#hdnmobno').val();
+  sendVerificationCode(phone);
+});
+
+// Send SMS Verification code
+$('#showdiv').click(function(e) {
+  e.preventDefault();
+  phone = $('#phone').val();
+  $('#verifyphone').html(phone);
+  $('#hdnmobno').val(phone);
+  sendVerificationCode(phone);
+});
+
+function sendVerificationCode(phone) {
+  $.ajax({
+     type: 'POST',
+     url: 'getverificationcode.php',
+     data:'mob_number='+phone,
+     success: function(response) {
+       alert(response);
+       var jsonObj = $.parseJSON(response);
+       status = jsonObj.Status;
+       if(status=="Success") {
+         $('#msgsuccess').html("<p class='alert alert-success'>OTP Code Send!</p>");
+       } else {
+         $('#msgsuccess').html("<p class='alert alert-danger'>OTP Code sending failed!</p>");
+       }
+
+     },
+     failure: function(err) {
+        $('#msgsuccess').html("<p class='alert alert-danger'>"+err+"</p>");
+     }
+ });
+}
+
+$('#btnvalidate').click(function(e){
+  e.preventDefault();
+  otp = $('#code').val();
+  $.ajax({
+     type: 'POST',
+     url: 'verifycode.php',
+     data:'otp_value='+otp,
+     success: function(data) {
+       if(data=='Matched') {
+        $('#verifydiv .close').click();
+        $('#tel1').addClass('is-valid');
+        $('#tel2').addClass('is-valid');
+        $('#tel3').addClass('is-valid');
+        $('#phonevalid').val("1");
+       } else {
+         $('#code').addClass('is-invalid');
+         $('#phonevalid').val("0");
+       }
+       $('#code').val("");
+       $('#code').focus();
+       $(this).addClass('disabled');
+     },
+     failure: function(err) {
+       $('#msgsuccess').html(err);
+     }
+ });
+});
+
+//fiter for Sale or to Buy
+$('#tobuy,#forsale,#all').on('click', function(){
+  $('#sellorbuy').val($(this).val());
+  $('.searchItemForm').submit();
+});
+
+//Change Items per page
+$('#selitemsperpage').on('change', function(){
+  $('#itemsperpage').val($(this).val());
+  $('.searchItemForm').submit();
 });

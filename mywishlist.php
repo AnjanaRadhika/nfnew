@@ -80,7 +80,7 @@ function getInterval($createddate) {
                  $pagestyle = $cur == 1 ? "" : "display:none"; ?>
                <div id="page<?php echo $cur ?>" class="wishitem text-left" style="<?php echo $pagestyle ?>" >
                <?php  }  ?>
-               <h2><?php echo $wish['wishdesc'];?></h2>
+               <h2><a href="home.php?action=search"><?php echo $wish['wishdesc'];?></a></h2>
                <p>
                  <?php
                  if(strpos($wish['wishdetails'],'available')) {

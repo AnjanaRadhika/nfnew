@@ -50,6 +50,8 @@
 								if(!empty($_SESSION)) {
 									if(array_key_exists('name', $_SESSION)) {
 										include('leftnav.php');
+									} else {
+											include('images.php');
 									}
 								} else {
 										include('images.php');
@@ -94,6 +96,7 @@
 				<!-- Row for advertisement -->
 					</div>
 				</div>
+				<br />
 				<?php } ?>
     </section>
     <!--Section End-->

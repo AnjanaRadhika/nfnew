@@ -2,19 +2,30 @@
   <div class="modal-dialog popup" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">Add Wishlist</h2>
+        <h2 class="modal-title">
+          <?php
+          if(array_key_exists('action',$_GET)) {
+            if($_GET['action'] == 'search') {
+                echo "Add Wishlist";
+            } else if($_GET['action'] == 'mywishlist') {
+                echo "My Wishlist";
+            } else if($_GET['action'] == 'site') {
+                echo "Site Maintenance";
+            }
+          }
+          ?>
+        </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">X</span>
         </button>
-      </div><br />
+      </div>
       <div class="modal-body">
         <form id="msgmodal" class="centered" action="home.php">
           <div id="msg">
 
           </div>
           <div align="center">
-            <input type="submit" id="btnhome" class="btn" value="Home" />
-            <input type="button" class="btn cancel" data-dismiss="modal" value="Cancel"/>
+            <input type="button" class="btn cancel" data-dismiss="modal" value="OK"/>
           </div>
         </form>
       </div>
