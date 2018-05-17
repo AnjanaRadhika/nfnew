@@ -35,7 +35,7 @@
 						</div>
 
 						By registering, I accept the NeighbourhoodFarmers.com
-						<a href="home.php?action=terms"><span id="termsofuseclick">Terms Of Use</span></a><br/>
+						<a><span id="termsofuseclick" data-toggle="modal" data-target="#termsofusediv">Terms Of Use</span></a><br/>
 						<input type="submit" name="signup-submit" class="btn" value="Sign Up" />
 						<input type="button" class="btn cancel" data-dismiss="modal" value="Cancel" /><hr />
 						<div align="center"><span class="signinclick" data-toggle="modal" data-target="#signindiv" data-dismiss="modal">Sign in</span> if you are already a member</div>

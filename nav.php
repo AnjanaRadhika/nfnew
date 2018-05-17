@@ -67,10 +67,10 @@
 									parse_str($_SERVER['QUERY_STRING'],$string);
 									$name=urldecode(base64_decode($string['key']));
 									echo $beforename." ".$name.$aftername;
-							} else {
-									echo $signin;
 							}
-						} else if(!empty($_SESSION)) {
+						}
+
+						if(!empty($_SESSION)) {
 								if(array_key_exists('name', $_SESSION)) {
 									$name=$_SESSION['name'];
 									echo $beforename.$name.$aftername;
@@ -81,7 +81,7 @@
 								} else {
 									echo $signin;
 								}
-							} else {
+						} else {
 								echo $signin;
 							}
 

@@ -171,18 +171,26 @@ function formatFileSize(bytes) {
     return (bytes / 1000).toFixed(2) + ' KB';
 }
 
-function getState(val) {
-	$('#country').val($('#country-list').val());
+function getDistrict(val) {
+  $('#state').val($('#state-list').val());
+  val = $('#state').val();
 	$.ajax({
 	type: "POST",
-	url: "getstate.php",
-	data:'country_id='+val,
+	url: "getdistricts.php",
+	data:'state_id='+val,
 	success: function(res){
-		$("#state-list").html(res);
+		$("#district-list").html(res);
 	}
 	});
 }
+function getCity(val) {
+  $('#district').val($('#district-list').val());
+}
 
+function setCategory() {
+  $('#category').val($('#category-list').val());
+  $('#categorytext').val($("#category-list option:selected").text());
+}
 //post item form ready
 $(function() {
 
@@ -198,6 +206,61 @@ $(function() {
         if (this.value.length == this.maxLength) {
           $(this).next("input[type='tel']").focus();
         }
+    });
+
+    //autocomplete invalidfields
+    $("#town").autocomplete({
+          source: function(request, response) {
+            $.ajax({
+              url: "suggesttowns.php",
+              data: { term: $('#town').val(), search: $('#district').val()},
+              dataType: "json",
+              type: "GET",
+              success: function(data) {
+                response(data);
+              }
+            });
+          },
+          minLength: 1,
+          select: function(event, ui){
+            $('#town').val(ui.item.value);
+          }
+    });
+
+    $("#nhood").autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: "suggestlocalities.php",
+          data: { term: $('#nhood').val(), search: $('#district').val()},
+          dataType: "json",
+          type: "GET",
+          success: function(data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 1,
+      select: function(event, ui){
+        $('#nhood').val(ui.item.value);
+      }
+    });
+
+    $("#zipcode").autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: "suggestpincodes.php",
+          data: { term: $('#zipcode').val(), search: $('#district').val()},
+          dataType: "json",
+          type: "GET",
+          success: function(data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 1,
+      select: function(event, ui){
+        $('#zipcode').val(ui.item.value);
+      }
     });
 });
 
@@ -230,7 +293,6 @@ function postForm(itemForm) {
   			success: function (response) {
         var successbool = "true";
 				var invalidfields = [];
-
         $('#sqlerror').html("");
         $('#sqlerror').removeClass("alert alert-danger");
 
@@ -245,7 +307,7 @@ function postForm(itemForm) {
     								$('#successmessage').removeClass("alert alert-danger");
      								$('#successmessage').removeClass("alert alert-success");
      								$('#fileerror').removeClass("alert alert-danger");
-    						 if(field == "category" || field == "measurements" || field == "country" || field == "state") {
+    						 if(field == "category" || field == "measurements" || field == "district" || field == "state") {
     							 $('.itemForm select[id="' + field + '-list"]').addClass('is-invalid');
     						 } else if(field == "phone") {
     							 $('.itemForm input[id="tel1"]').addClass('is-invalid');
@@ -601,6 +663,13 @@ $("#resendotp").on('click', function(){
 $('#showdiv').click(function(e) {
   e.preventDefault();
   phone = $('#phone').val();
+  if(phone=='') {
+    $('#tel1').addClass('is-invalid');
+    $('#tel2').addClass('is-invalid');
+    $('#tel3').addClass('is-invalid');
+    $('#tel1').focus();
+    return false;
+  }
   $('#verifyphone').html(phone);
   $('#hdnmobno').val(phone);
   sendVerificationCode(phone);
@@ -612,7 +681,6 @@ function sendVerificationCode(phone) {
      url: 'getverificationcode.php',
      data:'mob_number='+phone,
      success: function(response) {
-       alert(response);
        var jsonObj = $.parseJSON(response);
        status = jsonObj.Status;
        if(status=="Success") {

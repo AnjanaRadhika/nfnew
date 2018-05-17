@@ -22,7 +22,7 @@
 	      "verify_peer_name"=>false
 	      )
 	    );
-	    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($zip)."&sensor=false";
+	    $url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBLm_zpgRTPvuvX2Up-Nva6nTlwAbOmXG4&address=".urlencode($zip)."&sensor=false";
 	    $result_string = file_get_contents($url, false, stream_context_create($arrContextOptions));
 	    $result = json_decode($result_string, true);
 	    $address = $result['results'][0]['formatted_address'];
@@ -46,6 +46,7 @@
 
       $itemname = $_POST['item_name'];
       $category = $_POST['category'];
+			$categorytext = $_POST['categorytext'];
       $itemdesc = $_POST['itemdesc'];
       $quantity = $_POST['quantity'];
 			$sellorbuy = $_POST['sellorbuy'];
@@ -54,15 +55,26 @@
       $country = '101';
       $state = $_POST['state'];
       $phone = $_POST['phone'];
+			$phonevalid = $_POST['phonevalid'];
       $contact_person = $_POST['contact_person'];
       $address1 = $_POST['address1'];
-      $address2 = $_POST['address2'];
-      $city = $_POST['city'];
       $zipcode = $_POST['zipcode'];
 			$expirydate = $_POST['expirydate'];
-			$location = getLocation($zipcode);
+			$effectivedate = $_POST['effectivedate'];
+			$contactemail = $_POST['contact_email'];
+			$houseno = $_POST['hno'];
+			$bname = $_POST['bname'];
+			$hname = $_POST['hname'];
+			$street = $_POST['street'];
+			$district = $_POST['district'];
+			$town = $_POST['town'];
+			$nhood = $_POST['nhood'];
+			/*$location = getLocation($zipcode);
 			$latitude = $location[1]['lat'];
-			$longitude = $location[1]['lng'];
+			$longitude = $location[1]['lng'];*/
+			$latitude="";
+			$longitude="";
+			$itemcode = strtoupper(substr($categorytext,0,3)).date("Ymd").date("His");
 
       if ($itemname == "") {
           $return[] = array('status' => 'error', 'field' => 'item_name');
@@ -106,10 +118,16 @@
           $return[] = array('status' => 'success', 'field' => 'contact_person');
       }
 
-      if ($city == "") {
-          $return[] = array('status' => 'error', 'field' => 'city');
+      if ($district == "") {
+          $return[] = array('status' => 'error', 'field' => 'district');
       } else {
-          $return[] = array('status' => 'success', 'field' => 'city');
+          $return[] = array('status' => 'success', 'field' => 'district');
+      }
+
+			if ($town == "") {
+          $return[] = array('status' => 'error', 'field' => 'town');
+      } else {
+          $return[] = array('status' => 'success', 'field' => 'town');
       }
 
       if ($zipcode == "") {
@@ -129,13 +147,26 @@
       } else {
           $return[] = array('status' => 'success', 'field' => 'expirydate');
       }
+
+			if ($phonevalid == 0) {
+          $return[] = array('status' => 'error', 'field' => 'phone');
+      } else {
+          $return[] = array('status' => 'success', 'field' => 'phone');
+      }
+
+			if ($contactemail == "") {
+          $return[] = array('status' => 'error', 'field' => 'contact_email');
+      } else {
+          $return[] = array('status' => 'success', 'field' => 'contact_email');
+      }
       // A list of permitted file extensions
       $allowed = array('png', 'jpg', 'jpeg', 'jfif', 'gif','zip');
 
-      $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`, `sellorbuy`, "."
-        `pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, `address2`, `city`, `zipcode`,"."
-        `stateid`, `countryid`, `location`, `postedby`, `updatedby`, `expirydate`)"."
-        VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
+      $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`, `sellorbuy`, "
+        . "`pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, "
+				. "`districtid`, `town`, `nhood`, `streetname`, `housename`, `houseno`, `bldgname`, `zipcode`,"
+        . "`stateid`, `countryid`, `postedby`, `updatedby`, `expirydate`, `effectivedate`, `longitude`, `latitude`, `itemcode`)"
+        . "VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
 				. mysqli_real_escape_string($link, $itemname)."','"
         . mysqli_real_escape_string($link, $itemdesc)."',"
         . mysqli_real_escape_string($link, floatval($quantity)).",'"
@@ -144,15 +175,23 @@
         . mysqli_real_escape_string($link, intval($measurements)).",'"
         . mysqli_real_escape_string($link, $contact_person)."','"
         . mysqli_real_escape_string($link, $phone)."','"
-        . mysqli_real_escape_string($link, $address1)."','"
-        . mysqli_real_escape_string($link, $address2)."','"
-        . mysqli_real_escape_string($link, $city)."','"
+        . mysqli_real_escape_string($link, $address1)."',"
+        . mysqli_real_escape_string($link, intval($district)).",'"
+        . mysqli_real_escape_string($link, $town)."','"
+				. mysqli_real_escape_string($link, $nhood)."','"
+				. mysqli_real_escape_string($link, $street)."','"
+				. mysqli_real_escape_string($link, $hname)."','"
+				. mysqli_real_escape_string($link, $houseno)."','"
+				. mysqli_real_escape_string($link, $bname)."','"
         . mysqli_real_escape_string($link, $zipcode)."',"
         . mysqli_real_escape_string($link, intval($state)).","
         . mysqli_real_escape_string($link, intval($country))
-				.",'".$location[0]."','".$user."','".$user."',STR_TO_DATE('"
-				. mysqli_real_escape_string($link, $expirydate)."', '%d-%m-%Y'))";
-
+				.",'".$user."','".$user."',STR_TO_DATE('"
+				. mysqli_real_escape_string($link, $expirydate)."', '%d-%m-%Y'), STR_TO_DATE('"
+				. mysqli_real_escape_string($link, $effectivedate)."', '%d-%m-%Y'),'"
+				. mysqli_real_escape_string($link, $longitude)."','"
+				. mysqli_real_escape_string($link, $latitude)."','"
+				. mysqli_real_escape_string($link, $itemcode)."')";
 
       if(mysqli_query($link, $query) or die(mysqli_error($link))) {
 				$lastid = mysqli_insert_id($link);
@@ -173,6 +212,7 @@
 					      	if(move_uploaded_file($_FILES['files']['tmp_name'][$i], 'uploads/'.$_FILES['files']['name'][$i])){
 										$query = "INSERT INTO `images`(`imagename`, `imagepath`, `itemid`)" .
 												"VALUES('".$_FILES['files']['name'][$i]."','uploads/".$_FILES['files']['name'][$i]."',".$lastid.")";
+										// echo "<script>console.log('$query');</script>";
 										if(mysqli_query($link, $query) or die(mysqli_error($link))) {
 					      			$return[] = array('status' => 'success', 'field' => 'dbimages');
 					      		} else {
@@ -193,10 +233,17 @@
 						$return[] = array('status' => 'error', 'field' => 'dbimages');
 					}
 				}
-        $return[] = array('status' => 'success', 'field' => 'itemForm');
       } else {
         $return[] = array('status' => 'error', 'field' => 'itemForm');
       }
+			$query = "UPDATE `nfdb`.item i JOIN `nfdb`.itemcategory r
+SET i.itemcode=concat(substr(ucase(r.categoryname),1,3),DATE_FORMAT(NOW(), '%Y%m%d%h%m%s'),i.itemid)
+WHERE i.categoryid = r.categoryid";
+			if(mysqli_query($link, $query) or die(mysqli_error($link))) {
+				$return[] = array('status' => 'success', 'field' => 'itemForm');
+			} else {
+				$return[] = array('status' => 'error', 'field' => 'itemForm');
+			}
       CloseCon($link);
   }
 

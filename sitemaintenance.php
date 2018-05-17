@@ -14,7 +14,7 @@ if($link = OpenCon()) {
 ?>
 <div class="col-md-6"><br />
   <div>
-    <h3>Site Settings</h3><hr />
+    <h3>Site Settings</h3><hr />      
     <div class="block">
       <span class="pull-left"><strong>Item Category</strong></span>
       <span class="pull-right">

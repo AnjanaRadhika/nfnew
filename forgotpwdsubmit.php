@@ -89,7 +89,7 @@
 			</div>
 		</nav>
 		<br /><br /><br />
-		<section class="container messagebody">
+		<section class="container">
 			<div class="message centered" style="height:70%">
 				<?php echo $mail_sent;?>
 			</div>

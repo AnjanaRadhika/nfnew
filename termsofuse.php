@@ -1,10 +1,15 @@
-<div class="col-md-12">
-<div class="row">
-  <div class="col-lg-9 col-md-9 col-sm-9">
-    <div class="embed-responsive embed-responsive-16by9">
+<div id="termsofusediv" class="modal modal-open fade" tabindex="-1" role="dialog" aria-labelledby="termsofusediv" aria-hidden="true">
+	<div class="modal-dialog vertical-align-helper" role="document">
+		<div class="modal-content vertical-align-center">
+			<div class="modal-header">
+				<h2>Terms & Private Policy</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				 <span aria-hidden="true">X</span>
+			 	</button>
+			</div>
+			<div class="modal-body">
       <iframe class="embed-responsive-item" src="https://docs.google.com/document/d/e/2PACX-1vRubBQx0PfjKZAEZqzvQtatxQNQj7dRu8GFR-1xHEri0C8fwUwvrjPcnJklhcduDEYRqyTjnDPhVT8e/pub?embedded=true" style="border:2px solid green;" allowfullscreen></iframe>
+      </div>
     </div>
- </div>
- <?php include('contentadv.php'); ?>
-</div>
+  </div>
 </div>

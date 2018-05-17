@@ -22,7 +22,9 @@ if($link = OpenCon()) {
 
         </div>
         <hr />
-          <form method="post" enctype="multipart/form-data" class="itemForm" id="itemForm">
+          <form method="post" enctype="multipart/form-data" class="itemForm" id="itemForm" autocomplete="off">
+            <input type="hidden" value="something" />
+            <input id="phonevalid"  name="phonevalid" type="hidden" value="0"/>
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="item_name">Item Name *</label>
@@ -34,7 +36,8 @@ if($link = OpenCon()) {
               <div class="form-group col-md-8">
                 <label for="category-list">Item Category *</label>
                 <input type="hidden" name="category" id="category" value="" />
-                <select id="category-list" class="form-control  custom-select" onChange="$('#category').val($('#category-list').val());">
+                <input type="hidden" name="categorytext" id="categorytext" value="" />
+                <select id="category-list" class="form-control  custom-select" onChange="setCategory();" required>
                     <option value="">Select Category</option>
                     <?php
                     foreach($results as $category) {
@@ -64,8 +67,8 @@ if($link = OpenCon()) {
                       Please enter the quantity
                     </div>-->
                     <input type="hidden" id="measurements" name="measurements" value="" />
-                    <select form="itemForm" id="measurements-list" class="form-control  custom-select col-md-4" onChange="$('#measurements').val($('#measurements-list').val());">
-                        <option value=""></option>
+                    <select form="itemForm" id="measurements-list" class="form-control  custom-select col-md-4" onChange="$('#measurements').val($('#measurements-list').val());" required>
+                        <option value="">Select Unit</option>
                         <?php
                         foreach($results1 as $measurements) {
                         ?>
@@ -80,38 +83,35 @@ if($link = OpenCon()) {
           						<option value="For Sale" selected> For Sale</option>
           						<option value="To Buy"> To Buy</option>
           					</select>
-                    <!--<div class="invalid-feedback col-md-4">
-                      Please enter the measurement.
-                    </div>-->
                     </div>
                   </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="amount">Price Range:</label>
+                <label for="amount">Price Range (&#8377):</label>
                 <input type="hidden" name="amount" id="amount">
                 <div class="input-group">
                   <select id="pricerange-list" class="form-control  custom-select" onChange="$('#amount').val($('#pricerange-list').val());">
-                      <option value="">Select Price Range</option>
-                      <option value="">0 - 100</option>
-                      <option value="">100 - 250</option>
-                      <option value="">250 - 500</option>
-                      <option value="">> 500</option>
+                      <option value="">Select Price Range </option>
+                      <option value="0 - 100">0 - 100</option>
+                      <option value="100 - 250">100 - 250</option>
+                      <option value="250 - 500">250 - 500</option>
+                      <option value="> 500">> 500</option>
                   </select>
                 </div>
               </div>
               <div class="form-group col-md-4">
-                <label for="expiry">Effective Date:</label>
+                <label for="expiry">Effective Date</label>
                 <div class="input-group">
                   <input type="text" class="form-control" name="effectivedate" id="effectivedate"/>
-                  <div class="input-group-addon dateicon"><a id="cal1"><i class="fa fa-calendar"></i></a>&nbsp;</div>
+                  <div class="input-group-addon dateicon"><span id="cal1"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                 </div>
               </div>
               <div class="form-group col-md-4">
-                <label for="expiry">Expiry Date:</label>
+                <label for="expiry">Expiry Date *</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="expirydate" id="expirydate"/>
-                  <div class="input-group-addon dateicon"><a id="cal"><i class="fa fa-calendar"></i></a>&nbsp;</div>
+                  <input type="text" class="form-control" name="expirydate" id="expirydate" required />
+                  <div class="input-group-addon dateicon"><span id="cal"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                 </div>
               </div>
             </div>
@@ -124,7 +124,7 @@ if($link = OpenCon()) {
                            <input type="tel" id="tel2" class="form-control" value="" size="3" maxlength="3" required="required" title="" >-
                            <input type="tel" id="tel3" class="form-control" value="" size="4" maxlength="4" required="required" title="" >
                            <div class="invalid-feedback">
-                             Please enter the phone number.
+                             The phone number needs to be verified.
                            </div>
                            <div class="valid-feedback">
                              Number Verified!
@@ -135,43 +135,6 @@ if($link = OpenCon()) {
                            </span>
                    </div>
                 </div>
-                <!-- Verify Phone Number -->
-                <div id="verifydiv" class="modal modal-open fade" tabindex="-1" role="dialog" aria-labelledby="msgdiv" aria-hidden="true">
-                  <div class="modal-dialog popup" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h2 class="modal-title">
-                          Verify Mobile
-                        </h2>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">X</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <form name="verifymodal" id="verifymodal" class="centered" action="getverificationcode.php">
-                          <div class="form-group col-md-12">
-                            <div id="msgsuccess">
-
-                            </div>
-                            <input type="hidden" id="hdnmobno" name="mob_number" value="" />
-                            <label for="code">Enter the 6 digit OTP send to <span id="verifyphone"></span> </label>
-                            <input type="tel" class="form-control" name="code" id="code" maxlength="6" placeholder="Enter OTP Code" required>
-                            <div class="invalid-feedback col-md-12">
-                              Verification failed!
-                            </div>
-                          </div>
-                          <div align="center">
-                            <input id="btnvalidate" type="button" class="btn cancel" value="Validate"/>
-                            <input id="phonevalid"  name="phonevalid" type="hidden" value="0"/><br /><br />
-                            <strong><a id="resendotp" href="#">Resend One-Time Password</a></strong><br />
-                            Entered a wrong number?
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Modal -->
           </div>
           <div class="form-row">
             <div class="form-group col-md-8">
@@ -182,25 +145,41 @@ if($link = OpenCon()) {
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label>Address </label>
-              <input type="text" class="form-control " name="address1" placeholder="Address"><br />
-              <input type="text" class="form-control " name="address2" placeholder="Address">
+              <label for="contact_email">Email *</label>
+              <input type="text" class="form-control " name="contact_email" id="contact_email" placeholder="Contact Email" data-validation="email" data-validation-error-msg="You did not enter a valid e-mail" maxlength="40" required>
+
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="city">City *</label>
-              <input type="text" class="form-control " name="city" id="city" placeholder="City" required>
-              <div class="invalid-feedback col-md-6">
-                Please enter the city.
-              </div>
+              <label for="hno">Flat No/Door No/House No </label>
+              <input type="text" class="form-control " name="hno" id="hno" placeholder="Flat No/Door No/House No">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="bname">Building Name </label>
+              <input type="text" class="form-control " name="bname" id="bname" placeholder="Building Name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="hname">Flat/Villa/House Name </label>
+              <input type="text" class="form-control " name="hname" id="hname" placeholder="Flat/Villa/House Name">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="street">Street </label>
+              <input type="text" class="form-control " name="street" id="street" placeholder="Street">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <input type="text" class="form-control " name="address1" placeholder="Address">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="state-list">State *</label>
               <input type="hidden" id="state" name="state" value="" />
-              <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="$('#state').val($('#state-list').val());">
+              <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="getDistrict(this.value);" required>
                   <option value="">Select State</option>
                   <?php
                   foreach($results2 as $state) {
@@ -215,8 +194,32 @@ if($link = OpenCon()) {
               </div>
             </div>
             <div class="form-group col-md-6">
+              <label for="district-list">District *</label>
+              <input type="hidden" id="district" name="district" value="" />
+              <select form="itemForm" id="district-list" class="form-control  custom-select" onChange="getCity(this.value);" required>
+              </select>
+              <div class="invalid-feedback col-md-6">
+                Please enter the district.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="town">Town / Village * </label>
+              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" autocomplete="nope" required>
+              <div class="invalid-feedback col-md-6">
+                Please enter the Town / Village.
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="nhood">Neighbourhood </label>
+              <input type="text" class="form-control ui-autocomplete-input" name="nhood" id="nhood" placeholder="Neighbourhood" autocomplete="off">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
               <label for="zipcode">Zipcode *</label>
-              <input type="Number" class="form-control " name="zipcode" id="zipcode" placeholder="Zipcode" required>
+              <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" autocomplete="off" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the zipcode.
               </div>
@@ -244,4 +247,41 @@ if($link = OpenCon()) {
 
           </form>
         </div>
+        <!-- Verify Phone Number -->
+        <div id="verifydiv" class="modal modal-open fade" tabindex="-1" role="dialog" aria-labelledby="msgdiv" aria-hidden="true">
+          <div class="modal-dialog popup" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title">
+                  Verify Mobile
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">X</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form name="verifymodal" id="verifymodal" class="centered" action="getverificationcode.php">
+                  <div class="form-group col-md-12">
+                    <div id="msgsuccess">
+
+                    </div>
+                    <input type="hidden" id="hdnmobno" name="mob_number" value="" />
+                    <label for="code">Enter the 6 digit OTP send to <span id="verifyphone"></span> </label>
+                    <input type="tel" class="form-control" name="code" id="code" maxlength="6" placeholder="Enter OTP Code" required>
+                    <div class="invalid-feedback col-md-12">
+                      Verification failed!
+                    </div>
+                  </div>
+                  <div align="center">
+                    <input id="btnvalidate" type="button" class="btn cancel" value="Validate"/><br /><br />
+                    <strong><a id="resendotp" href="#">Resend One-Time Password</a></strong><br />
+                    Entered a wrong number?
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Modal -->
+
 </div>
