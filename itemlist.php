@@ -10,8 +10,10 @@ and itm.status is null ";
   if(!empty($_POST)){
     if(array_key_exists('location', $_POST)) {
       $location= $_POST['location'];
-      $query = $query . " and ((itm.city like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
-                        . " or (itm.location like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))";
+      $query = $query . " and ((itm.town like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
+                        . " or (itm.nhood like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
+                        . " or (itm.districtid in ( select districtid from districts where districtname like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))"
+                        . " or (itm.streetname like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))";
     }
     if(array_key_exists('itemsearch', $_POST)) {
       $itemsearch = $_POST['itemsearch'];
@@ -154,7 +156,7 @@ function isFavItem($userid, $itemid) {
                                       <input type="hidden" name="itemname" value=<?php echo $item['itemname'] ?> />
                                       <h2 class="title-small"><a href=<?php echo $url ?> target="_blank" onclick="popup(this.href);"); return false;"><strong> <?php echo $item["itemname"] ?></strong></a></h2>
                                       <h2 class="title-small"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; <?php echo $item["contactperson"] ?> @ <?php echo $item["contactno"] ?></h2>
-                                      <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["city"] ?></em></small></p>
+                                      <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["town"] ?></em></small></p>
                                     </div>
 
                                     <?php if(!empty($_SESSION)) {
