@@ -1,5 +1,5 @@
 <?php
-$hosturl = "localhost/nfnew";
+$hosturl = "neighbourhoodfarmerstest-com.stackstaging.com/nfnew";
 $toemail = $name = $ref = $itemid = "";
 if(array_key_exists('toemail', $_GET) && array_key_exists('name', $_GET) && array_key_exists('ref', $_GET) && array_key_exists('itemid', $_GET)) {
   $toemail = $_GET['toemail'];
