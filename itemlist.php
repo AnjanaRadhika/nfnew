@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $itemsperpage = 20;
 $sellorbuy = "All";
 $location=$itemsearch="";
@@ -6,7 +6,7 @@ if($link = OpenCon()) {
   $query ="SELECT * FROM item itm inner join images img on itm.itemid = img.itemid
                                   inner join itemcategory ctg on itm.categoryid = ctg.categoryid
 where img.imageid = (select max(img1.imageid) from images img1 where img1.itemid = itm.itemid)
-and itm.status is null ";
+and (itm.status is null or itm.status = '') ";
   if(!empty($_POST)){
     if(array_key_exists('location', $_POST)) {
       $location= $_POST['location'];
