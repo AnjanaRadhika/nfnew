@@ -23,8 +23,8 @@ $ch = curl_init();
 
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-curl_setopt($ch, CURLOPT_CAINFO, '\cert\cacert.pem');
-curl_setopt($ch, CURLOPT_CAPATH, '\cert\cacert.pem');
+curl_setopt($ch, CURLOPT_CAINFO, 'cert/cacert.pem');
+curl_setopt($ch, CURLOPT_CAPATH, 'cert/cacert.pem');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 

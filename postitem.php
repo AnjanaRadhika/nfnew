@@ -24,7 +24,7 @@ if($link = OpenCon()) {
         <hr />
           <form method="post" enctype="multipart/form-data" class="itemForm" id="itemForm" autocomplete="off">
             <input type="hidden" value="something" />
-            <input id="phonevalid"  name="phonevalid" type="hidden" value="0"/>
+            <input id="phonevalid"  name="phonevalid" type="hidden" value="1"/>
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="item_name">Item Name *</label>
@@ -156,16 +156,20 @@ if($link = OpenCon()) {
               <input type="text" class="form-control " name="hno" id="hno" placeholder="Flat No/Door No/House No">
             </div>
             <div class="form-group col-md-6">
-              <label for="bname">Building Name </label>
-              <input type="text" class="form-control " name="bname" id="bname" placeholder="Building Name">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
               <label for="hname">Flat/Villa/House Name </label>
               <input type="text" class="form-control " name="hname" id="hname" placeholder="Flat/Villa/House Name">
             </div>
-            <div class="form-group col-md-6">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="bname">Building No </label>
+              <input type="text" class="form-control " name="bno" id="bno" placeholder="Building No">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="bname">Building Name </label>
+              <input type="text" class="form-control " name="bname" id="bname" placeholder="Building Name">
+            </div>
+            <div class="form-group col-md-5">
               <label for="street">Street </label>
               <input type="text" class="form-control " name="street" id="street" placeholder="Street">
             </div>
@@ -206,7 +210,7 @@ if($link = OpenCon()) {
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="town">Town / Village * </label>
-              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" autocomplete="nope" required>
+              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" autocomplete="off" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the Town / Village.
               </div>

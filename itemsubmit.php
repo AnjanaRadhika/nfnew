@@ -63,6 +63,7 @@
 			$effectivedate = $_POST['effectivedate'];
 			$contactemail = $_POST['contact_email'];
 			$houseno = $_POST['hno'];
+			$bno = $_POST['bno'];
 			$bname = $_POST['bname'];
 			$hname = $_POST['hname'];
 			$street = $_POST['street'];
@@ -74,7 +75,9 @@
 			$longitude = $location[1]['lng'];*/
 			$latitude="";
 			$longitude="";
-			$itemcode = strtoupper(substr($categorytext,0,3)).date("Ymd").date("His");
+			$ret = runQuery($link,"SELECT Auto_increment FROM information_schema.tables WHERE table_schema = DATABASE() and table_name = 'item'");
+			foreach($ret as $row) { $item_id=$row['Auto_increment']; }
+			$itemcode = strtoupper(substr($categorytext,0,3)).date("Ymd").date("His").$item_id;
 
       if ($itemname == "") {
           $return[] = array('status' => 'error', 'field' => 'item_name');
@@ -164,7 +167,7 @@
 
       $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`, `sellorbuy`, "
         . "`pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, "
-				. "`districtid`, `town`, `nhood`, `streetname`, `housename`, `houseno`, `bldgname`, `zipcode`,"
+				. "`districtid`, `town`, `nhood`, `streetname`, `housename`, `houseno`, `bldgno`, `bldgname`, `zipcode`,"
         . "`stateid`, `countryid`, `postedby`, `updatedby`, `expirydate`, `effectivedate`, `longitude`, `latitude`, `itemcode`)"
         . "VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
 				. mysqli_real_escape_string($link, $itemname)."','"
@@ -182,6 +185,7 @@
 				. mysqli_real_escape_string($link, $street)."','"
 				. mysqli_real_escape_string($link, $hname)."','"
 				. mysqli_real_escape_string($link, $houseno)."','"
+				. mysqli_real_escape_string($link, $bno)."','"				
 				. mysqli_real_escape_string($link, $bname)."','"
         . mysqli_real_escape_string($link, $zipcode)."',"
         . mysqli_real_escape_string($link, intval($state)).","
@@ -233,17 +237,11 @@
 						$return[] = array('status' => 'error', 'field' => 'dbimages');
 					}
 				}
+				$return[] = array('status' => 'itemid', 'field' => $item_id);
+				$return[] = array('status' => 'itemcode', 'field' => $itemcode);
       } else {
         $return[] = array('status' => 'error', 'field' => 'itemForm');
       }
-			$query = "UPDATE `nfdb`.item i JOIN `nfdb`.itemcategory r
-SET i.itemcode=concat(substr(ucase(r.categoryname),1,3),DATE_FORMAT(NOW(), '%Y%m%d%h%m%s'),i.itemid)
-WHERE i.categoryid = r.categoryid";
-			if(mysqli_query($link, $query) or die(mysqli_error($link))) {
-				$return[] = array('status' => 'success', 'field' => 'itemForm');
-			} else {
-				$return[] = array('status' => 'error', 'field' => 'itemForm');
-			}
       CloseCon($link);
   }
 

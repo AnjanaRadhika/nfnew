@@ -141,6 +141,20 @@ $('#fileupload').fileupload({
         //var jqXHR = data.submit();
     },
 
+  /*  progress: function(e, data){
+
+        // Calculate the completion percentage of the upload
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+
+        // Update the hidden input field and trigger a change
+        // so that the jQuery knob plugin knows to update the dial
+        data.context.find('input').val(progress).change();
+
+        if(progress == 100){
+            data.context.removeClass('working');
+        }
+    },*/
+
     fail:function(e, data){
         // Something has gone wrong!
         data.context.addClass('error');
@@ -293,6 +307,7 @@ function postForm(itemForm) {
   			success: function (response) {
         var successbool = "true";
 				var invalidfields = [];
+        var itmid = "", itmcode = "";
         $('#sqlerror').html("");
         $('#sqlerror').removeClass("alert alert-danger");
 
@@ -302,7 +317,12 @@ function postForm(itemForm) {
             for (var i = 0; i < jsonObj.length; i++) {
                var status = jsonObj[i].status;
                var field = jsonObj[i].field;
-
+               if(status == "itemid") {
+                 itmid = field;
+               }
+               if(status == "itemcode") {
+                 itmcode = field;
+               }
                if (status == "error") {
     								$('#successmessage').removeClass("alert alert-danger");
      								$('#successmessage').removeClass("alert alert-success");
@@ -338,9 +358,18 @@ function postForm(itemForm) {
 				$('#successmessage').removeClass("alert alert-success");
 				$('#fileerror').removeClass("alert alert-danger");
         if (successbool=="true") {
+            var toemail = $('#contact_email').val();
+            var name = $('#contact_person').val();
+            var sentmsg = "";
             $('.itemForm')[0].reset();
             $("#fileupload").find(".files").empty();
-						$('#successmessage').html("<p>Post Adv completed successfully!</p>");
+            $.ajax({
+            type: "GET",
+            url: 'postsuccessemail.php?toemail='+toemail+'&name='+name+'&ref='+itmcode+'&itemid='+itmid,
+            success: function(response){
+              sentmsg = "Email sent to " + name + ".";
+            }});
+						$('#successmessage').html("<p>Post Adv completed successfully! " + sentmsg + "</p>");
 						$('#successmessage').addClass("alert alert-success");
         } else {
 						if(invalidfields[0] == "category" || invalidfields[0] == "measurements" || invalidfields[0] == "country" || invalidfields[0] == "state") {
@@ -647,11 +676,6 @@ $('#effectivedate')
         $('#effectivedate').datepicker('hide');
 
     });
-
-$('#cal1').click( function(e){
-  $('#effectivedate')
-      .datepicker('show');
-});
 
 //Resend OTP
 $("#resendotp").on('click', function(){

@@ -1,28 +1,5 @@
 <?php
     include('db_connection.php');
-    $statusupdate = "";
-    if(!empty($_POST)) {
-      if(array_key_exists('itemid', $_POST)){
-        $itemid = $_POST['itemid'];
-      }
-      if(array_key_exists('itemstatus', $_POST)){
-        $itemstatus = $_POST['itemstatus'];
-      }
-      if($link = OpenCon()) {
-        $query = "Update item set status = '".$itemstatus."' where itemid = '".$itemid."'";
-        $statusmsg = ($itemstatus==='Remove Ad')?'Advertisement removed from listing successfully':'Item is sold';
-        if(mysqli_query($link, $query)) {
-          $statusupdate='<div class="alert alert-success">
-							<p>'.$statusmsg.'</p>
-							</div>';
-        } else {
-          $statusupdate='<div class="alert alert-danger">
-							<p>Some problem occured. Please try again later!</p>
-							</div>';
-        }
-        CloseCon($link);
-      }
-    }
     parse_str(urldecode(base64_decode($_SERVER['QUERY_STRING'])),$string);
     if(array_key_exists('itemid', $string)){
         $itemid = $string['itemid'];
@@ -42,16 +19,37 @@
 
   function getUnit($mid) {
     if($link = OpenCon()) {
-      $query ="SELECT * FROM measurements";
+      $query ="SELECT * FROM measurements where measurementid = ".$mid;
       $results2 = runQuery($link,$query);
       CloseCon($link);
     }
     foreach($results2 as $measurement){
-      if($measurement['measurementid'] === $mid){
         return $measurement['measurementname'];
-      }
     }
   }
+
+  function getDistrict($did) {
+    if($link = OpenCon()) {
+      $query ="SELECT * FROM districts where districtid = ".$did;
+      $results2 = runQuery($link,$query);
+      CloseCon($link);
+    }
+    foreach($results2 as $district){
+        return $district['districtname'];
+    }
+  }
+
+  function getState($sid) {
+    if($link = OpenCon()) {
+      $query ="SELECT * FROM states where stateid = ".$sid;
+      $results2 = runQuery($link,$query);
+      CloseCon($link);
+    }
+    foreach($results2 as $state){
+        return $state['statename'];
+    }
+  }
+
 ?>
 <!DOCTYPE html>
 
@@ -105,67 +103,29 @@
               </div>
   					</div>
   					<div class="details col-md-5">
-              <div>
-                <?php echo $statusupdate; ?>
-              </div>
             <?php
               if(!empty($results)) {
                 foreach($results as $item) {
                 ?>
-  						<h3><?php echo $item['itemname']?></h3>
-  						<p><?php echo $item['itemdesc']?></p>
+  						<h3><?php echo $item['itemname'];?></h3>
+  						<p> <?php echo "Item Code #". $item['itemcode'] ?><br />
+              <?php echo $item['itemdesc'];?></p>
 
-              <h4>quantity available: <span><?php echo $item['quantity']?>&nbsp;<?php echo getUnit($item['measurementid'])?></span></h4>
-              <h6>contact person : <span><?php echo $item['contactperson']?> </span></h6>
-              <h6>contact number : <span><?php echo $item['contactno']?> </span></h6>
-              <h6>address : <span><?php echo $item['address1']?> <br />
-              <?php echo $item['address2']?> <br />
-              <?php echo $item['city']?>  &nbsp;
-              <?php echo $item['zipcode']?>
-              <?php echo $item['location']?>
+              <h5>quantity available: <span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".$item['sellorbuy']?></span></h5>
+              <h6>contact person : <span><?php echo $item['contactperson'];?> </span></h6>
+              <h6>contact number : <span><?php echo $item['contactno'];?> </span></h6>
+              <h6>price range (&#8377) : <span><?php echo $item['pricerange'];?> </span></h6>
+              <h6>available from : <span><?php echo $item['effectivedate'];?> </span><br />
+                till : <span><?php echo $item['expirydate'];?> </span></h6>
+              <h6>address : <span><?php echo $item['houseno']." ".$item['housename'];?>
+              <?php echo $item['bldgno']." ".$item['bldgname'];?>
+              <?php echo $item['address1'];?> <br />
+              <?php echo $item['streetname'];?> <br />
+              <?php echo $item['town']." ".$item['nhood'];?>  <br />
+              <?php echo getDistrict($item['districtid'])." ".getState($item['stateid']);?>  <br />
+              <?php echo $item['zipcode'];?>
               </span><br />
               </h6>
-              <?php
-          		if(!empty($_SESSION)) {
-          			if(array_key_exists('name', $_SESSION)) {
-                    if(($item['status']===NULL) or (is_null($item['status']))) {
-              ?>
-                <div>
-                    <form id="itemdetailform" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?action=detail">
-                      <input name="itemid" type="hidden" value="<?php echo $item['itemid']?>"  />
-                      <input name="itemstatus" id="itemstatus" type="hidden" value=""  />
-                      <input type="hidden" name="amount" id="amount">
-                      <select id="status-list" class="form-control form-element custom-select" onChange="$('#itemstatus').val($('#status-list').val());">
-                        <option value="">Select Status</option>
-                        <?php
-                        foreach($results2 as $status) {
-                        ?>
-                        <option value="<?php echo $status["statusdesc"]; ?>"><?php echo $status["statusdesc"]; ?></option>
-                        <?php
-                        }
-                        ?>
-                      </select>
-                      <div class="invalid-feedback">
-                        Please choose a status.
-                      </div>
-                      <br /><br />
-                      <select id="pricerange-list" class="form-control  custom-select" onChange="$('#amount').val($('#pricerange-list').val());">
-                          <option value="">Select Price Range</option>
-                          <option value="">0 - 100</option>
-                          <option value="">100 - 250</option>
-                          <option value="">250 - 500</option>
-                          <option value="">> 500</option>
-                      </select>
-                      <br /><br />
-                      <div class="input-group">
-                        <input type="text" class="form-control" name="expirydate" id="expirydate"/>
-                        <div class="input-group-addon dateicon"><i class="fa fa-calendar"></i>&nbsp;</div>
-                      </div><br /><br />
-                      <button class="btn btn-success button-submit form-element" type="submit">Update</button>
-                    </form>
-
-              </div>
-            <?php } } } ?>
               <!--
   						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
   						<h5 class="sizes">sizes:

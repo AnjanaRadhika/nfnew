@@ -154,7 +154,7 @@ function isFavItem($userid, $itemid) {
                                     <div class="itemdtl">
                                       <input type="hidden" name="itemid" value=<?php echo $item['itemid'] ?> />
                                       <input type="hidden" name="itemname" value=<?php echo $item['itemname'] ?> />
-                                      <h2 class="title-small"><a href=<?php echo $url ?> target="_blank" onclick="popup(this.href);"); return false;"><strong> <?php echo $item["itemname"] ?></strong></a></h2>
+                                      <h2 class="title-small"><a href=<?php echo $url ?> target="_blank" onclick="popup(this.href);"><strong> <?php echo $item["itemname"] ?></strong></a></h2>
                                       <h2 class="title-small"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; <?php echo $item["contactperson"] ?> @ <?php echo $item["contactno"] ?></h2>
                                       <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["town"] ?></em></small></p>
                                     </div>

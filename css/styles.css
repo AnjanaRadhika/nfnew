@@ -519,6 +519,13 @@ iframe {
 	text-decoration:none;
 	cursor:pointer;
 }
+div#itemedit {
+	margin: 0 auto;
+}
+
+div#itemeditdetails {
+	margin: 0 auto;
+}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
