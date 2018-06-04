@@ -1,7 +1,8 @@
-﻿<?php
+<?php
 $itemsperpage = 20;
 $sellorbuy = "All";
 $location=$itemsearch="";
+$filterby="all";
 if($link = OpenCon()) {
   $query ="SELECT * FROM item itm inner join images img on itm.itemid = img.itemid
                                   inner join itemcategory ctg on itm.categoryid = ctg.categoryid
@@ -18,12 +19,23 @@ and (itm.status is null or itm.status = '') ";
     if(array_key_exists('itemsearch', $_POST)) {
       $itemsearch = $_POST['itemsearch'];
       $query = $query . " and ((itm.itemname like '%" . mysqli_real_escape_string($link,$_POST['itemsearch']) ."%')"
-                          . " or (ctg.categoryname like '%" . mysqli_real_escape_string($link,$_POST['itemsearch']) ."%'))";
+                          . " or (ctg.categoryname like '%" . mysqli_real_escape_string($link,$_POST['itemsearch']) ."%')"
+                          . " or (itm.itemcode = '" . mysqli_real_escape_string($link,$_POST['itemsearch']) ."'))";
     }
     if(array_key_exists('sellorbuy', $_POST)) {
       $sellorbuy = $_POST['sellorbuy'];
       if($_POST['sellorbuy'] != 'All') {
         $query = $query . " and itm.sellorbuy = '" . mysqli_real_escape_string($link,$_POST['sellorbuy']) ."'";
+      }
+    }
+    if(array_key_exists('filterby', $_POST)) {
+      $filterby = $_POST['filterby'];
+      if($_POST['filterby'] == 'available') {
+        $query = $query . " and date(now()) between effectivedate and expirydate";
+      } else if($_POST['filterby'] == 'harvesting') {
+        $query = $query . " and date(now()) <= effectivedate and date(now()) <= expirydate";
+      } else if($_POST['filterby'] == 'expired') {
+        $query = $query . " and date(now()) > expirydate";
       }
     }
   }
@@ -38,6 +50,10 @@ and (itm.status is null or itm.status = '') ";
       } else {
         $itemsperpage = $rowcount;
       }
+    }
+
+    if(array_key_exists('filterby', $_POST)) {
+        $filterby = $_POST['filterby'];
     }
   }
 
@@ -75,8 +91,8 @@ function isFavItem($userid, $itemid) {
            		<form id="itemListForm" class="searchItemForm" method="post" action="home.php?action=search" role="search">
            			<div class="form-group-sm">
            				<div class="input-group">
-           					<input type="text" name="location" class="form-control col-md-6" placeholder="Search Location" value="<?php echo $location; ?>">
-           					<input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item" value="<?php echo $itemsearch; ?>">
+           					<input type="text" name="location" class="form-control col-md-6" placeholder="Search Neighbourhood" value="<?php echo $location; ?>">
+           					<input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item By Name or Code" value="<?php echo $itemsearch; ?>">
            					<span class="input-group-btn">
            						<button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
            					</span>
@@ -99,12 +115,12 @@ function isFavItem($userid, $itemid) {
                         <input type="hidden" id="sellorbuy" name="sellorbuy" value="<?php echo $sellorbuy; ?>" />
                       </div>
                       <div class="col-md-3" style="padding-right:0px;">
-                        <input type="hidden" name="filterby" id="filterby" aria-hidden="true" value="<?php echo $itemsperpage;?>" />
+                        <input type="hidden" name="filterby" id="filterby" aria-hidden="true" value="<?php echo $filterby;?>" />
                         <select id="selfilterby" class="form-control custom-select" style="width:85%;float:right;">
-                          <option value="20" <?php if($itemsperpage=="20") echo 'selected'; ?> >Sort By </option>
-                          <option value="40" <?php if($itemsperpage=="40") echo 'selected'; ?> >Availability </option>
-                          <option value="60" <?php if($itemsperpage=="60") echo 'selected'; ?> >Location </option>
-                          <option value="<?php echo $rowcount; ?>" <?php if($itemsperpage==$rowcount) echo 'selected'; ?> >All</option>
+                          <option value="all" <?php if($filterby=="all") echo 'selected'; ?> >All Items </option>
+                          <option value="available" <?php if($filterby=="available") echo 'selected'; ?> >Available Items </option>
+                          <option value="harvesting" <?php if($filterby=="harvesting") echo 'selected'; ?> >Harvesting Items </option>
+                          <option value="expired" <?php if($filterby=="expired") echo 'selected'; ?> >Expired Items </option>
                         </select>
                       </div>
                     <div class="col-md-3" style="padding-right:0px;">
@@ -148,7 +164,7 @@ function isFavItem($userid, $itemid) {
                                 <div class="card"><div id="tag"><div class="<?php echo $item['sellorbuy']=='For Sale'? 'bg-success' : 'bg-danger'; ?>" id="price">
                                   <span><?php echo $item['sellorbuy'] ?></span>
                                   </div></div>
-                                  <a href=<?php echo $url ?> target="_blank" onclick="popup(this.href);" >
+                                  <a href=<?php echo $url ?> target="_blank" >
                                     <img class="img-fluid itemimage" src="<?php echo $item["imagepath"] ?>" alt="<?php echo $item["imagename"] ?>"></a>
                                   <div class="card-body">
                                     <div class="itemdtl">
@@ -186,6 +202,8 @@ function isFavItem($userid, $itemid) {
                   </div>
             <?php } ?>
           </div>
+          <?php
+          if(!empty($results)) { ?>
           <div class="text-center">
             <ul class="pagination pager d-inline-flex" id="myPager">
               <li><a href="#" id="prev" class="page disabled">«</a></li>
@@ -197,6 +215,7 @@ function isFavItem($userid, $itemid) {
               <li><a id="next" href="#" class="page <?php echo $disabled ?>" >»</a></li>
             </ul>
           </div>
+        <?php }?>
         </div>
         <?php include('contentadvlist.php'); ?>
    </div>

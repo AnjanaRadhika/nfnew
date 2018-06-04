@@ -648,7 +648,13 @@ $('.btnremove').click(function(e){
 //datePicker
 $('#expirydate')
     .datepicker({
-        format: 'dd-mm-yyyy',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        format: 'yyyy-mm-dd',
         todayHighlight: true,
         orientation: "top auto",
         autoclose: true
@@ -664,9 +670,20 @@ $('#cal').click( function(e){
       .datepicker('show');
 });
 
+$('#cal1').click( function(e){
+  $('#effectivedate')
+      .datepicker('show');
+});
+
 $('#effectivedate')
     .datepicker({
-        format: 'dd-mm-yyyy',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        format: 'yyyy-mm-dd',
         todayHighlight: true,
         orientation: "top auto",
         autoclose: true
@@ -757,5 +774,11 @@ $('#tobuy,#forsale,#all').on('click', function(){
 //Change Items per page
 $('#selitemsperpage').on('change', function(){
   $('#itemsperpage').val($(this).val());
+  $('.searchItemForm').submit();
+});
+
+//Filter Items
+$('#selfilterby').on('change', function(){
+  $('#filterby').val($(this).val());
   $('.searchItemForm').submit();
 });

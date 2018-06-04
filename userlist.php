@@ -75,7 +75,6 @@ if($link = OpenCon()) {
                   <thead>
                     <th>Id</th>
                     <th>User Name</th>
-                    <th>Email</th>
                     <th>Role</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -87,7 +86,6 @@ if($link = OpenCon()) {
                      <tr id="<?php echo $user['id']?>">
                        <td class="edituserid"><?php echo $user['id']?></td>
                        <td class="editusername"><?php echo $user['username']?></td>
-                       <td class="edituseremail"><?php echo $user['email']?></td>
                        <td class="edituserrole"><?php echo $user['role']?></td>
                        <td class="edituseractive" style="display:none"><?php echo $user['activate'] ?></td>
                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs edituserbtn" data-title="Edit" data-userid="<?php echo $user['id']?>" ><i class="fa fa-pencil" aria-hidden="true"></i></button></p></td>

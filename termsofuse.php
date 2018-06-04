@@ -7,8 +7,8 @@
 				 <span aria-hidden="true">X</span>
 			 	</button>
 			</div>
-			<div class="modal-body">
-      <iframe class="embed-responsive-item" src="https://docs.google.com/document/d/e/2PACX-1vRubBQx0PfjKZAEZqzvQtatxQNQj7dRu8GFR-1xHEri0C8fwUwvrjPcnJklhcduDEYRqyTjnDPhVT8e/pub?embedded=true" style="border:2px solid green;" allowfullscreen></iframe>
+			<div class="modal-body embed-responsive embed-responsive-16by9">
+      <iframe class="embed-responsive-item" src="https://docs.google.com/document/d/e/2PACX-1vRubBQx0PfjKZAEZqzvQtatxQNQj7dRu8GFR-1xHEri0C8fwUwvrjPcnJklhcduDEYRqyTjnDPhVT8e/pub?embedded=true" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
   </div>

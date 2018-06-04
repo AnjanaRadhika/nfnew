@@ -14,7 +14,7 @@ if($link = OpenCon()) {
           </div><hr />
     			<div class="form-row">
             <div class="form-group col-md-12">
-						        <input type="text" class="form-control form-element" name="wishtitle" placeholder="Title" required>
+						        <input type="text" class="form-control form-element" name="wishtitle" placeholder="Item Name" required>
             </div>
 					</div>
 					<div class="form-row">

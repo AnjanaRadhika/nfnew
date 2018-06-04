@@ -152,7 +152,7 @@
 	<link rel="shortcut icon" href="images/logo.ico">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/datepicker.css">
+	<link rel="stylesheet" href="css/bootstrap-datepicker3.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
@@ -330,15 +330,15 @@
                         <div class="form-group col-md-4">
                           <label for="effectivedate">Effective Date</label>
                           <div class="input-group">
-                            <input type="text" class="form-control" name="effectivedate" id="effectivedateedit" value="<?php echo $item['effectivedate'];?>" />
-                            <div class="input-group-addon dateicon"><span id="caledit1"><i class="fa fa-calendar"></i></span>&nbsp;</div>
+                            <input type="text" class="form-control" name="effectivedate" id="effectivedate" value="<?php echo date_format(date_create($item['effectivedate']), 'Y-m-d');?>" />
+                            <div class="input-group-addon dateicon"><span id="cal1"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                           </div>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="expirydate">Expiry Date *</label>
                           <div class="input-group">
-                            <input type="text" class="form-control" name="expirydate" id="expirydateedit" value="<?php echo $item['expirydate'];?>" required />
-                            <div class="input-group-addon dateicon"><span id="caledit"><i class="fa fa-calendar"></i></span>&nbsp;</div>
+                            <input type="text" class="form-control" name="expirydate" id="expirydate" value="<?php echo date_format(date_create($item['expirydate']), 'Y-m-d');?>" required />
+                            <div class="input-group-addon dateicon"><span id="cal"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                           </div>
                         </div>
                       </div>
@@ -417,6 +417,42 @@
   				</div>
   			</div>
   		</div>
+      <!-- Verify Phone Number -->
+      <div id="verifydiv" class="modal modal-open fade" tabindex="-1" role="dialog" aria-labelledby="msgdiv" aria-hidden="true">
+        <div class="modal-dialog popup" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">
+                Verify Mobile
+              </h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">X</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form name="verifymodal" id="verifymodal" class="centered" action="getverificationcode.php">
+                <div class="form-group col-md-12">
+                  <div id="msgsuccess">
+
+                  </div>
+                  <input type="hidden" id="hdnmobno" name="mob_number" value="" />
+                  <label for="code">Enter the 6 digit OTP send to <span id="verifyphone"></span> </label>
+                  <input type="tel" class="form-control" name="code" id="code" maxlength="6" placeholder="Enter OTP Code" required>
+                  <div class="invalid-feedback col-md-12">
+                    Verification failed!
+                  </div>
+                </div>
+                <div align="center">
+                  <input id="btnvalidate" type="button" class="btn cancel" value="Validate"/><br /><br />
+                  <strong><a id="resendotp" href="#">Resend One-Time Password</a></strong><br />
+                  Entered a wrong number?
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Modal -->
     </div>
 </section>
 <br /><br /><br />
@@ -425,13 +461,21 @@
   <!-- Terms & Policy -->
 	<?php include('termsofuse.php'); ?>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.ui.widget.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/tether.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+  <script src="js/jquery.min.js"></script>
+	<script src="js/tether.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.knob.js"></script>
+
+	<!-- jQuery File Upload Dependencies -->
+	<script src="js/jquery.ui.widget.js"></script>
+	<script src="js/jquery.iframe-transport.js"></script>
+	<script src="js/jquery.fileupload.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+  <script type="text/javascript">
+          $('#datetimepicker1').datepicker();
+  </script>
 </body>
 
 </html>

@@ -114,7 +114,7 @@
               <h5>quantity available: <span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".$item['sellorbuy']?></span></h5>
               <h6>contact person : <span><?php echo $item['contactperson'];?> </span></h6>
               <h6>contact number : <span><?php echo $item['contactno'];?> </span></h6>
-              <h6>price range (&#8377) : <span><?php echo $item['pricerange'];?> </span></h6>
+              <h6>price range (&8377) : <span><?php echo $item['pricerange'];?> </span></h6>
               <h6>available from : <span><?php echo $item['effectivedate'];?> </span><br />
                 till : <span><?php echo $item['expirydate'];?> </span></h6>
               <h6>address : <span><?php echo $item['houseno']." ".$item['housename'];?>

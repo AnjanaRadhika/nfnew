@@ -71,6 +71,9 @@ function getInterval($createddate) {
    <div class="content-box">
        <h3>My WishList</h3><br />
        <hr />
+       <form id="homeSearch" action="home.php?action=search" method="post">
+         <input type="hidden" id="itemsearch" name="itemsearch" value="" />
+       </form>
        <?php
          if(!empty($results)) {
            $cur=1;
@@ -80,7 +83,7 @@ function getInterval($createddate) {
                  $pagestyle = $cur == 1 ? "" : "display:none"; ?>
                <div id="page<?php echo $cur ?>" class="wishitem text-left" style="<?php echo $pagestyle ?>" >
                <?php  }  ?>
-               <h2><a href="home.php?action=search"><?php echo $wish['wishdesc'];?></a></h2>
+               <h2><a href="javascript:goToSearch('<?php echo $wish['wishdesc'];?>');"><?php echo $wish['wishdesc'];?></a></h2>
                <p>
                  <?php
                  if(strpos($wish['wishdetails'],'available')) {
@@ -138,4 +141,10 @@ function getInterval($createddate) {
      </ul>
    </div>
  </div>
-</div>
+ </div>
+<script type="text/javascript">
+function goToSearch(wishdesc) {
+  $('#itemsearch').val(wishdesc);
+  $('#homeSearch').submit();
+}
+</script>

@@ -23,8 +23,7 @@ if($link = OpenCon()) {
         </div>
         <hr />
           <form method="post" enctype="multipart/form-data" class="itemForm" id="itemForm" autocomplete="off">
-            <input type="hidden" value="something" />
-            <input id="phonevalid"  name="phonevalid" type="hidden" value="1"/>
+            <input autocomplete="false" name="hidden" type="text" style="display:none;">
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="item_name">Item Name *</label>
@@ -118,6 +117,7 @@ if($link = OpenCon()) {
             <div class="form-row">
                 <div class="form-group col-md-12">
                    <label>Phone *</label>
+                   <input id="phonevalid"  name="phonevalid" type="hidden" value="1"/>
                    <input type="hidden" id="phone" name="phone" value="" />
                    <div class="input-group" onKeyUp="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
                            <input type="tel" id="tel1" class="form-control" value="" size="3" maxlength="3" required="required" title="" >-
@@ -210,7 +210,7 @@ if($link = OpenCon()) {
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="town">Town / Village * </label>
-              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" autocomplete="off" required>
+              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the Town / Village.
               </div>

@@ -5,7 +5,9 @@ html {
 	font-size:100%;
 	margin:0;
 	padding:0;
-	height:100%;
+	position: relative;
+	min-height: 100%;
+	height: 100%;
 }
 body {
    margin:0;
@@ -25,7 +27,6 @@ footer {
 		left:0;
 		right:0;
 		bottom:0;
-
 }
 .navbar-header {
 	width: 40%;
@@ -273,6 +274,12 @@ button:hover{
     margin: 0px auto;
     float: none;
 }
+.table#usertable {
+    border-radius: 5px;
+    width: 100%;
+    margin: 0px auto;
+    float: none;
+}
 .tooltip-inner {
     background-color:forestgreen;
 }
@@ -418,7 +425,6 @@ textarea{
 	border: 5px solid #3e8e41;
 }
 #termsofusediv .modal-body {
-  height: 70%;
   overflow-y: auto;
 }
 #termsofusediv {
@@ -429,22 +435,20 @@ iframe {
 	position: relative;
 	overflow-y: auto;
 	overflow-x: auto;
-	width: auto;
-	min-width: 1000px;
-	min-height: 450px;
+	max-height: 100%;
+	max-width: 100%;
 }
 .vertical-align-helper {
 	left: 10%;
 	padding:1%;
 	margin:0px;
+	min-width: 80%;
 	background-color:white;
 	display: table;
 	position: relative;
 	overflow-y: auto;
 	overflow-x: auto;
 	width: auto;
-	min-width: 1000px;
-	min-height: 600px;
 	border: 5px solid #3e8e41;
 }
 .vertical-align-center {
@@ -852,8 +856,12 @@ span#cal, span#cal1 {
 #itmimg {
 	padding-bottom: 2%;
 }
+.card:hover {
+	box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
+}
 .card {
 	border: 1px solid darkgray;
+	box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
 }
 /*
 	Media Queries
@@ -867,8 +875,15 @@ span#cal, span#cal1 {
 		font-size: 95%;
 	}
 	footer {
-		height: 5%;
 		font-size: 95%;
+		position:relative!important;
+		top:0px;
+		height:12%;
+		max-height:100%;
+		padding-bottom:0px;
+	}
+	.vertical-align-helper {
+		left: 0;
 	}
   .popup{
       left:10%;
@@ -881,6 +896,12 @@ span#cal, span#cal1 {
 	.content-box{
 		width:auto;
 	}
+.input-group .form-control {
+			display: block;
+			width:95%;
+			margin-bottom: 5px;
+			clear: both;
+	}
 	html {
 		-ms-text-size-adjust:80%;
 		-webkit-text-size-adjust:80%;
@@ -888,12 +909,25 @@ span#cal, span#cal1 {
 	}
 }
 @media only screen and (max-width: 768px) {
+	#itmimg {
+		width: 200px;
+		height: 300px;
+	}
 	section {
 		padding-bottom: 7%;
 	}
 	footer {
-		height: 7%;
 		font-size: 90%;
+		position:relative!important;
+		top:0px;
+		height:9%;
+		max-height:100%;
+		padding-bottom:0px;
+	}
+	.vertical-align-helper {
+		left: 0;
+		right:0;
+		bottom:0;
 	}
 	.navbar-toggler-icon {
 		height: 35px;
@@ -903,6 +937,11 @@ span#cal, span#cal1 {
 	div.leftNav, div.releted-content {display:none; visibility:hidden;}
 	.table { width: 100%;}
 	tr td.hide-col	{ display:none; visibility:hidden; }
+	.input-group .form-control {
+			display: block;
+			margin-bottom: 10px;
+			clear: both;
+	}
 	html {
 		-ms-text-size-adjust:80%;
 		-webkit-text-size-adjust:80%;
@@ -910,12 +949,20 @@ span#cal, span#cal1 {
 	}
 }
 @media only screen and (max-width: 420px) {
+	#itmimg {
+		width: 200px;
+		height: 300px;
+	}
 	section {
 		padding-bottom: 2%;
 	}
 	footer {
-		height: 8%;
 		font-size: 75%;
+		position:relative!important;
+		top:0px;
+		height:12%;
+		max-height:100%;
+		padding-bottom:0px;
 	}
 	.navbar-toggler-icon {
 		height: 25px;
@@ -924,6 +971,12 @@ span#cal, span#cal1 {
 	#head {display:none; visibility:hidden;}
 	div.leftNav, div.releted-content {display:none; visibility:hidden;}
 	tr td.hide-col	{ display:none; visibility:hidden; }
+	.input-group .form-control {
+				display: block;
+				width:95%;
+				margin-bottom: 5px;
+				clear: both;
+		}
 	html {
 		-ms-text-size-adjust:80%;
 		-webkit-text-size-adjust:80%;
@@ -931,12 +984,26 @@ span#cal, span#cal1 {
 	}
 }
 @media only screen and (max-width: 320px) {
-	section {
-		padding-bottom: 0;
+	#itmimg {
+		width: 200px;
+		height: 300px;
 	}
 	footer {
-		height: 9%;
 		font-size: 65%;
+		position:relative!important;
+		top:0px;
+		height:12%;
+		max-height:100%;
+		padding-bottom:0px;
+	}
+	.vertical-align-helper {
+		left: 0;
+	}
+	iframe {
+		-webkit-transform:scale(0.3);
+		-moz-transform:scale(0.3);
+		-o-transform:scale(0.3);
+		transform:scale(0.3);
 	}
 	.navbar-toggler-icon {
 		height: 35px;
@@ -945,6 +1012,12 @@ span#cal, span#cal1 {
 	#head {display:none; visibility:hidden;}
 	div.leftNav, div.releted-content {display:none; visibility:hidden;}
 	tr td.hide-col, #head	{ display:none; visibility:hidden; }
+	.input-group .form-control {
+				display: block;
+				width:95%;
+				margin-bottom: 5px;
+				clear: both;
+		}
 	html {
 		-ms-text-size-adjust:80%;
 		-webkit-text-size-adjust:80%;

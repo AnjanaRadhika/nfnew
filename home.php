@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/datepicker.css">
+	<link rel="stylesheet" href="css/bootstrap-datepicker3.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
 
@@ -24,6 +24,12 @@
     <!--Section Start-->
     <section class="container">
 			<?php
+			if(array_key_exists('action',$_GET) && empty($_SESSION) &&
+							($_GET['action'] == 'myposts' || $_GET['action'] == 'userlist' || $_GET['action'] == 'site'
+							|| $_GET['action'] == 'mywishlist' || $_GET['action'] == 'newwish' || $_GET['action'] == 'change')) {
+				header('Location: '.$_SERVER['PHP_SELF']);
+				exit;
+			}
 			if(array_key_exists('action',$_GET)) {
 			?>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -31,16 +37,12 @@
 			<!-- Row for advertisement -->
         </div>
 			</div>
-			<?php } ?>
+		<?php } ?>
         <div class="row">
-
-						<?php //include('leftnav.php'); ?>
 						<?php
 						if(array_key_exists('action',$_GET)) {
 							if($_GET['action'] == 'search') {
 									include('itemlist.php');
-							} else if($_GET['action'] == 'myposts') {
-									include('myposts.php');
 							} else {
 								if(!empty($_SESSION)) {
 									if(array_key_exists('name', $_SESSION)) {
@@ -55,6 +57,8 @@
 
 								if($_GET['action'] == 'post') {
 										include('postitem.php');
+								} else if($_GET['action'] == 'myposts') {
+										include('myposts.php');
 								} else if($_GET['action'] == 'about') {
 										include('aboutus.php');
 								} else if($_GET['action'] == 'contact') {
@@ -64,9 +68,9 @@
 								} else if($_GET['action'] == 'site') {
 										include('sitemaintenance.php');
 								} else if($_GET['action'] == 'mywishlist') {
-											include('mywishlist.php');
+										include('mywishlist.php');
 								} else if($_GET['action'] == 'newwish') {
-											include('newwish.php');
+										include('newwish.php');
 								} else if($_GET['action'] == 'change') {
 										include('userchangepwd.php');
 								}
@@ -74,13 +78,17 @@
 							}
 						} else {
 							 	include('searchfarmer.php');
+								echo '<style type="text/css">
+						        footer {
+											position:absolute;
+											left:0;
+											right:0;
+											bottom:0;
+						        }
+						        </style>';
 						}
 
 						?>
-
-						<?php //include('searchfarmer.php'); ?>
-
-						<?php //include('contentadv.php'); ?>
 
         </div>
 				<?php
@@ -92,7 +100,7 @@
 					</div>
 				</div>
 				<br />
-				<?php } ?>
+			<?php } ?>
     </section>
     <!--Section End-->
 

@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<a class="navbar-left">
+			<a href="home.php" class="navbar-left">
 				<img id="logo" src="images/logo.ico">
 			</a>
 			<span id="head" class="navbar-brand" rel="home" >
@@ -29,7 +29,7 @@
 							."<i class='fa fa-user-circle' aria-hidden='true'></i> Sign up / Sign in</a>";
 					$beforename="<a class='nav-link active'><i class='fa fa-user-circle'></i> ";
 					$aftername="</a></li>"
-					."<li class='nav-item dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-th' style='font-size:24px;color:white;position:relative;top:10px;'></i></a>"
+					."<li class='nav-item dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href='#' aria-expanded='false'><i class='fa fa-th' style='font-size:24px;color:white;position:relative;top:10px;'></i></a>"
 					."<ul class='dropdown-menu'>"
 					."<li class='nav-item'> <a href='home.php?action=myposts'> My Posts <i class='pull-right fa fa-file-audio-o' aria-hidden='true'></i></a></li>"
 					."<hr/>"
