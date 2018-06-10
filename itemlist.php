@@ -92,7 +92,7 @@ function isFavItem($userid, $itemid) {
            			<div class="form-group-sm">
            				<div class="input-group">
            					<input type="text" name="location" class="form-control col-md-6" placeholder="Search Neighbourhood" value="<?php echo $location; ?>">
-           					<input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item By Name or Code" value="<?php echo $itemsearch; ?>">
+           					<input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item" value="<?php echo $itemsearch; ?>">
            					<span class="input-group-btn">
            						<button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
            					</span>

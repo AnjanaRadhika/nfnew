@@ -120,7 +120,7 @@
               <h6>address : <span><?php echo $item['houseno']." ".$item['housename'];?>
               <?php echo $item['bldgno']." ".$item['bldgname'];?>
               <?php echo $item['address1'];?> <br />
-              <?php echo $item['streetname'];?> <br />
+              <?php echo $item['address2'];?> <br />
               <?php echo $item['town']." ".$item['nhood'];?>  <br />
               <?php echo getDistrict($item['districtid'])." ".getState($item['stateid']);?>  <br />
               <?php echo $item['zipcode'];?>

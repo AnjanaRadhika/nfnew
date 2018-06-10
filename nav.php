@@ -1,3 +1,4 @@
+<!-- Top Navigation -->
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -6,7 +7,7 @@
 				<img id="logo" src="images/logo.ico">
 			</a>
 			<span id="head" class="navbar-brand" rel="home" >
-				NeighbourhoodFarmer's
+				<a href="home.php" class="navbar-brand" rel="home"> NeighbourhoodFarmer's </a>
 			</span>
 			<button class="navbar-toggler pull-right" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -21,15 +22,15 @@
 			</ul>
 		</div><!-- /.navbar-collapse -->
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link" href="home.php?action=post"><i class="fa fa-bullhorn" aria-hidden="true"></i>  Post an Ad</a></li>
+			<li class="nav-item"><a class="nav-link btn btn-success" href="home.php?action=post" style="color:rgb(255, 255, 255, 150);">&nbsp;<i class="fa fa-bullhorn" aria-hidden="true"></i>  Submit an Ad&nbsp;</a></li>
 			<li class="nav-item">
 				<?php
 					$string=$name="";
 					$signin="<a class='nav-link' id='signin-text' data-toggle='modal' data-target='#signindiv'>"
-							."<i class='fa fa-user-circle' aria-hidden='true'></i> Sign up / Sign in</a>";
+							."<i class='fa fa-user-circle' aria-hidden='true'></i> My Account</a>";
 					$beforename="<a class='nav-link active'><i class='fa fa-user-circle'></i> ";
 					$aftername="</a></li>"
-					."<li class='nav-item dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href='#' aria-expanded='false'><i class='fa fa-th' style='font-size:24px;color:white;position:relative;top:10px;'></i></a>"
+					."<li class='nav-item dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href='#' aria-expanded='false'><i class='fa fa-caret-down' style='font-size:20px;color:white;position:relative;top:10px;'></i></a>"
 					."<ul class='dropdown-menu'>"
 					."<li class='nav-item'> <a href='home.php?action=myposts'> My Posts <i class='pull-right fa fa-file-audio-o' aria-hidden='true'></i></a></li>"
 					."<hr/>"

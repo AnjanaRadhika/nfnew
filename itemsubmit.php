@@ -167,7 +167,7 @@
 
       $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`, `sellorbuy`, "
         . "`pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, "
-				. "`districtid`, `town`, `nhood`, `streetname`, `housename`, `houseno`, `bldgno`, `bldgname`, `zipcode`,"
+				. "`districtid`, `town`, `nhood`, `address2`, `housename`, `houseno`, `bldgno`, `bldgname`, `zipcode`,"
         . "`stateid`, `countryid`, `postedby`, `updatedby`, `expirydate`, `effectivedate`, `longitude`, `latitude`, `itemcode`)"
         . "VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
 				. mysqli_real_escape_string($link, $itemname)."','"

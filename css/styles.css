@@ -59,7 +59,7 @@ footer {
     box-shadow:none;
     margin-top:20px;
     position: absolute;
-		left: -200px;
+		left: -216px;
 }
 .dropdown ul.dropdown-menu:before {
     content: "";
@@ -80,6 +80,9 @@ footer {
     top: -12px;
     right: 14px;
     z-index: 9;
+}
+ul.dropdown-menu hr {
+		background-color: #ccc;
 }
 .dropdown-toggle::after {
     display:none
@@ -102,7 +105,8 @@ footer {
 	left:10%;
 }
 #logo{
-	height:8%;
+	height:50px;
+	width:50px;
 }
 
 .navbar-dark .navbar-nav > .active > a,
@@ -204,6 +208,7 @@ min-height:25%;
 	padding:5px;
 	width:95%;
 	height: 120px;
+    outline:0;
 }
 #picturetable {
 	border:collapse;
@@ -240,7 +245,7 @@ tr.hide-row { display:none; visibility:hidden; }
 }
 .sidebar-nav {
     display: block;
-    padding: 2% 7%;
+		border:solid 1px white;
     color: #333;
     font-size:100%;
     text-decoration: none;
@@ -326,6 +331,7 @@ button:hover{
 	opacity:0.92;
 	background: #000;
 	display: none;
+  margin: 0px auto;
 }
 div.forgotpopup h2, div.popup h2, .modal-title, .wishitem h2{
 	font-size:35px;

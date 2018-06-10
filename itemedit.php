@@ -78,7 +78,7 @@
         .  "housename = '".$hname. "', "
         .  "bldgno = '".$bno. "', "
         .  "bldgname = '".$bname. "', "
-        .  "streetname = '".$street. "', "
+        .  "address2 = '".$street. "', "
         .  "address1 = '".$address1. "', "
         .  "town = '".$town. "', "
         .  "nhood = '".$nhood. "', "
@@ -363,7 +363,7 @@
                         </div>
                         <div class="form-group col-md-4">
                           <label for="street">Street </label>
-                          <input type="text" class="form-control " name="street" id="street" placeholder="Street" value="<?php echo $item['streetname'];?>">
+                          <input type="text" class="form-control " name="street" id="street" placeholder="Street" value="<?php echo $item['address2'];?>">
                         </div>
                       </div>
                       <div class="form-row">

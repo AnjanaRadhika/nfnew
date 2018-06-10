@@ -83,7 +83,7 @@ and (itm.status is null or itm.status = '') ";
         <div class="form-group-sm">
           <div class="input-group">
             <input type="text" name="location" class="form-control col-md-6" placeholder="Search Neighbourhood">
-            <input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item By Name or Code">
+            <input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item">
             <span class="input-group-btn">
               <button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
             </span>

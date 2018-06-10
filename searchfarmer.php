@@ -7,7 +7,7 @@
 				<div class="input-group searchdiv">
 					<div class="col-md-1"></div>
 					<input type="text" id="location" name="location" class="form-control col-md-5 ui-autocomplete-input" placeholder="Search Neighbourhood">
-					<input type="text" name="itemsearch" class="form-control col-md-5" placeholder="Search Item by Name or Code">
+					<input type="text" name="itemsearch" class="form-control col-md-5" placeholder="Search Item">
 					<span class="input-group-btn">
 						<button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
 					</span>
@@ -15,18 +15,25 @@
 				</div>
 			</div>
 
-		</form>
-
-			<div>
+          <div>
 				<table class="table table-responsive" id="picturetable">
-				<tr><td class="cells"><img class="cellimg"src="images/cell1.jpg"></td>
-				<td class="cells"><img class="cellimg" src="images/cell2.jpg"></td>
-				<td class="cells hide-col"><img class="cellimg" src="images/cell3.jpg"></td></tr>
-				<tr><td class="cells"><img class="cellimg" src="images/cell4.jpg"></td>
-				<td class="cells"><img class="cellimg" src="images/cell5.jpg"></td>
-				<td class="cells hide-col"><img class="cellimg" src="images/cell6.jpg"></td></tr>
+				
+				<tr>
+					<td class="cells"> <input type="image" class="cellimg" src="images/cell1.jpg" title="Vegetables" name="itemsearch" value="Vegetables"></td>
+				    <td class="cells"> <input type="image" class="cellimg" src="images/cell2.jpg" title="Diary" name="itemsearch" value="Dairy"></td>
+				    <td class="cells"> <input type="image" class="cellimg" src="images/cell3.jpg" title="Banana" name="itemsearch" value="Banana"></td>
+				</tr>
+				
+				<tr>
+					<td class="cells"> <input type="image" class="cellimg" src="images/cell4.jpg" title="Oil" name="itemsearch" value="Oil"></td>
+				    <td class="cells"> <input type="image" class="cellimg" src="images/cell5.jpg" title="Fruits" name="itemsearch" value="Fruits"></td>
+				    <td class="cells"> <input type="image" class="cellimg" src="images/cell6.jpg" title="Paultry" name="itemsearch" value="Paultry"></td>
+				</tr>
+
 			</table>
-		</div><br />
+		</div><br/>
+          
+		</form>
 	</div>
 
 </div>

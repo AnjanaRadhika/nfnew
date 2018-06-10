@@ -14,7 +14,7 @@ if($link = OpenCon()) {
 ?>
     <div class="col-lg-6 col-md-6 col-sm-6">
       <div class="content-box">
-    		<h3>Post Advertisement</h3><br />
+    		<h3>Submit Advertisement</h3><br />
         <div id="successmessage">
 
         </div>
@@ -87,15 +87,16 @@ if($link = OpenCon()) {
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="amount">Price Range (&#8377):</label>
+                <label for="amount">Price per Unit (&#8377):</label>
                 <input type="hidden" name="amount" id="amount">
                 <div class="input-group">
                   <select id="pricerange-list" class="form-control  custom-select" onChange="$('#amount').val($('#pricerange-list').val());">
                       <option value="">Select Price Range </option>
-                      <option value="0 - 100">0 - 100</option>
-                      <option value="100 - 250">100 - 250</option>
-                      <option value="250 - 500">250 - 500</option>
-                      <option value="> 500">> 500</option>
+                      <option value="0 - 100">&#8377 0 - 100</option>
+                      <option value="100 - 250">&#8377 100 - 250</option>
+                      <option value="250 - 1000">&#8377 250 - 1000</option>
+                      <option value="1000 - 2000">&#8377 1000 - 2000</option>
+                      <option value="> 2000">> &#8377 2000</option>
                   </select>
                 </div>
               </div>
@@ -246,8 +247,10 @@ if($link = OpenCon()) {
 
             </div>
           </div>
-
-          <button class="btn btn-success button-submit " type="submit">Post Adv</button>
+          <p>
+            By clicking 'Submit' you agree to our <span id="termsofuseclick1" data-toggle="modal" data-target="#termsofusediv" style="color:blue;cursor:pointer;">Terms of Use</span> & <span id="termsofuseclick1" data-toggle="modal" data-target="#termsofusediv" style="color:blue;cursor:pointer;">Posting Rules</span>
+          </p>
+          <button class="btn btn-success button-submit " type="submit">Submit</button>
 
           </form>
         </div>
