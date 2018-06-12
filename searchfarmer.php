@@ -17,13 +17,13 @@
 
           <div>
 				<table class="table table-responsive" id="picturetable">
-				
+
 				<tr>
 					<td class="cells"> <input type="image" class="cellimg" src="images/cell1.jpg" title="Vegetables" name="itemsearch" value="Vegetables"></td>
 				    <td class="cells"> <input type="image" class="cellimg" src="images/cell2.jpg" title="Diary" name="itemsearch" value="Dairy"></td>
 				    <td class="cells"> <input type="image" class="cellimg" src="images/cell3.jpg" title="Banana" name="itemsearch" value="Banana"></td>
 				</tr>
-				
+
 				<tr>
 					<td class="cells"> <input type="image" class="cellimg" src="images/cell4.jpg" title="Oil" name="itemsearch" value="Oil"></td>
 				    <td class="cells"> <input type="image" class="cellimg" src="images/cell5.jpg" title="Fruits" name="itemsearch" value="Fruits"></td>
@@ -32,7 +32,7 @@
 
 			</table>
 		</div><br/>
-          
+
 		</form>
 	</div>
 

@@ -1,5 +1,16 @@
 <?php
 //include('db_connection.php');
+$userid=$username="";
+$contactno = $username = $email = $address1 = $address2 = $stateid = "";
+$districtid = $town = $nhood = $zipcode = "";
+if(!empty($_SESSION)) {
+  if(array_key_exists('id', $_SESSION)) {
+    $userid=$_SESSION['id'];
+  }
+  if(array_key_exists('name', $_SESSION)) {
+    $username=$_SESSION['name'];
+  }
+}
 if($link = OpenCon()) {
   $query ="SELECT * FROM itemcategory";
   $results = runQuery($link,$query);
@@ -9,6 +20,8 @@ if($link = OpenCon()) {
   $results2 = runQuery($link,$query);*/
   $query ="SELECT * FROM states WHERE countryid = '101'";
   $results2 = runQuery($link, $query);
+  $query ="SELECT * FROM users WHERE id = '". $userid ."'";
+  $results3 = runQuery($link, $query);
   CloseCon($link);
 }
 ?>
@@ -78,7 +91,7 @@ if($link = OpenCon()) {
                         ?>
                     </select>
                     <input type="hidden" id="sellorbuy" name="sellorbuy" value="For Sale" />
-          					<select  form="itemForm" id="sellorbuy-list" class="form-control  custom-select col-md-3" onChange="$('#sellorbuy').val($('#sellorbuy-list').val());">
+          					<select  form="itemForm" id="sellorbuy-list" class="form-control  custom-select col-md-4" onChange="$('#sellorbuy').val($('#sellorbuy-list').val());">
           						<option value="For Sale" selected> For Sale</option>
           						<option value="To Buy"> To Buy</option>
           					</select>
@@ -115,15 +128,30 @@ if($link = OpenCon()) {
                 </div>
               </div>
             </div>
+            <?php
+            if(!empty($results3)) {
+                foreach($results3 as $user) {
+                  $contactno = $user['contactno'];
+                  $username = $user['username'];
+                  $email = $user['email'];
+                  $address1 = $user['address1'];
+                  $address2 = $user['address2'];
+                  $stateid = $user['stateid'];
+                  $districtid = $user['districtid'];
+                  $town = $user['town'];
+                  $nhood = $user['nhood'];
+                  $zipcode = $user['zipcode'];
+                }
+            } ?>
             <div class="form-row">
                 <div class="form-group col-md-12">
                    <label>Phone *</label>
                    <input id="phonevalid"  name="phonevalid" type="hidden" value="1"/>
-                   <input type="hidden" id="phone" name="phone" value="" />
+                   <input type="hidden" id="phone" name="phone" value="<?php echo $contactno;?>" />
                    <div class="input-group" onKeyUp="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
-                           <input type="tel" id="tel1" class="form-control" value="" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel2" class="form-control" value="" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel3" class="form-control" value="" size="4" maxlength="4" required="required" title="" >
+                           <input type="tel" id="tel1" class="form-control" value="<?php echo substr($contactno,0,3);?>" size="3" maxlength="3" required="required" title="" >-
+                           <input type="tel" id="tel2" class="form-control" value="<?php echo substr($contactno,3,3);?>" size="3" maxlength="3" required="required" title="" >-
+                           <input type="tel" id="tel3" class="form-control" value="<?php echo substr($contactno,6,4);?>" size="4" maxlength="4" required="required" title="" >
                            <div class="invalid-feedback">
                              The phone number needs to be verified.
                            </div>
@@ -140,54 +168,33 @@ if($link = OpenCon()) {
           <div class="form-row">
             <div class="form-group col-md-8">
               <label for="contact_person">Contact Person *</label>
-              <input type="text" class="form-control " name="contact_person" id="contact_person" placeholder="Contact Person" required>
+              <input type="text" class="form-control " name="contact_person" id="contact_person" placeholder="Contact Person" value="<?php echo $username;?>" required>
 
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="contact_email">Email *</label>
-              <input type="text" class="form-control " name="contact_email" id="contact_email" placeholder="Contact Email" data-validation="email" data-validation-error-msg="You did not enter a valid e-mail" maxlength="40" required>
+              <input type="text" class="form-control " name="contact_email" id="contact_email" placeholder="Contact Email" data-validation="email" data-validation-error-msg="You did not enter a valid e-mail" maxlength="40" value="<?php echo $email;?>" required>
 
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="hno">Flat No/Door No/House No </label>
-              <input type="text" class="form-control " name="hno" id="hno" placeholder="Flat No/Door No/House No">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="hname">Flat/Villa/House Name </label>
-              <input type="text" class="form-control " name="hname" id="hname" placeholder="Flat/Villa/House Name">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-3">
-              <label for="bname">Building No </label>
-              <input type="text" class="form-control " name="bno" id="bno" placeholder="Building No">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="bname">Building Name </label>
-              <input type="text" class="form-control " name="bname" id="bname" placeholder="Building Name">
-            </div>
-            <div class="form-group col-md-5">
-              <label for="street">Street </label>
-              <input type="text" class="form-control " name="street" id="street" placeholder="Street">
-            </div>
-          </div>
-          <div class="form-row">
             <div class="form-group col-md-12">
-              <input type="text" class="form-control " name="address1" placeholder="Address">
+              <label for="address">Address </label>
+              <input type="text" id="address" class="form-control " name="address1" placeholder="Address Line1" value="<?php echo $address1;?>" > <br />
+              <input type="text" class="form-control " name="address2" placeholder="Address Line2" value="<?php echo $address2?>" >
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="state-list">State *</label>
-              <input type="hidden" id="state" name="state" value="" />
+              <input type="hidden" id="state" name="state" value="<?php echo $stateid; ?>"  />
               <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="getDistrict(this.value);" required>
                   <option value="">Select State</option>
                   <?php
                   foreach($results2 as $state) {
+                    $strselected = $state['stateid'] == $stateid?'selected':'';
                   ?>
                   <option value="<?php echo $state["stateid"]; ?>"><?php echo $state["statename"]; ?></option>
                   <?php
@@ -200,8 +207,21 @@ if($link = OpenCon()) {
             </div>
             <div class="form-group col-md-6">
               <label for="district-list">District *</label>
-              <input type="hidden" id="district" name="district" value="" />
+              <input type="hidden" id="district" name="district" value="<?php echo $districtid; ?>"  />
               <select form="itemForm" id="district-list" class="form-control  custom-select" onChange="getCity(this.value);" required>
+                <option value="">Select District</option>
+              <?php
+                  if($stateid!="") {
+                    if($link = OpenCon()) {
+                      	$query ="SELECT * FROM districts WHERE stateid = " . $stateid;
+                      	$results = runQuery($link,$query);
+                        CloseCon($link);
+                      }
+
+                    foreach($results as $district) {
+                        $strselected = $district['districtid'] == $districtid?'selected':'';    ?>
+    	                   <option value="<?php echo $district['districtid']; ?>" <?php echo $strselected;?> ><?php echo $district['districtname']; ?></option>
+              <?php } } ?>
               </select>
               <div class="invalid-feedback col-md-6">
                 Please enter the district.
@@ -211,20 +231,20 @@ if($link = OpenCon()) {
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="town">Town / Village * </label>
-              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" required>
+              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" value="<?php echo $town;?>" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the Town / Village.
               </div>
             </div>
             <div class="form-group col-md-6">
               <label for="nhood">Neighbourhood </label>
-              <input type="text" class="form-control ui-autocomplete-input" name="nhood" id="nhood" placeholder="Neighbourhood" autocomplete="off">
+              <input type="text" class="form-control ui-autocomplete-input" name="nhood" id="nhood" placeholder="Neighbourhood" value="<?php echo $nhood;?>" >
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="zipcode">Zipcode *</label>
-              <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" autocomplete="off" required>
+              <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" value="<?php echo $zipcode;?>" required>
               <div class="invalid-feedback col-md-6">
                 Please enter the zipcode.
               </div>

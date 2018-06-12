@@ -58,15 +58,11 @@
 			$phonevalid = $_POST['phonevalid'];
       $contact_person = $_POST['contact_person'];
       $address1 = $_POST['address1'];
+			$address2 = $_POST['address2'];
       $zipcode = $_POST['zipcode'];
 			$expirydate = $_POST['expirydate'];
 			$effectivedate = $_POST['effectivedate'];
 			$contactemail = $_POST['contact_email'];
-			$houseno = $_POST['hno'];
-			$bno = $_POST['bno'];
-			$bname = $_POST['bname'];
-			$hname = $_POST['hname'];
-			$street = $_POST['street'];
 			$district = $_POST['district'];
 			$town = $_POST['town'];
 			$nhood = $_POST['nhood'];
@@ -167,7 +163,7 @@
 
       $query = "INSERT INTO `item`(`categoryid`,`itemname`, `itemdesc`, `quantity`, `sellorbuy`, "
         . "`pricerange`, `measurementid`, `contactperson`, `contactno`, `address1`, "
-				. "`districtid`, `town`, `nhood`, `address2`, `housename`, `houseno`, `bldgno`, `bldgname`, `zipcode`,"
+				. "`districtid`, `town`, `nhood`, `streetname`, `zipcode`,"
         . "`stateid`, `countryid`, `postedby`, `updatedby`, `expirydate`, `effectivedate`, `longitude`, `latitude`, `itemcode`)"
         . "VALUES(" . mysqli_real_escape_string($link, intval($category)).",'"
 				. mysqli_real_escape_string($link, $itemname)."','"
@@ -182,17 +178,13 @@
         . mysqli_real_escape_string($link, intval($district)).",'"
         . mysqli_real_escape_string($link, $town)."','"
 				. mysqli_real_escape_string($link, $nhood)."','"
-				. mysqli_real_escape_string($link, $street)."','"
-				. mysqli_real_escape_string($link, $hname)."','"
-				. mysqli_real_escape_string($link, $houseno)."','"
-				. mysqli_real_escape_string($link, $bno)."','"				
-				. mysqli_real_escape_string($link, $bname)."','"
+				. mysqli_real_escape_string($link, $address2)."','"
         . mysqli_real_escape_string($link, $zipcode)."',"
         . mysqli_real_escape_string($link, intval($state)).","
         . mysqli_real_escape_string($link, intval($country))
 				.",'".$user."','".$user."',STR_TO_DATE('"
-				. mysqli_real_escape_string($link, $expirydate)."', '%d-%m-%Y'), STR_TO_DATE('"
-				. mysqli_real_escape_string($link, $effectivedate)."', '%d-%m-%Y'),'"
+				. mysqli_real_escape_string($link, $expirydate)."', '%e/%c/%Y'), STR_TO_DATE('"
+				. mysqli_real_escape_string($link, $effectivedate)."', '%e/%c/%Y'),'"
 				. mysqli_real_escape_string($link, $longitude)."','"
 				. mysqli_real_escape_string($link, $latitude)."','"
 				. mysqli_real_escape_string($link, $itemcode)."')";

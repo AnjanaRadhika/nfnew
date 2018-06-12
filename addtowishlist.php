@@ -1,3 +1,4 @@
+<!-- Add to Wishlist on clicking on add to favorites in the image item -->
 <?php
 include('db_connection.php');
 session_start();

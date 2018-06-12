@@ -654,7 +654,7 @@ $('#expirydate')
             up: "fa fa-arrow-up",
             down: "fa fa-arrow-down"
         },
-        format: 'yyyy-mm-dd',
+        dateFormat: 'dd/mm/yy',
         todayHighlight: true,
         orientation: "top auto",
         autoclose: true
@@ -683,7 +683,7 @@ $('#effectivedate')
             up: "fa fa-arrow-up",
             down: "fa fa-arrow-down"
         },
-        format: 'yyyy-mm-dd',
+        dateFormat: 'dd/mm/yy',
         todayHighlight: true,
         orientation: "top auto",
         autoclose: true

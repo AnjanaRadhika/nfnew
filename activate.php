@@ -1,3 +1,5 @@
+<!-- Sign Up will send email an activation link
+Below code is used to activate the user -->
 <?php
 	include('db_connection.php');
 	$activatemsg="";
@@ -8,7 +10,6 @@
 				$key=$string['key'];
 				$email=substr($string['email'],0, -3);
 				$query = "UPDATE `users` SET `activate`= 1 WHERE `email`='".$email."' and `username`='".$key."' LIMIT 1";
-				echo $query;
 				if(mysqli_query($link, $query)) {
 					$activatemsg="<div class='alert alert-success'>
 							<p>Hi <strong> {$key} </strong>,<br>

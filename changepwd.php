@@ -1,3 +1,4 @@
+<!-- Changing Password -->
 <?php
 	include('db_connection.php');
 	$pwdchangestatus =$script=$error=$active="";
@@ -31,8 +32,8 @@
 									</div>';
 						}
 
-						if($active==1) {
-							echo("<script>console.log('inside active')</script>");
+						if($active == 1) {
+
 							$query = "UPDATE `users` SET `password`= '"
 							.mysqli_real_escape_string($link, password_hash($_POST['newpassword'],PASSWORD_DEFAULT))
 							."' WHERE `email`='".$email."' and `username`='".$key."' LIMIT 1";
@@ -59,6 +60,7 @@
 				}
 			}
 		} else {
+
 				$error='<div class="alert alert-danger">
 						<p>Some problem occured while activating your account. Please try again later!</p>
 						</div>';

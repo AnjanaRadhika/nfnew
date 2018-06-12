@@ -19,7 +19,7 @@ and (itm.status is null or itm.status = '') ";
       $query = $query . " and ((itm.town like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
                         . " or (itm.nhood like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
                         . " or (itm.districtid in ( select districtid from districts where districtname like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))"
-                        . " or (itm.streetname like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))";
+                        . " or (itm.address2 like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))";
     }
     if(array_key_exists('itemsearch', $_POST)) {
       $itemsearch = $_POST['itemsearch'];
@@ -93,11 +93,11 @@ and (itm.status is null or itm.status = '') ";
             <div class="col-md-6" style="padding-left:0px;">
               <div class="custom-control custom-radio custom-control-inline" style="float:left;">
                 <input class="custom-control-input" type="radio" name="radioBuyOptions" id="forsale" value="For Sale" <?php if($sellorbuy=="For Sale") echo 'checked'; ?> >
-                <label class="custom-control-label" for="forsale">For Sale</label>
+                <label class="custom-control-label" for="forsale">Items for Sale</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline" style="float:left;">
                 <input class="custom-control-input" type="radio" name="radioBuyOptions" id="tobuy" value="To Buy" <?php if($sellorbuy=="To Buy") echo 'checked'; ?> >
-                <label class="custom-control-label" for="tobuy">To Buy</label>
+                <label class="custom-control-label" for="tobuy">Requests from Buyer</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline" style="float:left;">
                 <input class="custom-control-input" type="radio" name="radioBuyOptions" id="all" value="All" <?php if($sellorbuy=="All") echo 'checked'; ?> >
@@ -154,7 +154,7 @@ and (itm.status is null or itm.status = '') ";
                              <input type="hidden" name="itemname" value=<?php echo $item['itemname'] ?> />
                              <h2 class="title-small"><a href=<?php echo $url ?> ><strong> <?php echo $item["itemname"] ?></strong></a></h2>
                              <h2 class="title-small"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; <?php echo $item["contactperson"] ?> @ <?php echo $item["contactno"] ?></h2>
-                             <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["streetname"] ?></em></small></p>
+                             <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["address2"] ?></em></small></p>
                            </div>
                          </div>
                        </div>

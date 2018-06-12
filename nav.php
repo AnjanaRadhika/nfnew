@@ -38,7 +38,9 @@
 					."<hr/>"
 					."<li class='nav-item'> <a href='home.php?action=newwish'> New Wish <i class='pull-right fa fa-magic' aria-hidden='true'></i></a></li>"
 					."<hr/>"
-					."<li class='nav-item'> <a href='home.php?action=change'> Change Password <i class='pull-right fa fa-cog' aria-hidden='true'></i></a></li>";
+					."<li class='nav-item'> <a href='home.php?action=change'> Change Password <i class='pull-right fa fa-cog' aria-hidden='true'></i></a></li>"
+					."<hr/>"
+					."<li class='nav-item'> <a href='home.php?action=profile'> Update Profile <i class='pull-right fa fa-user' aria-hidden='true'></i></a></li>";
 					if(!empty($_SESSION)) {
 						if(array_key_exists('role', $_SESSION) && $_SESSION['role']==='Admin') {
 							$aftername=$aftername

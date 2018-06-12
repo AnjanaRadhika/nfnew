@@ -29,24 +29,32 @@
   }
 
   function getDistrict($did) {
-    if($link = OpenCon()) {
-      $query ="SELECT * FROM districts where districtid = ".$did;
-      $results2 = runQuery($link,$query);
-      CloseCon($link);
-    }
-    foreach($results2 as $district){
-        return $district['districtname'];
+    if(!empty($did)){
+      if($link = OpenCon()) {
+        $query ="SELECT * FROM districts where districtid = ".$did;
+        $results2 = runQuery($link,$query);
+        CloseCon($link);
+      }
+      foreach($results2 as $district){
+          return $district['districtname'];
+      }
+    } else {
+      return '';
     }
   }
 
   function getState($sid) {
-    if($link = OpenCon()) {
-      $query ="SELECT * FROM states where stateid = ".$sid;
-      $results2 = runQuery($link,$query);
-      CloseCon($link);
-    }
-    foreach($results2 as $state){
-        return $state['statename'];
+    if(!empty($sid)){
+      if($link = OpenCon()) {
+        $query ="SELECT * FROM states where stateid = ".$sid;
+        $results2 = runQuery($link,$query);
+        CloseCon($link);
+      }
+      foreach($results2 as $state){
+          return $state['statename'];
+      }
+    } else {
+      return '';
     }
   }
 
@@ -114,9 +122,9 @@
               <h5>quantity available: <span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".$item['sellorbuy']?></span></h5>
               <h6>contact person : <span><?php echo $item['contactperson'];?> </span></h6>
               <h6>contact number : <span><?php echo $item['contactno'];?> </span></h6>
-              <h6>price range (&8377) : <span><?php echo $item['pricerange'];?> </span></h6>
-              <h6>available from : <span><?php echo $item['effectivedate'];?> </span><br />
-                till : <span><?php echo $item['expirydate'];?> </span></h6>
+              <h6>price range : <span><?php echo '&#8377'. ' '. $item['pricerange'];?> </span></h6>
+              <h6>available from : <span><?php echo date_format(date_create($item['effectivedate']), 'd/m/Y');?> </span><br />
+                till : <span><?php echo date_format(date_create($item['expirydate']), 'd/m/Y');?> </span></h6>
               <h6>address : <span><?php echo $item['houseno']." ".$item['housename'];?>
               <?php echo $item['bldgno']." ".$item['bldgname'];?>
               <?php echo $item['address1'];?> <br />

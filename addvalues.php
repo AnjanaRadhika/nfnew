@@ -1,3 +1,4 @@
+<!-- Site Maintanence Adding new Category and Measurement -->
 <?php
 include('db_connection.php');
 $query="";

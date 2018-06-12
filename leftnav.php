@@ -4,6 +4,7 @@
 		<li class="sidebar-nav"> <a href="home.php?action=mywishlist"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> My Wishlist</a></li>
 		<li class="sidebar-nav"> <a href="home.php?action=newwish"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> My New Wish</a></li>
 		<li class="sidebar-nav"> <a href="home.php?action=change"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Change Password</a></li>
+		<li class="sidebar-nav"> <a href="home.php?action=profile"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Update Profile</a></li>
 		<?php
 		if(!empty($_SESSION)) {
 			if(array_key_exists('role', $_SESSION) && $_SESSION['role']==='Admin') {

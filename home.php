@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/bootstrap-datepicker3.css">
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
 
@@ -73,6 +73,8 @@
 										include('newwish.php');
 								} else if($_GET['action'] == 'change') {
 										include('userchangepwd.php');
+								} else if($_GET['action'] == 'profile') {
+										include('userprofile.php');
 								}
 								include('contentadv.php');
 							}
@@ -133,7 +135,7 @@
 	<script src="js/jquery.iframe-transport.js"></script>
 	<script src="js/jquery.fileupload.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript">
 

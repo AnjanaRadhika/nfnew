@@ -32,20 +32,8 @@
       if(array_key_exists('expirydate', $_POST)){
         $expirydate = $_POST['expirydate'];
       }
-      if(array_key_exists('hno', $_POST)){
-        $hno = $_POST['hno'];
-      }
-      if(array_key_exists('hname', $_POST)){
-        $hname = $_POST['hname'];
-      }
-      if(array_key_exists('bno', $_POST)){
-        $bno = $_POST['bno'];
-      }
-      if(array_key_exists('bname', $_POST)){
-        $bname = $_POST['bname'];
-      }
-      if(array_key_exists('street', $_POST)){
-        $street = $_POST['street'];
+      if(array_key_exists('address2', $_POST)){
+        $address2 = $_POST['address2'];
       }
       if(array_key_exists('address1', $_POST)){
         $address1 = $_POST['address1'];
@@ -72,14 +60,10 @@
         .  "contactperson = '".$contact_person. "', "
         .  "contactno = '".$phone. "', "
         .  "pricerange = '".$amount. "', "
-        .  "effectivedate = '".$effectivedate. "', "
-        .  "expirydate = '".$expirydate. "', "
-        .  "houseno = '".$hno. "', "
-        .  "housename = '".$hname. "', "
-        .  "bldgno = '".$bno. "', "
-        .  "bldgname = '".$bname. "', "
-        .  "address2 = '".$street. "', "
+        .  "effectivedate = STR_TO_DATE('".$effectivedate. "','%e/%c/%Y'), "
+        .  "expirydate = STR_TO_DATE('".$expirydate. "','%e/%c/%Y'), "
         .  "address1 = '".$address1. "', "
+        .  "address2 = '".$address2. "', "
         .  "town = '".$town. "', "
         .  "nhood = '".$nhood. "', "
         .  "zipcode = '".$zipcode. "', "
@@ -101,6 +85,8 @@
     parse_str(urldecode(base64_decode($_SERVER['QUERY_STRING'])),$string);
     if(array_key_exists('itemid', $string)){
         $itemid = $string['itemid'];
+    } else {
+        $itemid = $_POST['itemid'];
     }
     if($link = OpenCon()) {
       $query ="SELECT * FROM item itm where itm.itemid =" .$itemid;
@@ -117,14 +103,22 @@
     }
 
   function getDistrict($did) {
+    if($did == "") {
+      return '';
+    }
     if($link = OpenCon()) {
       $query ="SELECT * FROM districts where districtid = ".$did;
       $results2 = runQuery($link,$query);
       CloseCon($link);
     }
-    foreach($results2 as $district){
-        return $district['districtname'];
+    if(!empty($result2)) {
+      foreach($results2 as $district){
+          return $district['districtname'];
+      }
+    } else {
+      return '';
     }
+
   }
 
   function getState($sid) {
@@ -133,8 +127,12 @@
       $results2 = runQuery($link,$query);
       CloseCon($link);
     }
-    foreach($results2 as $state){
-        return $state['statename'];
+    if(!empty($result2)) {
+      foreach($results2 as $state){
+          return $state['statename'];
+      }
+    } else {
+      return '';
     }
   }
 
@@ -152,7 +150,7 @@
 	<link rel="shortcut icon" href="images/logo.ico">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/bootstrap-datepicker3.css">
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
@@ -316,59 +314,39 @@
                                 <?php
                                   $strselected1 = $item["pricerange"] == "0 - 100"?"selected":"";
                                   $strselected2 = $item["pricerange"] == "100 - 250"?"selected":"";
-                                  $strselected3 = $item["pricerange"] == "250 - 500"?"selected":"";
-                                  $strselected4 = $item["pricerange"] == "> 500"?"selected":"";
+                                  $strselected3 = $item["pricerange"] == "250 - 1000"?"selected":"";
+                                  $strselected4 = $item["pricerange"] == "1000 - 2000"?"selected":"";
+                                  $strselected5 = $item["pricerange"] == "> 2000"?"selected":"";
                                 ?>
                                 <option value="">Select Price Range </option>
-                                <option value="0 - 100" <?php echo $strselected1;?> >0 - 100</option>
-                                <option value="100 - 250" <?php echo $strselected2;?> >100 - 250</option>
-                                <option value="250 - 500" <?php echo $strselected3;?> >250 - 500</option>
-                                <option value="> 500" <?php echo $strselected4;?> >> 500</option>
+                                <option value="0 - 100" <?php echo $strselected1;?> >&#8377 0 - 100</option>
+                                <option value="100 - 250" <?php echo $strselected2;?> >&#8377 100 - 250</option>
+                                <option value="250 - 1000" <?php echo $strselected3;?> >&#8377 250 - 1000</option>
+                                <option value="1000 - 2000" <?php echo $strselected4;?> >&#8377 1000 - 2000</option>
+                                <option value="> 2000" <?php echo $strselected5;?> >> &#8377 2000</option>
                             </select>
                           </div>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="effectivedate">Effective Date</label>
                           <div class="input-group">
-                            <input type="text" class="form-control" name="effectivedate" id="effectivedate" value="<?php echo date_format(date_create($item['effectivedate']), 'Y-m-d');?>" />
+                            <input type="text" class="form-control" name="effectivedate" id="effectivedate" value="<?php echo date_format(date_create($item['effectivedate']), 'd/m/Y');?>" />
                             <div class="input-group-addon dateicon"><span id="cal1"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                           </div>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="expirydate">Expiry Date *</label>
                           <div class="input-group">
-                            <input type="text" class="form-control" name="expirydate" id="expirydate" value="<?php echo date_format(date_create($item['expirydate']), 'Y-m-d');?>" required />
+                            <input type="text" class="form-control" name="expirydate" id="expirydate" value="<?php echo date_format(date_create($item['expirydate']), 'd/m/Y');?>" required />
                             <div class="input-group-addon dateicon"><span id="cal"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                           </div>
                         </div>
                       </div>
                       <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="hno">Flat No/Door No/House No </label>
-                          <input type="text" class="form-control " name="hno" id="hno" placeholder="Flat No/Door No/House No" value="<?php echo $item['houseno'];?>">
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="hname">Flat/Villa/House Name </label>
-                          <input type="text" class="form-control " name="hname" id="hname" placeholder="Flat/Villa/House Name" value="<?php echo $item['housename'];?>">
-                        </div>
-                      </div>
-                      <div class="form-row">
-                        <div class="form-group col-md-4">
-                          <label for="bname">Building Number </label>
-                          <input type="text" class="form-control " name="bno" id="bno" placeholder="Building Numbere" value="<?php echo $item['bldgno'];?>">
-                        </div>
-                        <div class="form-group col-md-4">
-                          <label for="bname">Building Name </label>
-                          <input type="text" class="form-control " name="bname" id="bname" placeholder="Building Name" value="<?php echo $item['bldgname'];?>">
-                        </div>
-                        <div class="form-group col-md-4">
-                          <label for="street">Street </label>
-                          <input type="text" class="form-control " name="street" id="street" placeholder="Street" value="<?php echo $item['address2'];?>">
-                        </div>
-                      </div>
-                      <div class="form-row">
                         <div class="form-group col-md-12">
-                          <input type="text" class="form-control " name="address1" placeholder="Address" value="<?php echo $item['address1'];?>">
+                          <label for="address">Address </label>
+                          <input type="text" class="form-control " id="address" name="address1" placeholder="Address Line1" value="<?php echo $item['address1'];?>"><br />
+                          <input type="text" class="form-control " id="address" name="address2" placeholder="Address Line2" value="<?php echo $item['address2'];?>">
                         </div>
                       </div>
                       <div class="form-row">
@@ -471,11 +449,9 @@
 	<script src="js/jquery.iframe-transport.js"></script>
 	<script src="js/jquery.fileupload.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
-  <script type="text/javascript">
-          $('#datetimepicker1').datepicker();
-  </script>
+
 </body>
 
 </html>

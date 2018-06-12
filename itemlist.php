@@ -13,8 +13,7 @@ and (itm.status is null or itm.status = '') ";
       $location= $_POST['location'];
       $query = $query . " and ((itm.town like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
                         . " or (itm.nhood like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')"
-                        . " or (itm.districtid in ( select districtid from districts where districtname like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))"
-                        . " or (itm.streetname like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%'))";
+                        . " or (itm.districtid in ( select districtid from districts where districtname like '%" . mysqli_real_escape_string($link,$_POST['location']) ."%')))";
     }
     if(array_key_exists('itemsearch', $_POST)) {
       $itemsearch = $_POST['itemsearch'];
@@ -102,11 +101,11 @@ function isFavItem($userid, $itemid) {
                       <div class="col-md-6" style="padding-left:0px;">
                         <div class="custom-control custom-radio custom-control-inline" style="float:left;">
                           <input class="custom-control-input" type="radio" name="radioBuyOptions" id="forsale" value="For Sale" <?php if($sellorbuy=="For Sale") echo 'checked'; ?> >
-                          <label class="custom-control-label" for="forsale">For Sale</label>
+                          <label class="custom-control-label" for="forsale">Items for Sale</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline" style="float:left;">
                           <input class="custom-control-input" type="radio" name="radioBuyOptions" id="tobuy" value="To Buy" <?php if($sellorbuy=="To Buy") echo 'checked'; ?> >
-                          <label class="custom-control-label" for="tobuy">To Buy</label>
+                          <label class="custom-control-label" for="tobuy">Requests from Buyer</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline" style="float:left;">
                           <input class="custom-control-input" type="radio" name="radioBuyOptions" id="all" value="All" <?php if($sellorbuy=="All") echo 'checked'; ?> >

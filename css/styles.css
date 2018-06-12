@@ -208,7 +208,7 @@ min-height:25%;
 	padding:5px;
 	width:95%;
 	height: 120px;
-    outline:0;
+	outline:none;
 }
 #picturetable {
 	border:collapse;
@@ -433,9 +433,10 @@ textarea{
 #termsofusediv .modal-body {
   overflow-y: auto;
 }
-#termsofusediv {
-	width:100%;
+#termsofusediv .modal-dialog {
 	height:100%;
+	width: 95%;
+	margin: 0px auto;
 }
 iframe {
 	position: relative;
@@ -1006,10 +1007,18 @@ span#cal, span#cal1 {
 		left: 0;
 	}
 	iframe {
-		-webkit-transform:scale(0.3);
-		-moz-transform:scale(0.3);
-		-o-transform:scale(0.3);
-		transform:scale(0.3);
+		position:fixed;
+		top:0px;
+		left:0px;
+		bottom:0px;
+		right:0px;
+		width:100%;
+		height:100%;
+		border:none;
+		margin:0;
+		padding:0;
+		overflow:hidden;
+		z-index:999999;
 	}
 	.navbar-toggler-icon {
 		height: 35px;
