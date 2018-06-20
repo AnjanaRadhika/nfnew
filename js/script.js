@@ -566,6 +566,7 @@ $('.edituserbtn').click(function(e){
 });
 
 $('.deleteuserbtn').click(function(e){
+  e.preventDefault();
   $('#hdnuserid').val($(this).data('userid'));
 });
 

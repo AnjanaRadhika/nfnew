@@ -1,5 +1,18 @@
 <?php
     include('db_connection.php');
+    session_start();
+  	if(array_key_exists('last_activity', $_SESSION) && array_key_exists('expire_time', $_SESSION)) {
+  		if( $_SESSION['last_activity'] < time()-$_SESSION['expire_time'] ) { //have we expired?
+  		    //redirect to logout.php
+  				//redirect to logout.php
+          session_unset();
+          session_destroy();
+          header("location:home.php");
+          exit();
+  		} else{ //if we haven't expired:
+  		    $_SESSION['last_activity'] = time(); //this was the moment of last activity.
+  		}
+  	}
     $userid = isset($_GET['userid'])?$_GET['userid']:false;
     $action = isset($_GET['action'])?$_GET['action']:false;
     if(!$action && !$userid) {
@@ -14,6 +27,8 @@
         if($link = OpenCon()) {
           $query="SELECT * FROM `users` where `id`  = ".mysqli_real_escape_string($link, $userid)."";
           $results = runQuery($link,$query);
+          $query ="SELECT * FROM `states` WHERE `countryid` = '101'";
+          $results2 = runQuery($link, $query);
           if(!empty($results)) {
             foreach($results as $user) {
               $uselected = $user['role']=="User"? "selected='selected'":"";
@@ -28,11 +43,11 @@
                         <form class='form editfrm' id='editfrm' method='post'>
                             <div class='input-group'>
                              <input type='hidden' name='edituserid' id='editfrmid' value='".$user['id']."' >
-                             <input class='form-control' type='text' name='editusername' id='editfrmname' placeholder='Full Name' value='".$user['username']."'>
+                             <input class='form-control' type='text' name='editusername' id='editfrmname' placeholder='Full Name *' value='".$user['username']."' required>
                             </div>
                             <br />
                             <div class='input-group'>
-                             <input class='form-control' type='text' name='edituseremail' id='editfrmemail' placeholder='Email' value='".$user['email']."'>
+                             <input class='form-control' type='text' name='edituseremail' id='editfrmemail' placeholder='Email *' value='".$user['email']."' required>
                             </div>
                             <br />
                             <div class='input-group'>
@@ -44,7 +59,8 @@
                             </div>
                             <br />
                             <div class='input-group'>
-                             <select class='form-control' name='edituseractive' id='edituseractive'>
+                              <input type='hidden' name='edituseractive' id='edituseractive' value='".$user['activate']."'  />
+                             <select class='form-control' name='edituseractivesel' id='edituseractivesel' onChange='changestatus($(this).val());'>
                                <option value=1 ".$uactive.">Active</option>
                                <option value=0 ".$uinactive.">Inactive</option>
                              </select>
@@ -58,9 +74,106 @@
                   						<div class='progressbar' role='progressbar' aria-valuenow='15' aria-valuemin='0' aria-valuemax='100'></div>
                   					</div>
                             <br />
+                            <input id='phonevalid'  name='phonevalid' type='hidden' value='1'/>
+                            <input type='hidden' id='phone' name='phone' size='10' maxlength='10' value='".$user['contactno']."' />
+                            <div class='input-group' >
+                                    <input type='tel' id='tel1' class='form-control tel' value='".substr($user['contactno'],0,3)."' placeholder='999' size='3' maxlength='3' required='required' >-
+                                    <input type='tel' id='tel2' class='form-control tel' value='".substr($user['contactno'],3,3)."' placeholder='999' size='3' maxlength='3' required='required' >-
+                                    <input type='tel' id='tel3' class='form-control tel' value='".substr($user['contactno'],6,4)."' placeholder='9999' size='4' maxlength='4' required='required' >
+                                    <div class='invalid-feedback'>
+                                      The phone number needs to be verified.
+                                    </div>
+                                    <div class='valid-feedback'>
+                                      Number Verified!
+                                    </div>
+                                    &nbsp;
+                                    <span class='input-group-btn'>
+                                      <button id='showdiv' class='btn btn-success' data-toggle='modal' data-target='#verifydiv'><i class='fa fa-phone' aria-hidden='true'></i> Verify Phone</button>
+                                    </span>
+                            </div>
+                            <br />
+                            <input type='text' id='address' class='form-control ' name='address1' placeholder='Address Line1' value='".$user['address1']."'> <br />
+                            <input type='text' class='form-control ' name='address2' placeholder='Address Line2' value='".$user['address2']."'> <br />
+                            <input type='hidden' id='state' name='state' value='".$user['stateid']."' />
+                            <select form='editfrm' id='state-list' class='form-control custom-select' onChange='getDistrict(this.value);' required>
+                                <option value=''>Select State</option>";
+                                foreach($results2 as $state) {
+                                  $strselected = $state['stateid'] == $user['stateid']?'selected':'';
+                                  $html = $html.
+                                      "<option value='".$state['stateid']."' ".$strselected." >".$state['statename']."</option>";
+                                }
+                            $html = $html .
+                            "</select><br />
+                            <br />
+                            <input type='hidden' id='district' name='district' value='".$user['districtid']."'  />
+                            <select form='editfrm' id='district-list' class='form-control  custom-select' onChange='getCity(this.value);' required>
+                                <option value=''>Select District</option>";
+                                  if(!empty($user['stateid'])) {
+                                      	$query ='SELECT * FROM districts WHERE stateid = ' . $user['stateid'];
+                                      	$results1 = runQuery($link,$query);
+                                    foreach($results1 as $district) {
+                                        $strselected = $district['districtid'] == $user['districtid']?'selected':'';
+                    	                  $html = $html. "<option value='".$district['districtid']."' ".$strselected.">".$district['districtname']."</option>";
+                                  } }
+                            $html = $html ."</select>
+                            <br /><br />
+                            <input type='text' class='form-control ui-autocomplete-input' name='town' id='town' placeholder='Town / Village' value='".$user['town']."' required><br />
+                            <input type='text' class='form-control ui-autocomplete-input' name='nhood' id='nhood' placeholder='Neighbourhood' value='".$user['nhood']."'><br />
+                            <input type='Number' class='form-control ui-autocomplete-input' name='zipcode' id='zipcode' placeholder='Zipcode' value='".$user['zipcode']."' required><br />
                             <input id='editfrmupdate' type='submit' class='btn' style='width: 50%;' value='Update' />
                             <input id='editfrmclose' type='submit' class='btn' style='width: 50%;' value='Cancel' />
                         </form>
+                        <!-- Verify Phone Number -->
+                        <div id='verifydiv' class='modal modal-open fade' tabindex='-1' role='dialog' aria-labelledby='msgdiv' aria-hidden='true'>
+                          <div class='modal-dialog popup' role='document'>
+                            <div class='modal-content'>
+                              <div class='modal-header'>
+                                <h2 class='modal-title'>
+                                  Verify Mobile
+                                </h2>
+                                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                  <span aria-hidden='true'>X</span>
+                                </button>
+                              </div>
+                              <div class='modal-body'>
+                                <form name='verifymodal' id='verifymodal' class='centered' action='getverificationcode.php'>
+                                  <div class='form-group col-md-12'>
+                                    <div id='msgsuccess'>
+
+                                    </div>
+                                    <input type='hidden' id='hdnmobno' name='mob_number' value='' />
+                                    <label for='code'>Enter the 6 digit OTP send to <span id='verifyphone'></span> </label>
+                                    <input type='tel' class='form-control' name='code' id='code' maxlength='6' placeholder='Enter OTP Code' required>
+                                    <div class='invalid-feedback col-md-12'>
+                                      Verification failed!
+                                    </div>
+                                  </div>
+                                  <div align='center'>
+                                    <input id='btnvalidate' type='button' class='btn cancel' value='Validate'/><br /><br />
+                                    <strong><a id='resendotp' href='#'>Resend One-Time Password</a></strong><br />
+                                    Entered a wrong number?
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- End Modal -->
+                        <script>
+                        $(function() {
+                          $('.tel').keyup(function(e) {
+                              if (this.value.length == this.maxLength) {
+                                $(this).next('.tel').focus();
+                              }
+                              if(e.target.id=='tel1' || e.target.id=='tel2' || e.target.id=='tel3') {
+                                $('#phone').val($('#tel1').val()+$('#tel2').val()+$('#tel3').val());
+                              }
+                          });
+                        });
+                        function changestatus(value) {
+                          $('#edituseractive').val(value);
+                        }
+                        </script>
               ";
             } }
           CloseCon($link);
@@ -71,19 +184,40 @@
         $edituserrole = isset($_POST['edituserrole'])?$_POST['edituserrole']:false;
         $edituseractive = isset($_POST['edituseractive']) && $_POST['edituseractive']=='1'?1:0;
         $edituserpwd = isset($_POST['edituserpwd'])?$_POST['edituserpwd']:false;
+        $edituserphone = isset($_POST['phone'])?$_POST['phone']:false;
+        $edituserphonevalid = isset($_POST['phonevalid'])?$_POST['phonevalid']:false;
+        $edituseraddress1 = isset($_POST['address1'])?$_POST['address1']:false;
+        $edituseraddress2 = isset($_POST['address2'])?$_POST['address2']:false;
+        $edituserstate = isset($_POST['state'])?$_POST['state']:false;
+        $edituserdistrict = isset($_POST['district'])?$_POST['district']:false;
+        $editusertown = isset($_POST['town'])?$_POST['town']:false;
+        $editusernhood = isset($_POST['nhood'])?$_POST['nhood']:false;
+        $edituserzipcode = isset($_POST['zipcode'])?$_POST['zipcode']:false;
         if($link = OpenCon()) {
           $query="SELECT * FROM `users` where `id`  = ".mysqli_real_escape_string($link, $userid)."";
           $results = runQuery($link,$query);
           if(!empty($results)) {
             foreach($results as $user) {
-              $editusername = $editusername != $user['username']?$editusername:false;
+              //$editusername = $editusername != $user['username']?$editusername:false;
               $edituseremail = $edituseremail != $user['email']?$edituseremail:false;
-              $useractive = $edituseractive != $user['activate']?true:false;
+              $useractive = $edituseractive != $user['activate']?$edituseractive:false;
               $edituserrole = $edituserrole != $user['role']?$edituserrole:false;
               $edituserpwd = $edituserpwd!="" && password_verify($edituserpwd, $user['password'])?$edituserpwd:false;
+              $edituserphone = $edituserphone!="" && $edituserphonevalid == 1 && $edituserphone!=$user['contactno'] ?$edituserphone:false;
+              $edituseraddress1 = $edituseraddress1 != $user['address1']?$edituseraddress1:false;
+              $edituseraddress2 = $edituseraddress2 != $user['address2']?$edituseraddress2:false;
+              $edituserstate = $edituserstate != $user['stateid']?$edituserstate:false;
+              $edituserdistrict = $edituserdistrict != $user['districtid']?$edituserdistrict:false;
+              $editusertown = $editusertown != $user['town']?$editusertown:false;
+              $editusernhood = $editusernhood != $user['nhood']?$editusernhood:false;
+              $edituserzipcode = $edituserzipcode != $user['zipcode']?$edituserzipcode:false;
 
               $nameqry=$emailqry=$activeqry=$roleqry=$pwdqry="";
-              if($editusername || $edituseremail || $useractive || $edituserrole || $edituserpwd) {
+              $phoneqry=$addressqry1=$addressqry2=$stateqry=$districtqry=$nhoodqry=$townqry=$zipcodeqry="";
+
+              if($editusername || $edituseremail || $useractive==true || $edituserrole || $edituserpwd
+                  || $edituserphone || $edituseraddress1 || $edituseraddress2 || $edituserstate || $edituserdistrict
+                  || $editusertown ||$editusernhood ||  $edituserzipcode) {
                 $query = "UPDATE `users` SET ";
                 if($editusername) {
                   $nameqry = "`username` = '".mysqli_real_escape_string($link, $editusername)."'";
@@ -91,8 +225,8 @@
                 if($edituseremail) {
                   $emailqry = "`email` = '".mysqli_real_escape_string($link, $edituseremail)."'";
                 }
-                if($useractive) {
-                  $activeqry = "`activate` = '".mysqli_real_escape_string($link, $edituseractive)."'";
+                if($useractive==true) {
+                  $activeqry = "`activate` = ".mysqli_real_escape_string($link, $edituseractive)."";
                 }
                 if($edituserrole) {
                   $roleqry = "`role` = '".mysqli_real_escape_string($link, $edituserrole)."'";
@@ -100,12 +234,44 @@
                 if($edituserpwd) {
                   $pwdqry = "`password` = '".mysqli_real_escape_string($link, password_hash($edituserpwd,PASSWORD_DEFAULT))."'";
                 }
+                if($edituserphone){
+                  $phoneqry = "`contactno` = '".mysqli_real_escape_string($link, $edituserphone)."',`phonevalid` = 1";
+                }
+                if($edituseraddress1){
+                  $addressqry1 = "`address1` = '".mysqli_real_escape_string($link, $edituseraddress1)."'";
+                }
+                if($edituseraddress2){
+                  $addressqry2 = "`address2` = '".mysqli_real_escape_string($link, $edituseraddress2)."'";
+                }
+                if($edituserstate){
+                  $stateqry = "`stateid` = '".mysqli_real_escape_string($link, $edituserstate)."'";
+                }
+                if($edituserdistrict){
+                  $districtqry = "`districtid` = '".mysqli_real_escape_string($link, $edituserdistrict)."'";
+                }
+                if($editusertown){
+                  $townqry = "`town` = '".mysqli_real_escape_string($link, $editusertown)."'";
+                }
+                if($editusernhood){
+                  $nhoodqry = "`nhood` = '".mysqli_real_escape_string($link, $editusernhood)."'";
+                }
+                if($edituserzipcode){
+                  $zipcodeqry = "`zipcode` = '".mysqli_real_escape_string($link, $edituserzipcode)."'";
+                }
                 $whereqry = " where `id` = " .mysqli_real_escape_string($link,$userid)." LIMIT 1";
                 $query = $query . ($nameqry!=''?$nameqry:'')
-                        . ($nameqry!='' && $emailqry != '' ?' ,'.$emailqry:$emailqry)
-                        . ($nameqry!='' && $emailqry != '' && $activeqry != '' ?' ,'.$activeqry:$activeqry)
-                        . ($nameqry!='' && $emailqry != '' && $activeqry != '' && $roleqry != ''?' ,'.$roleqry:$roleqry)
-                        . ($nameqry!='' && $emailqry != '' && $activeqry != '' && $roleqry != '' && $pwdqry != ''?' ,'.$pwdqry:$pwdqry)
+                        . ($emailqry != '' ?' ,'.$emailqry:'')
+                        . ($activeqry != '' ?' ,'.$activeqry:'')
+                        . ($roleqry != ''?' ,'.$roleqry:'')
+                        . ($pwdqry != ''?' ,'.$pwdqry:'')
+                        . ($phoneqry != ''?' ,'.$phoneqry:'')
+                        . ($addressqry1 != ''?' ,'.$addressqry1:'')
+                        . ($addressqry2 != ''?' ,'.$addressqry2:'')
+                        . ($stateqry != ''?' ,'.$stateqry:'')
+                        . ($districtqry != ''?' ,'.$districtqry:'')
+                        . ($townqry != ''?' ,'.$townqry:'')
+                        . ($nhoodqry != ''?' ,'.$nhoodqry:'')
+                        . ($zipcodeqry != ''?' ,'.$zipcodeqry:'')
                         . $whereqry;
                 echo "<script>console.log(' query ".$query."');</script>";
                 if(mysqli_query($link, $query)) {
@@ -121,7 +287,7 @@
                     </p>
                   ";
                 }
-              } else if(!$editusername && !$edituseremail && !$edituseractive && !$edituserrole && !$edituserpwd) {
+              } else {
                 $html = "
                   <p>
                   No update
@@ -133,20 +299,46 @@
         }
       } else if($action == "deleteuser") {
           if($link = OpenCon()) {
-            $query="DELETE FROM `users` where `id`  = ".mysqli_real_escape_string($link, $userid)."";
-            if(mysqli_query($link, $query)) {
-              $html = "
-                <p class='alert alert-success'>
-                User deleted successfully!
-                </p>
-              ";
+            $query="DELETE FROM `users` where `id`  = '".mysqli_real_escape_string($link, $userid)."'";
+            $query1="DELETE T FROM `images` T inner join `item` on `item`.`itemid` = T.`itemid` where `item`.`postedby`  = '".mysqli_real_escape_string($link, $userid)."'";
+            $query2="DELETE FROM `item` where `postedby`  = '".mysqli_real_escape_string($link, $userid)."'";
+
+            if(mysqli_query($link, $query1) or die(mysqli_error($link))) {
+               if(mysqli_query($link, $query2) or die(mysqli_error($link))) {
+                if(mysqli_query($link, $query) or die(mysqli_error($link))) {
+                  $html = "
+                    <p class='alert alert-success'>
+                    User profile removed successfully!!
+                    </p>
+                  ";
             } else {
               $html = "
                 <p class='alert alert-danger'>
                 Failed to delete. Please try again later.
                 </p>
               ";
-            }
+            }}}
+            CloseCon($link);
+          }
+      } else if($action == "deleteprofile") {
+          if($link = OpenCon()) {
+            $query="DELETE FROM `users` where `id`  = '".mysqli_real_escape_string($link, $userid)."'";
+            $query1="DELETE T FROM `images` T inner join `item` on `item`.`itemid` = T.`itemid` where `item`.`postedby`  = '".mysqli_real_escape_string($link, $userid)."'";
+            $query2="DELETE FROM `item` where `postedby`  = '".mysqli_real_escape_string($link, $userid)."'";
+
+            if(mysqli_query($link, $query1) or die(mysqli_error($link))) {
+               if(mysqli_query($link, $query2) or die(mysqli_error($link))) {
+                if(mysqli_query($link, $query) or die(mysqli_error($link))) {
+                  session_unset();
+                  session_destroy();
+                  exit();
+            } else {
+              $html = "
+                <p class='alert alert-danger'>
+                Failed to delete. Please try again later.
+                </p>
+              ";
+            }}}
             CloseCon($link);
           }
       }

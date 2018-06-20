@@ -433,11 +433,6 @@ textarea{
 #termsofusediv .modal-body {
   overflow-y: auto;
 }
-#termsofusediv .modal-dialog {
-	height:100%;
-	width: 95%;
-	margin: 0px auto;
-}
 iframe {
 	position: relative;
 	overflow-y: auto;
@@ -1005,20 +1000,6 @@ span#cal, span#cal1 {
 	}
 	.vertical-align-helper {
 		left: 0;
-	}
-	iframe {
-		position:fixed;
-		top:0px;
-		left:0px;
-		bottom:0px;
-		right:0px;
-		width:100%;
-		height:100%;
-		border:none;
-		margin:0;
-		padding:0;
-		overflow:hidden;
-		z-index:999999;
 	}
 	.navbar-toggler-icon {
 		height: 35px;

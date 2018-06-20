@@ -196,7 +196,7 @@ if($link = OpenCon()) {
                   foreach($results2 as $state) {
                     $strselected = $state['stateid'] == $stateid?'selected':'';
                   ?>
-                  <option value="<?php echo $state["stateid"]; ?>"><?php echo $state["statename"]; ?></option>
+                  <option value="<?php echo $state["stateid"]; ?>" <?php echo $strselected;?> ><?php echo $state["statename"]; ?></option>
                   <?php
                   }
                   ?>

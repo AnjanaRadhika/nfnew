@@ -22,8 +22,8 @@
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-		$headers .= "From: anjana.rajeevv@gmail.com" . "\\r\
-		" . "Reply-to: rajeevvasudevan@outlook.com";
+		$headers .= "From: support@neighbourhoodfarmers.com" . "\\r\
+		" . "Reply-to: support@neighbourhoodfarmers.com";
 
 		$message = "<div class='container' style='background:whitesmoke'><br>Hello <strong>{$name}</strong>,<br><br> To reset your NeighbourhoodFarmers.com password,
 				please click on the below link or copy and paste the address onto your web browser\'s address window.
@@ -79,12 +79,12 @@
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<a class="navbar-left">
-						<img style="max-width:7%;" src="images/logo.ico">
+					<a href="home.php" class="navbar-left">
+						<img id="logo" src="images/logo.ico">
 					</a>
-					<a id="head" class="navbar-brand" rel="home" href="#">
-						NeighbourhoodFarmers.com
-					</a>
+					<span id="head" class="navbar-brand" rel="home" >
+						<a href="home.php" class="navbar-brand" rel="home"> NeighbourhoodFarmer's </a>
+					</span>
 				</div>
 			</div>
 		</nav>

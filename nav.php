@@ -34,9 +34,9 @@
 					."<ul class='dropdown-menu'>"
 					."<li class='nav-item'> <a href='home.php?action=myposts'> My Posts <i class='pull-right fa fa-file-audio-o' aria-hidden='true'></i></a></li>"
 					."<hr/>"
-					."<li class='nav-item'> <a href='home.php?action=mywishlist'> My Wishlist <i class='pull-right fa fa-list' aria-hidden='true'></i></a></li>"
+					."<li class='nav-item'> <a href='home.php?action=mywishlist'> My Favorites <i class='pull-right fa fa-list' aria-hidden='true'></i></a></li>"
 					."<hr/>"
-					."<li class='nav-item'> <a href='home.php?action=newwish'> New Wish <i class='pull-right fa fa-magic' aria-hidden='true'></i></a></li>"
+					."<li class='nav-item'> <a href='home.php?action=newwish'> Add a New Tag <i class='pull-right fa fa-magic' aria-hidden='true'></i></a></li>"
 					."<hr/>"
 					."<li class='nav-item'> <a href='home.php?action=change'> Change Password <i class='pull-right fa fa-cog' aria-hidden='true'></i></a></li>"
 					."<hr/>"
@@ -44,6 +44,8 @@
 					if(!empty($_SESSION)) {
 						if(array_key_exists('role', $_SESSION) && $_SESSION['role']==='Admin') {
 							$aftername=$aftername
+												."<hr/>"
+												."<li class='nav-item'> <a href='home.php?action=editposts'> Edit Posts by Users<i class='pull-right fa fa-object-group' aria-hidden='true'></i></a></li>"	
 												."<hr/>"
 												."<li class='nav-item'> <a href='home.php?action=userlist'> User Maintenance <i class='pull-right fa fa-users' aria-hidden='true'></i></a></li>"
 												."<hr/>"

@@ -7,7 +7,7 @@ if($link = OpenCon()) {
   $query ="SELECT * FROM item itm inner join images img on itm.itemid = img.itemid
                                   inner join itemcategory ctg on itm.categoryid = ctg.categoryid
 where img.imageid = (select max(img1.imageid) from images img1 where img1.itemid = itm.itemid)
-and (itm.status is null or itm.status = '') ";
+and (itm.status is null or itm.status = '' or itm.status <> 'Remove Ad') ";
   if(!empty($_POST)){
     if(array_key_exists('location', $_POST)) {
       $location= $_POST['location'];
@@ -139,9 +139,9 @@ function isFavItem($userid, $itemid) {
            		</form>
             </div>
               <div class="releted-content col-md-3">
-                  <div class="veradv row"><br />
-                    <p> <br /> ADVERTISE YOUR BUSINESS HERE <br />
-                      nbfarmercontact1@gmail.com
+                  <div class="veradv row">
+                    <p> <br />ADVERTISE YOUR BUSINESS HERE <br />
+                      <small><strong>admin@neighbourhoodfarmers.com</strong></small>
                     </p>
 
                   </div>

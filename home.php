@@ -59,6 +59,8 @@
 										include('postitem.php');
 								} else if($_GET['action'] == 'myposts') {
 										include('myposts.php');
+								} else if($_GET['action'] == 'editposts') {
+										include('editposts.php');
 								} else if($_GET['action'] == 'about') {
 										include('aboutus.php');
 								} else if($_GET['action'] == 'contact') {
@@ -148,7 +150,5 @@
 			exit();
 		}
 	?>
-
   </body>
-
 </html>

@@ -1,4 +1,16 @@
 <?php
+if(array_key_exists('last_activity', $_SESSION) && array_key_exists('expire_time', $_SESSION)) {
+  if( $_SESSION['last_activity'] < time()-$_SESSION['expire_time'] ) { //have we expired?
+      //redirect to logout.php
+      //redirect to logout.php
+      session_unset();
+      session_destroy();
+      header("location:home.php");
+      exit();
+  } else{ //if we haven't expired:
+      $_SESSION['last_activity'] = time(); //this was the moment of last activity.
+  }
+}
 $updateprofile=$userid=$username="";
 if(!empty($_SESSION)) {
   if(array_key_exists('id', $_SESSION)) {
@@ -27,26 +39,27 @@ if($link = OpenCon()) {
       $nhood=$_POST['nhood'];
       $zipcode=$_POST['zipcode'];
 
-      if($_POST['phone']==="") {
+      if($phone==="") {
         $updateprofile .= '<div class="alert-danger">Please enter the phone number and get it verfied. </div>';
       } else {
-        if($_POST['phonevalid']!=1){
+        if($phonevalid!=1){
                   $updateprofile .= '<div class="alert-danger">Phone number needs to be verfied. </div>';
         }
       }
-      if($_POST['state']==="") {
+      if($state==="") {
         $updateprofile .= '<div class="alert-danger">Please select the state. </div>';
       }
-      if($_POST['district']==="") {
+      if($district==="") {
         $updateprofile .= '<div class="alert-danger">Please select the district. </div>';
       }
-      if($_POST['town']==="") {
+      if($town==="") {
         $updateprofile .= '<div class="alert-danger">Please enter the town. </div>';
       }
-      if($_POST['zipcode']==="") {
+      if($zipcode==="") {
         $updateprofile .= '<div class="alert-danger">Please enter the zipcode. </div>';
       }
-      if($_POST['phone']!="" && $_POST['phonevalid']!= 0 && $_POST['state']!="" && $_POST['district']!=="" && $_POST['town']!=="" && $_POST['nhood']!=="" && $_POST['zipcode']!==""){
+
+      if($_POST['phone']!="" || $_POST['phonevalid']!= 0 || $_POST['state']!="" || $_POST['district']!=="" || $_POST['town']!=="" || $_POST['zipcode']!==""){
           $query = "UPDATE `users` SET `contactno`= '"
 					.mysqli_real_escape_string($link, $phone) ."', `phonevalid`=1, `address1` = '"
 					.mysqli_real_escape_string($link, $address1) ."', `address2` = '"
@@ -63,39 +76,54 @@ if($link = OpenCon()) {
 									Your profile with NeighbourhoodFarmers.com has been changed successfully.
 								</p>
 								</div>";
+        } else {
+            $updateprofile="<div class='alert alert-danger'>
+                <p>
+                  Failed to update. Please try again later.
+                </p>
+                </div>";
         }
 			}
     }
   	CloseCon($link);
 }
  ?>
-<div class="col-lg-6 col-md-6 col-sm-6">
+<div id="updateprofile" class="col-lg-6 col-md-6 col-sm-6">
   <div class="content-box">
     <h3>Update Profile</h3><br />
     <div id="successmessage">
         <?php echo $updateprofile; ?>
     </div>
+    <input type="hidden" id="hosturl" value="<?php echo $hosturl;?>" >
     <hr />
     <form name="profileform" class="form" action="home.php?action=profile" id="changeprofile" method="post">
       <?php
-      foreach($results1 as $user) {      ?>
+      if($link = OpenCon()) {
+        $query ="SELECT * FROM users WHERE id = '". $userid ."'";
+        $results = runQuery($link, $query);
+        CloseCon($link);
+      }
+      foreach($results as $user) {      ?>
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label><?php echo $user['username'];?></label>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-5">
               <label><?php echo $user['email'];?></label>
+            </div>
+            <div class="form-group col-md-3">
+              <button class="btn btn-danger btn-xs deleteuserbtn" data-title="Delete" data-userid="<?php echo $user['id']?>" data-toggle="modal" data-target="#delete" >Delete Profile</button>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
-               <label>Phone *</label>
+               <label>Phone </label>
                <input id="phonevalid"  name="phonevalid" type="hidden" value="1"/>
                <input type="hidden" id="phone" name="phone" value="<?php echo $user['contactno'];?>" />
                <div class="input-group" onKeyUp="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
-                       <input type="tel" id="tel1" class="form-control" value="<?php echo substr($user['contactno'],0,3);?>" size="3" maxlength="3" required="required" >-
-                       <input type="tel" id="tel2" class="form-control" value="<?php echo substr($user['contactno'],3,3);?>" size="3" maxlength="3" required="required" >-
-                       <input type="tel" id="tel3" class="form-control" value="<?php echo substr($user['contactno'],6,4);?>" size="4" maxlength="4" required="required" >
+                       <input type="tel" id="tel1" class="form-control" value="<?php echo substr($user['contactno'],0,3);?>" size="3" maxlength="3" >-
+                       <input type="tel" id="tel2" class="form-control" value="<?php echo substr($user['contactno'],3,3);?>" size="3" maxlength="3" >-
+                       <input type="tel" id="tel3" class="form-control" value="<?php echo substr($user['contactno'],6,4);?>" size="4" maxlength="4" >
                        <div class="invalid-feedback">
                          The phone number needs to be verified.
                        </div>
@@ -118,9 +146,9 @@ if($link = OpenCon()) {
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="state-list">State *</label>
+          <label for="state-list">State </label>
           <input type="hidden" id="state" name="state" value="<?php echo $user['stateid']; ?>" />
-          <select form="profileform" id="state-list" class="form-control custom-select" onChange="getDistrict(this.value);" required>
+          <select form="profileform" id="state-list" class="form-control custom-select" onChange="getDistrict(this.value);" >
               <option value="">Select State</option>
               <?php
               foreach($results2 as $state) {
@@ -136,9 +164,9 @@ if($link = OpenCon()) {
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="district-list">District *</label>
+          <label for="district-list">District </label>
           <input type="hidden" id="district" name="district" value="<?php echo $user['districtid']; ?>"  />
-          <select form="profileform" id="district-list" class="form-control  custom-select" required>
+          <select form="profileform" id="district-list" class="form-control  custom-select" onChange="getCity(this.value);">
               <option value="">Select District</option>
             <?php
                 if(!empty($user['stateid'])) {
@@ -163,8 +191,8 @@ if($link = OpenCon()) {
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="town">Town / Village * </label>
-          <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" value="<?php echo $user['town'];?>" required>
+          <label for="town">Town / Village </label>
+          <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" value="<?php echo $user['town'];?>">
           <div class="invalid-feedback col-md-6">
             Please enter the Town / Village.
           </div>
@@ -176,8 +204,8 @@ if($link = OpenCon()) {
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="zipcode">Zipcode *</label>
-          <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" value="<?php echo $user['zipcode'];?>" required>
+          <label for="zipcode">Zipcode </label>
+          <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" value="<?php echo $user['zipcode'];?>">
           <div class="invalid-feedback col-md-6">
             Please enter the zipcode.
           </div>
@@ -216,7 +244,7 @@ if($link = OpenCon()) {
               </div>
             </div>
             <div align="center">
-              <button class="btn btn-success button-submit " type="submit">
+              <input id="btnvalidate" type="button" class="btn cancel" value="Validate"/><br /><br />
               <strong><a id="resendotp" href="#">Resend One-Time Password</a></strong><br />
               Entered a wrong number?
             </div>
@@ -226,4 +254,54 @@ if($link = OpenCon()) {
     </div>
   </div>
   <!-- End Modal -->
+  <!-- Delete User -->
+  <div class="modal modal-open fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog popup">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h2>Delete entry</h2>
+         <form>
+
+         </form>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">X</span>
+         </button>
+       </div>
+        <div class="modal-body">
+
+     <div class="alert alert-danger"><i class="fa fa-warning"></i> Are you sure you want to delete your profile from NeighbourhoodFarmers.com?</div>
+     <input id="hdnuserid" type="hidden" value="" />
+    </div>
+      <div class="modal-footer ">
+      <button id="delbutton" type="button" class="btn btn-success" ><i class="fa fa-ok-sign"></i> Yes</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> No</button>
+    </div>
+      </div>
+  <!-- /.modal-content -->
+</div>
+</div>
+<!-- End Modal -->
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#delbutton").click(function(e){
+      e.preventDefault();
+      var userid = $('#hdnuserid').val();
+      $.ajax({
+        url: 'userlistsubmit.php',
+        data: {userid: userid, action: 'deleteprofile'},
+        type: 'GET',
+        dataType: 'HTML'
+      }).done(function(res){
+        $('#delete').modal('hide');
+        if(res!=""){
+          $('#updateprofile').find('#successmessage').html(res);
+        }
+        window.location = 'http://'+ $('#hosturl').val() +'/home.php';
+      });
+    });
+
+/*    $('#delete').on('hidden', function () {
+      setTimeout(function(){ location.reload(); }, 5000);
+   });*/
+</script>
 </div>

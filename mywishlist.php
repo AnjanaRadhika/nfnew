@@ -69,7 +69,7 @@ function getInterval($createddate) {
 
  <div id="wishlist" class="col-lg-6 col-md-6 col-sm-6">
    <div class="content-box">
-       <h3>My WishList</h3><br />
+       <h3>My Favorites</h3><br />
        <hr />
        <form id="homeSearch" action="home.php?action=search" method="post">
          <input type="hidden" id="itemsearch" name="itemsearch" value="" />

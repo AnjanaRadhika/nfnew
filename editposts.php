@@ -10,12 +10,12 @@ where img.imageid = (select max(img1.imageid) from images img1 where img1.itemid
 and (itm.status is null or itm.status = '' or itm.status <> 'Remove Ad') ";
   if(!empty($_SESSION)) {
     if(array_key_exists('id', $_SESSION)) {
-      $query = $query." and postedby = '".$_SESSION['id']."'";
+      $query = $query." and postedby <> '".$_SESSION['id']."'";
     }
   }
   if(!empty($_POST)){
     if(empty($_SESSION) && array_key_exists('user', $_POST)) {
-      $query = $query." and postedby = '".$_POST['user']."'";
+      $query = $query." and postedby <> '".$_POST['user']."'";
     }
     if(array_key_exists('location', $_POST)) {
       $location= $_POST['location'];
@@ -82,7 +82,7 @@ and (itm.status is null or itm.status = '' or itm.status <> 'Remove Ad') ";
  <div class="col-lg-6 col-md-6 col-sm-6">
    <div class="row">
    	<div class="jumbotron content col-lg-12 col-md-12 col-sm-12">
-   		<form id="itemPostForm" class="searchItemForm" method="post" action="home.php?action=myposts" role="search">
+   		<form id="itemPostForm" class="searchItemForm" method="post" action="home.php?action=editposts" role="search">
         <div class="form-group-sm">
           <div class="input-group">
             <input type="text" name="location" class="form-control col-md-6" placeholder="Search Neighbourhood">

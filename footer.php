@@ -6,7 +6,7 @@
 						            <a href="https://twitter.com/nbfarmercontact"><i id="social-tw" class="fa fa-twitter-square fa-2x social"></i></a>
 						            <a href="https://plus.google.com/u/1/117180404475119408570"><i id="social-gp" class="fa fa-google-plus-square fa-2x social"></i></a>
 												<a href="https://www.youtube.com/channel/UCGmMHFfQAvxrcLyna85pBkw"><i id="social-yt" class="fa fa-youtube-square fa-2x social"></i></a>
-						            <a href="mailto:nbfarmercontact1@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-2x social"></i></a>
+						            <a href="mailto:admin@neighbourhoodfarmers.com"><i id="social-em" class="fa fa-envelope-square fa-2x social"></i></a>
 									<p class="pull-right" style="color:lightgray"> <a style="text-decoration:none"><span id="termsofuseclick1" class="termslink" data-toggle="modal" data-target="#termsofusediv">Terms & Privacy Policy</span></a>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									<a href="#top" tag="back to top">

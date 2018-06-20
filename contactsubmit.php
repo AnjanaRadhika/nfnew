@@ -12,13 +12,13 @@ if(!empty($_POST)){
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 		$headers .= "From: ". $email . "\\r\
-		" . "Reply-to: rajeevvasudevan@outlook.com";
+		" . "Reply-to: ". $email;
 
 		//$to = 'admin@neighbourhoodfarmers.com';
-    $to = 'anjana.rajeevv@gmail.com';
+    $to = 'support@neighbourhoodfarmers.com';
     $message = $message. '<p>
     Please contact me at +91'.$phone.'.
-    </p>';
+    </p><br><br>Thanks & Regards,<br />'.$name;
 
 		$sent=mail($to,$subject,$message,$headers);
 		if(!$sent) {

@@ -261,7 +261,7 @@
                                 </div>
                               </div>
                               <div class="form-group col-md-4">
-                                    <label for="itemstatus">Item Status </label>
+                                    <label for="itemstatus" style='color:red;font-weight:bold;'>Item Status </label>
                                     <div class="input-group">
                                         <input name="itemstatus" id="itemstatus" type="hidden" value=""  />
                                         <select id="status-list" class="form-control form-element custom-select" onChange="$('#itemstatus').val($('#status-list').val());">
