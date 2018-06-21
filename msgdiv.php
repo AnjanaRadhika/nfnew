@@ -6,9 +6,9 @@
           <?php
           if(array_key_exists('action',$_GET)) {
             if($_GET['action'] == 'search') {
-                echo "Add Wishlist";
+                echo "Add to My Favorites";
             } else if($_GET['action'] == 'mywishlist') {
-                echo "My Wishlist";
+                echo "My Favorites";
             } else if($_GET['action'] == 'site') {
                 echo "Site Maintenance";
             }

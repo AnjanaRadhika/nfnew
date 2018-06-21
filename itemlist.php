@@ -87,10 +87,10 @@ function isFavItem($userid, $itemid) {
    <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="row">
             <div class="jumbotron content col-lg-9 col-md-9 col-sm-9">
-           		<form id="itemListForm" class="searchItemForm" method="post" action="home.php?action=search" role="search">
+           		<form id="itemListForm" class="searchItemForm" method="post" action="home.php?action=search" role="search" autocomplete="off">
            			<div class="form-group-sm">
            				<div class="input-group">
-           					<input type="text" name="location" class="form-control col-md-6" placeholder="Search Neighbourhood" value="<?php echo $location; ?>">
+           					<input type="text" id="location" name="location" class="form-control col-md-6 ui-autocomplete-input" placeholder="Search Neighbourhood" value="<?php echo $location; ?>">
            					<input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item" value="<?php echo $itemsearch; ?>">
            					<span class="input-group-btn">
            						<button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
@@ -169,6 +169,9 @@ function isFavItem($userid, $itemid) {
                                     <div class="itemdtl">
                                       <input type="hidden" name="itemid" value=<?php echo $item['itemid'] ?> />
                                       <input type="hidden" name="itemname" value=<?php echo $item['itemname'] ?> />
+                                      <?php if($item['status'] == 'Sold') { ?>
+                                        <div> <button class="btn badge badge-pill badge-primary" style="float:right;cursor:default;"><i id="icoheart" class="fa fa-check-circle"></i> Sold</button> </div>
+                                      <?php } ?>
                                       <h2 class="title-small"><a href=<?php echo $url ?> target="_blank" onclick="popup(this.href);"><strong> <?php echo $item["itemname"] ?></strong></a></h2>
                                       <h2 class="title-small"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; <?php echo $item["contactperson"] ?> @ <?php echo $item["contactno"] ?></h2>
                                       <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["town"] ?></em></small></p>
@@ -177,10 +180,10 @@ function isFavItem($userid, $itemid) {
                                     <?php if(!empty($_SESSION)) {
                                               if(array_key_exists('id', $_SESSION)) {
                                                 if(isFavItem($_SESSION['id'], $item['itemid'])) { ?>
-                                                    <div> <button class="btn btnaddwish badge badge-pill badge-danger disabled"  ?><i id="icoheart" class="fa fa-heart"></i> <del> Add to Favorites </del></button> </div>
+                                                    <div> <button class="btn badge badge-pill badge-danger disabled"  ?><i id="icoheart" class="fa fa-heart"></i> <del> Add to Favorites </del></button> </div>
                                                 <?php } else {?>
                                                     <div> <button class="btn btnaddwish badge badge-pill badge-danger" data-toggle="modal" data-item=<?php echo $item['itemid'];  ?> ><i id="icoheart" class="fa fa-heart-o"></i> Add to Favorites</button> </div>
-                                  <?php } } }?>
+                                  <?php } } } ?>
                                   </div>
                                 </div>
                               </div>

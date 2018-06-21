@@ -205,6 +205,26 @@ function setCategory() {
   $('#category').val($('#category-list').val());
   $('#categorytext').val($("#category-list option:selected").text());
 }
+
+//search screen autocomplete
+$("#location").autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: "suggestplaces.php",
+          data: { term: $('#location').val()},
+          dataType: "json",
+          type: "GET",
+          success: function(data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 1,
+      select: function(event, ui){
+        $('#location').val(ui.item.value);
+      }
+});
+
 //post item form ready
 $(function() {
 
@@ -276,6 +296,7 @@ $(function() {
         $('#zipcode').val(ui.item.value);
       }
     });
+
 });
 
 
@@ -576,20 +597,6 @@ $('.btnaddwish').click(function(e){
       var itemid = $(this).data('item');
       $.ajax({
         url: 'addtowishlist.php?itemid='+itemid,
-        type: 'GET',
-        dataType: 'HTML'
-      }).done(function(res){
-        $('#msgdiv').find('#msg').html(res);
-        $('#msgdiv').modal('show');
-      });
-});
-
-//Remove Wishlist
-$('.btndelwish').click(function(e){
-      e.preventDefault();
-      var wishid = $(this).data('wish');
-      $.ajax({
-        url: 'delwishlist.php?wishid='+wishid,
         type: 'GET',
         dataType: 'HTML'
       }).done(function(res){

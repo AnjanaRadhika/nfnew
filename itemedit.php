@@ -1,6 +1,6 @@
 <?php
     include('db_connection.php');
-    $statusupdate = "";
+    $statusupdate = $strselected = "";
     if(!empty($_POST)) {
       if(array_key_exists('itemid', $_POST)){
         $itemid = $_POST['itemid'];
@@ -268,8 +268,10 @@
                                           <option value="">Select Status</option>
                                           <?php
                                           foreach($results4 as $status) {
+                                            $strselected = $item["status"] == $status["statusdesc"]?"selected":"";
+
                                           ?>
-                                          <option value="<?php echo $status["statusdesc"]; ?>"><?php echo $status["statusdesc"]; ?></option>
+                                          <option value="<?php echo $status["statusdesc"]; ?>" <?php echo $strselected;?> ><?php echo $status["statusdesc"]; ?></option>
                                           <?php
                                           }
                                           ?>

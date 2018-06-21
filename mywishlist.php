@@ -73,6 +73,7 @@ function getInterval($createddate) {
        <hr />
        <form id="homeSearch" action="home.php?action=search" method="post">
          <input type="hidden" id="itemsearch" name="itemsearch" value="" />
+         <input type="hidden" id="location" name="location" value="" />
        </form>
        <?php
          if(!empty($results)) {
@@ -83,7 +84,7 @@ function getInterval($createddate) {
                  $pagestyle = $cur == 1 ? "" : "display:none"; ?>
                <div id="page<?php echo $cur ?>" class="wishitem text-left" style="<?php echo $pagestyle ?>" >
                <?php  }  ?>
-               <h2><a href="javascript:goToSearch('<?php echo $wish['wishdesc'];?>');"><?php echo $wish['wishdesc'];?></a></h2>
+               <h2><a href="javascript:goToSearch('<?php echo $wish['wishdesc'];?>', '<?php echo $wish['location'];?>');"><?php echo $wish['wishdesc'];?></a></h2>
                <p>
                  <?php
                  if(strpos($wish['wishdetails'],'available')) {
@@ -95,6 +96,9 @@ function getInterval($createddate) {
                  ?><br /><strong>Category : </strong><?php
                  if($wish['itemcategory'])
                     echo $wish['categorydesc'];
+                 ?><br /><strong>Location : </strong><?php
+                 if($wish['location'])
+                    echo $wish['location'];
                  ?>
                </p>
                <p class="text-muted">
@@ -110,7 +114,7 @@ function getInterval($createddate) {
                  }
                   ?> <?php getInterval($wish['createdon']); ?>ago.
                </p>
-               <div> <button class="btn btndelwish badge badge-pill badge-danger" data-toggle="modal" data-wish=<?php echo $wish['id'];  ?> >
+               <div> <button class="btn delwishbtn badge badge-pill badge-danger" data-title="Delete" data-target="#delete" data-toggle="modal" data-wish=<?php echo $wish['id'];  ?> >
                  <i id="icoheart" class="fa fa-trash"></i> Remove</button> </div>
                <hr style="color:green"  />
                <?php if(($itemcount === $itemsperpage)) {

@@ -20,7 +20,7 @@ if($wishid){
         if(mysqli_query($link, $query)) {
           $html = "
             <p class='alert alert-success'>
-            Removed from wishlist!
+            Removed from Favorites List!
             </p>
           ";
         } else {

@@ -38,6 +38,11 @@ if($link = OpenCon()) {
                 <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
             </div>
           </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+						        <input type="text" class="form-control form-element" name="location" placeholder="Location" required>
+            </div>
+					</div>
           <div id="res">
 
           </div>

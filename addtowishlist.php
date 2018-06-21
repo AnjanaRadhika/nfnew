@@ -20,23 +20,24 @@ if($itemid){
     if(!empty($results)) {
       foreach($results as $item) {
         $query = "INSERT INTO `wishlist` (`wishdesc`,
-                                      `wishdetails`, `itemcategory` , `createdby`, `createdbyname`, `favitemid`)"
+                                      `wishdetails`, `itemcategory` , `createdby`, `createdbyname`, `favitemid`, `location`)"
                   . " VALUES ('".mysqli_real_escape_string($link, $item['itemname'])."','"
                   . mysqli_real_escape_string($link, $item['itemdesc'])."',"
                   . mysqli_real_escape_string($link, $item['categoryid']).",'"
                   . mysqli_real_escape_string($link, $userid)."','"
                   . mysqli_real_escape_string($link, $username)."',"
-                  . mysqli_real_escape_string($link, $item['itemid']).")";
+                  . mysqli_real_escape_string($link, $item['itemid']).",'"
+                  . mysqli_real_escape_string($link, $item['town'])."')";
         if(mysqli_query($link, $query)) {
           $html = "
             <p class='alert alert-success'>
-            Added to wishlist!
+            Added to Favorites!
             </p>
           ";
         } else {
           $html = "
             <p class='alert alert-danger'>
-            Failed to add to wishlist. Please try again later.
+            Failed to add to Favorites. Please try again later.
             </p>
           ";
         }

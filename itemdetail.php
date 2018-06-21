@@ -115,21 +115,113 @@
               if(!empty($results)) {
                 foreach($results as $item) {
                 ?>
-  						<h3><?php echo $item['itemname'];?></h3>
-  						<p> <?php echo "Item Code #". $item['itemcode'] ?><br />
-              <?php echo $item['itemdesc'];?></p>
 
-              <h5>quantity : <span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".$item['sellorbuy']?></span></h5>
-              <h6>contact person : <span><?php echo $item['contactperson'];?> </span></h6>
-              <h6>contact number : <span><?php echo $item['contactno'];?> </span></h6>
-              <h6>price range : <span><?php echo '&#8377'. ' '. $item['pricerange'];?> </span></h6>
-              <h6>available from : <span><?php echo date_format(date_create($item['effectivedate']), 'd/m/Y');?> </span><br />
-                till : <span><?php echo date_format(date_create($item['expirydate']), 'd/m/Y');?> </span></h6>
-              <h6>address : <?php echo $item['town']." ".$item['nhood'];?>  <br />
-              <?php echo getDistrict($item['districtid'])." ".getState($item['stateid']);?>  <br />
-              <?php echo $item['zipcode'];?>
-              </span><br />
-              </h6>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+  						            <h3><?php echo $item['itemname'];?></h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+  						            <p> <?php echo "Item Code #". $item['itemcode'] ?></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+  						            <p><?php echo $item['itemdesc'];?></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <h6 align="left">quantity : </h5>
+                  </div>
+                  <div class="col">
+                    <h6 align="left"><span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".$item['sellorbuy']?></span></h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <h6 align="left">contact person : </h6>
+                  </div>
+                  <div class="col">
+                    <h6 align="left"> <span><?php echo $item['contactperson'];?> </span></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                      <h6 align="left">contact number : </h6>
+                  </div>
+                  <div class="col">
+                      <h6 align="left"><span><?php echo $item['contactno'];?> </span></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                      <h6 align="left">price range : </h6>
+                  </div>
+                  <div class="col">
+                      <h6 align="left"><span><?php echo '&#8377'. ' '. $item['pricerange'];?> </span></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <h6 align="left">available from :</h6>
+                  </div>
+                  <div class="col">
+                    <h6 align="left"><span><?php echo date_format(date_create($item['effectivedate']), 'd/m/Y');?> </span></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <h6 align="right">till : </h6>
+                  </div>
+                  <div class="col">
+                    <h6 align="left"><span><?php echo date_format(date_create($item['expirydate']), 'd/m/Y');?> </span></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <h6 align="left">address : </h6>
+                  </div>
+                  <div class="col">
+                    <h6 align="left"><?php echo $item['town']."  ". $item['nhood'];?></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+
+                  </div>
+                  <div class="col">
+                    <h6 align="left"><?php echo getDistrict($item['districtid'])?></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+
+                  </div>
+                  <div class="col">
+                    <h6 align="left"><?php echo getState($item['stateid']);?></h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+
+                  </div>
+                  <div class="col">
+                    <h6 align="left"> <?php echo $item['zipcode'];?></h6>
+                  </div>
+                </div>
+
+                <?php if($item['status'] == 'Sold') { ?>
+                  <div class="row">
+                    <div class="col">
+                      <button class="btn badge badge-pill badge-primary" style="float:left;cursor:default;">
+                        <i id="icoheart" class="fa fa-check-circle"></i> Sold</button>
+                      </div>
+                  </div>
+                <?php } ?>
+              </div>
               <!--
   						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
   						<h5 class="sizes">sizes:

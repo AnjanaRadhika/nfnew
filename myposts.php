@@ -7,10 +7,16 @@ if($link = OpenCon()) {
   $query ="SELECT * FROM item itm inner join images img on itm.itemid = img.itemid
                                   inner join itemcategory ctg on itm.categoryid = ctg.categoryid
 where img.imageid = (select max(img1.imageid) from images img1 where img1.itemid = itm.itemid)
-and (itm.status is null or itm.status = '' or itm.status <> 'Remove Ad') ";
+and (itm.status is null or itm.status = '') ";
   if(!empty($_SESSION)) {
     if(array_key_exists('id', $_SESSION)) {
       $query = $query." and postedby = '".$_SESSION['id']."'";
+      if(empty($_POST)) {
+        $query = $query." and ((itm.town like '%%') or (itm.nhood like '%%') or
+                (itm.districtid in ( select districtid from districts where districtname like '%%')) or
+                (itm.address2 like '%%')) and ((itm.itemname like '%%') or (ctg.categoryname like '%%') or
+                (itm.itemcode = ''))";
+      }
     }
   }
   if(!empty($_POST)){
@@ -82,10 +88,10 @@ and (itm.status is null or itm.status = '' or itm.status <> 'Remove Ad') ";
  <div class="col-lg-6 col-md-6 col-sm-6">
    <div class="row">
    	<div class="jumbotron content col-lg-12 col-md-12 col-sm-12">
-   		<form id="itemPostForm" class="searchItemForm" method="post" action="home.php?action=myposts" role="search">
+   		<form id="itemPostForm" class="searchItemForm" method="post" action="home.php?action=myposts" role="search" autocomplete="off">
         <div class="form-group-sm">
           <div class="input-group">
-            <input type="text" name="location" class="form-control col-md-6" placeholder="Search Neighbourhood">
+            <input type="text" id="location" name="location" class="form-control col-md-6  ui-autocomplete-input" placeholder="Search Neighbourhood" autofocus>
             <input type="text" name="itemsearch" class="form-control col-md-6" placeholder="Search Item">
             <span class="input-group-btn">
               <button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Go!</button>
@@ -156,6 +162,9 @@ and (itm.status is null or itm.status = '' or itm.status <> 'Remove Ad') ";
                            <div class="itemdtl">
                              <input type="hidden" name="itemid" value=<?php echo $item['itemid'] ?> />
                              <input type="hidden" name="itemname" value=<?php echo $item['itemname'] ?> />
+                             <?php if($item['status']) { ?>
+                               <div> <button class="btn badge badge-pill badge-primary" style="float:right;cursor:default;"><i id="icoheart" class="fa fa-check-circle"></i> <?php echo $item['status'];?> </button> </div>
+                             <?php } ?>
                              <h2 class="title-small"><a href=<?php echo $url ?> ><strong> <?php echo $item["itemname"] ?></strong></a></h2>
                              <h2 class="title-small"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; <?php echo $item["contactperson"] ?> @ <?php echo $item["contactno"] ?></h2>
                              <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["address2"] ?></em></small></p>
