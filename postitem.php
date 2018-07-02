@@ -24,6 +24,20 @@ if($link = OpenCon()) {
   $results3 = runQuery($link, $query);
   CloseCon($link);
 }
+if(!empty($results3)) {
+    foreach($results3 as $user) {
+      $contactno = $user['contactno'];
+      $username = $user['username'];
+      $email = $user['email'];
+      $address1 = $user['address1'];
+      $address2 = $user['address2'];
+      $stateid = $user['stateid'];
+      $districtid = $user['districtid'];
+      $town = $user['town'];
+      $nhood = $user['nhood'];
+      $zipcode = $user['zipcode'];
+    }
+}
 ?>
     <div class="col-lg-6 col-md-6 col-sm-6">
       <div class="content-box">
@@ -35,12 +49,11 @@ if($link = OpenCon()) {
 
         </div>
         <hr />
-          <form method="post" enctype="multipart/form-data" class="itemForm" id="itemForm" autocomplete="off">
-            <input autocomplete="false" name="hidden" type="text" style="display:none;">
+          <form method="post" enctype="multipart/form-data" class="itemForm" id="itemForm" >
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="item_name">Item Name *</label>
-                <input type="text" class="form-control  " name="item_name" id="item_name" placeholder="Item Name" required>
+                <input type="text" class="form-control  " name="item_name" id="item_name" placeholder="Item Name" required autocomplete="off" />
                 <div class="invalid-feedback">
                   Please enter the Item Name.
                 </div>
@@ -128,30 +141,15 @@ if($link = OpenCon()) {
                 </div>
               </div>
             </div>
-            <?php
-            if(!empty($results3)) {
-                foreach($results3 as $user) {
-                  $contactno = $user['contactno'];
-                  $username = $user['username'];
-                  $email = $user['email'];
-                  $address1 = $user['address1'];
-                  $address2 = $user['address2'];
-                  $stateid = $user['stateid'];
-                  $districtid = $user['districtid'];
-                  $town = $user['town'];
-                  $nhood = $user['nhood'];
-                  $zipcode = $user['zipcode'];
-                }
-            } ?>
             <div class="form-row">
                 <div class="form-group col-md-12">
                    <label>Phone *</label>
                    <input id="phonevalid"  name="phonevalid" type="hidden" value="1"/>
                    <input type="hidden" id="phone" name="phone" value="<?php echo $contactno;?>" />
                    <div class="input-group" onKeyUp="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
-                           <input type="tel" id="tel1" class="form-control" value="<?php echo substr($contactno,0,3);?>" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel2" class="form-control" value="<?php echo substr($contactno,3,3);?>" size="3" maxlength="3" required="required" title="" >-
-                           <input type="tel" id="tel3" class="form-control" value="<?php echo substr($contactno,6,4);?>" size="4" maxlength="4" required="required" title="" >
+                           <input type="tel" id="tel1" class="form-control" value="<?php echo substr($contactno,0,3);?>" size="3" maxlength="3" required="required" autocomplete="nope" />-
+                           <input type="tel" id="tel2" class="form-control" value="<?php echo substr($contactno,3,3);?>" size="3" maxlength="3" required="required" autocomplete="nope" />-
+                           <input type="tel" id="tel3" class="form-control" value="<?php echo substr($contactno,6,4);?>" size="4" maxlength="4" required="required" autocomplete="nope" / >
                            <div class="invalid-feedback">
                              The phone number needs to be verified.
                            </div>
@@ -168,29 +166,29 @@ if($link = OpenCon()) {
           <div class="form-row">
             <div class="form-group col-md-8">
               <label for="contact_person">Contact Person *</label>
-              <input type="text" class="form-control " name="contact_person" id="contact_person" placeholder="Contact Person" value="<?php echo $username;?>" required>
+              <input type="text" class="form-control " name="contact_person" id="contact_person" placeholder="Contact Person" value="<?php echo $username;?>" required autocomplete="off" />
 
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="contact_email">Email *</label>
-              <input type="text" class="form-control " name="contact_email" id="contact_email" placeholder="Contact Email" data-validation="email" data-validation-error-msg="You did not enter a valid e-mail" maxlength="40" value="<?php echo $email;?>" required>
+              <input type="text" class="form-control " name="contact_email" id="contact_email" placeholder="Contact Email" data-validation="email" data-validation-error-msg="You did not enter a valid e-mail" maxlength="40" value="<?php echo $email;?>" required autocomplete="nope" />
 
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="address">Address </label>
-              <input type="text" id="address" class="form-control " name="address1" placeholder="Address Line1" value="<?php echo $address1;?>" > <br />
-              <input type="text" class="form-control " name="address2" placeholder="Address Line2" value="<?php echo $address2?>" >
+              <input type="text" id="address" class="form-control " name="address1" placeholder="Address Line1" value="<?php echo $address1;?>" autocomplete="nope" /> <br />
+              <input type="text" class="form-control " name="address2" placeholder="Address Line2" value="<?php echo $address2?>" autocomplete="nope" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="state-list">State *</label>
               <input type="hidden" id="state" name="state" value="<?php echo $stateid; ?>"  />
-              <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="getDistrict(this.value);" required>
+              <select form="itemForm" id="state-list" class="form-control  custom-select" onChange="changeState(this.value,'#district-list');" required>
                   <option value="">Select State</option>
                   <?php
                   foreach($results2 as $state) {
@@ -231,20 +229,20 @@ if($link = OpenCon()) {
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="town">Town / Village * </label>
-              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" value="<?php echo $town;?>" required>
+              <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" value="<?php echo $town;?>" required autocomplete="nope" />
               <div class="invalid-feedback col-md-6">
                 Please enter the Town / Village.
               </div>
             </div>
             <div class="form-group col-md-6">
               <label for="nhood">Neighbourhood </label>
-              <input type="text" class="form-control ui-autocomplete-input" name="nhood" id="nhood" placeholder="Neighbourhood" value="<?php echo $nhood;?>" >
+              <input type="text" class="form-control ui-autocomplete-input" name="nhood" id="nhood" placeholder="Neighbourhood" value="<?php echo $nhood;?>" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="zipcode">Zipcode *</label>
-              <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" value="<?php echo $zipcode;?>" required>
+              <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" value="<?php echo $zipcode;?>" required autocomplete="nope" />
               <div class="invalid-feedback col-md-6">
                 Please enter the zipcode.
               </div>

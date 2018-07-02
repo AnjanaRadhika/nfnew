@@ -185,18 +185,45 @@ function formatFileSize(bytes) {
     return (bytes / 1000).toFixed(2) + ' KB';
 }
 
-function getDistrict(val) {
-  $('#state').val($('#state-list').val());
-  val = $('#state').val();
+/*post item state dropdown change */
+function changeState(val, district) {
+  $('#state').val(val);
+  getDistrict(val,'#district-list');
+}
+
+function getDistrict(val, district) {
 	$.ajax({
 	type: "POST",
 	url: "getdistricts.php",
 	data:'state_id='+val,
 	success: function(res){
-		$("#district-list").html(res);
+    $(district).html(res);
 	}
 	});
 }
+
+function getTown(val, town) {
+	$.ajax({
+	type: "POST",
+	url: "gettowns.php",
+	data:'district_id='+val,
+	success: function(res){
+    $(town).html(res);
+	}
+	});
+}
+
+function getNeighbourhoods(val, neighbourhood) {
+	$.ajax({
+	type: "POST",
+	url: "getlocalities.php",
+	data:'district_id='+val,
+	success: function(res){
+    $(neighbourhood).html(res);
+	}
+	});
+}
+
 function getCity(val) {
   $('#district').val($('#district-list').val());
 }
@@ -602,6 +629,7 @@ $('.btnaddwish').click(function(e){
       }).done(function(res){
         $('#msgdiv').find('#msg').html(res);
         $('#msgdiv').modal('show');
+        $('.btnaddwish').addClass('disabled');
       });
 });
 
@@ -614,6 +642,7 @@ $('#msgdiv').on('hidden.bs.modal', function(e){
 $('.btnadd').click(function(e){
   e.preventDefault();
   var txtField = $(this).parents('form:first').find('input[type=text]');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
   if(txtField.val()=="") {
     alert('Enter the value for ' + txtField.attr('placeholder'));
     txtField.focus();
@@ -621,11 +650,148 @@ $('.btnadd').click(function(e){
   }
   $.ajax({
     url: 'addvalues.php',
-    data:'newcategory='+txtField.val(),
+    data: { newValue: txtField.val(), type: hdnField.val()},
     type: 'POST',
     dataType: 'HTML'
   }).done(function(res){
     txtField.val("");
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//with additional select option field(s) - add new
+$('.btnaddnew').click(function(e){
+  e.preventDefault();
+  var txtField = $(this).parents('form:first').find('input[type=text]');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+  var optField = $(this).parents('form:first').find('select option:selected');
+  if(optField.val()=="") {
+    if(hdnField.val() == "District") {
+      alert('Select the State');
+      return;
+    }
+  }
+  if(txtField.val()=="") {
+    alert('Enter the value for ' + txtField.attr('placeholder'));
+    txtField.focus();
+    return;
+  }
+  $.ajax({
+    url: 'addvalues.php',
+    data: { newValue: txtField.val(), optValue: optField.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    txtField.val("");
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//with additional select option field(s) - add new town
+$('.btnaddtown').click(function(e){
+  e.preventDefault();
+  var txtField = $(this).parents('form:first').find('input[type=text]');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+  var optField1 = $(this).parents('form:first').find('select:first');
+  var optField2 = $(this).parents('form:first').find('select:nth-child(2)');
+
+  if(hdnField.val() == "Town") {
+    if(optField1.val()=="") {
+      alert('Select the State');
+      return;
+    }
+    if(optField2.val()=="") {
+      alert('Select the District');
+      return;
+    }
+  }
+  if(txtField.val()=="") {
+    alert('Enter the value for ' + txtField.attr('placeholder'));
+    txtField.focus();
+    return;
+  }
+  $.ajax({
+    url: 'addvalues.php',
+    data: { newValue: txtField.val(), optValue1: optField1.val(), optValue2: optField2.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    txtField.val("");
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//with additional select option field(s) - add new neighbourhood
+$('.btnaddnhood').click(function(e){
+  e.preventDefault();
+  var txtField1 = $(this).parents('form:first').find('input[type=text]:first');
+  var txtField2 = $(this).parents('form:first').find('input[type=text]:nth-child(2)');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+  var optField1 = $(this).parents('form:first').find('select:first');
+  var optField2 = $(this).parents('form:first').find('select:nth-child(2)');
+
+  if(hdnField.val() == "Neighbourhood") {
+    if(optField1.val()=="") {
+      alert('Select the State');
+      return;
+    }
+    if(optField2.val()=="") {
+      alert('Select the District');
+      return;
+    }
+  }
+  if(txtField1.val()=="") {
+    alert('Enter the value for ' + txtField1.attr('placeholder'));
+    txtField1.focus();
+    return;
+  }
+  if(txtField2.val()=="") {
+    alert('Enter the value for ' + txtField2.attr('placeholder'));
+    txtField2.focus();
+    return;
+  }
+  $.ajax({
+    url: 'addvalues.php',
+    data: { newValue: txtField1.val(), newValue1: txtField2.val(), optValue1: optField1.val(), optValue2: optField2.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    txtField1.val("");
+    txtField2.val("");
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//update policy
+$('.btnupdatepolicy').click(function(e){
+  e.preventDefault();
+  var txtField = $(this).parents('form:first').find('input[type=text]:first');
+  var txtField1 = $(this).parents('form:first').find('input[type=text]#version');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+
+  if(txtField.val()=="") {
+    alert('Enter the value for ' + txtField.attr('placeholder'));
+    txtField.focus();
+    return;
+  }
+  if(txtField1.val()=="") {
+    alert('Enter the value for ' + txtField1.attr('placeholder'));
+    txtField1.focus();
+    return;
+  }
+
+  $.ajax({
+    url: 'addvalues.php',
+    data: { newValue: txtField.val(), newValue1: txtField1.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    txtField.val("");
+    txtField1.val("");
     $('#msgdiv').find('#msg').html(res);
     $('#msgdiv').modal('show');
   });
@@ -636,6 +802,8 @@ $('.btnremove').click(function(e){
   e.preventDefault();
   var optField = $(this).parents('form:first').find('select');
   var txtField = $(this).parents('form:first').find('input[type=text]');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+
   if(optField.val()=="") {
     alert('Select the value for ' + txtField.attr('placeholder') + ' to remove');
     optField.focus();
@@ -643,11 +811,134 @@ $('.btnremove').click(function(e){
   }
   $.ajax({
     url: 'removevalues.php',
-    data:'categories='+optField.val(),
+    data:{ delValue: optField.val(), type: hdnField.val()},
     type: 'POST',
     dataType: 'HTML'
   }).done(function(res){
-    optField.val("");
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//remove expired items
+$('.btnremoveitems').click(function(e){
+  e.preventDefault();
+  var txtField = $(this).parents('form:first').find('input[type=text]#expirydate1');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+
+  if(txtField.val()=="") {
+    alert('Select the value for ' + txtField.attr('placeholder') + ' to remove');
+    txtField.focus();
+    return;
+  }
+  hdnField.val('ClearItem');
+  $.ajax({
+    url: 'removevalues.php',
+    data:{ delValue: txtField.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//clear wishlist
+$('.btnremovewishlist').click(function(e){
+  e.preventDefault();
+  var txtField = $(this).parents('form:first').find('input[type=text]#expirydate');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+
+  if(txtField.val()=="") {
+    alert('Select the value for ' + txtField.attr('placeholder') + ' to remove');
+    txtField.focus();
+    return;
+  }
+  hdnField.val('ClearFav');
+  $.ajax({
+    url: 'removevalues.php',
+    data:{ delValue: txtField.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//with additional select option field(s) - remove
+$('.btnremovedistrict').click(function(e){
+  e.preventDefault();
+  var optField2 = $(this).parents('form:first').find('select:nth-child(2)');
+  var optField3 = $(this).parents('form:first').find('select:nth-child(3)');
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+
+  if(optField2.val()=="") {
+    if(hdnField.val() == "District") {
+      alert('Select State');
+      return;
+    }
+  }
+  if(optField3.val()=="") {
+    if(hdnField.val() == "District") {
+      alert('Select District(s) to be removed');
+      return;
+    }
+  }
+
+  $.ajax({
+    url: 'removevalues.php',
+    data:{ delValue: optField3.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
+    $('#msgdiv').find('#msg').html(res);
+    $('#msgdiv').modal('show');
+  });
+});
+
+//with additional select option field(s) - remove town, neighbourhood
+$('.btnremovevalues').click(function(e){
+  e.preventDefault();
+  var hdnField = $(this).parents('form:first').find('input[type=hidden]');
+  var optField3 = $(this).parents('form:first').find('select#t-state-list');
+  var optField4 = $(this).parents('form:first').find('select#t-district-list');
+  var optField5;
+  if(hdnField.val() == "Town") {
+    optField5 = $(this).parents('form:first').find('select#t-town-list');
+  }
+  if(hdnField.val() == "Neighbourhood") {
+    optField5 = $(this).parents('form:first').find('select#n-neighbourhood-list');
+  }
+  if(optField3.val()=="") {
+      alert('Select State');
+      return;
+    }
+  if(optField4.val()=="") {
+      alert('Select District');
+      return;
+  }
+
+  if(hdnField.val() == "Town") {
+    if(optField5.val()=="") {
+        alert('Select Town(s) to be removed');
+        return;
+    }
+  }
+
+  if(hdnField.val() == "Neighbourhood") {
+    if(optField5.val()=="") {
+        alert('Select Neighbourhood(s) to be removed');
+        return;
+    }
+  }
+
+  $.ajax({
+    url: 'removevalues.php',
+    data:{ delValue: optField5.val(), type: hdnField.val()},
+    type: 'POST',
+    dataType: 'HTML'
+  }).done(function(res){
     $('#msgdiv').find('#msg').html(res);
     $('#msgdiv').modal('show');
   });
@@ -675,6 +966,30 @@ $('#expirydate')
 
 $('#cal').click( function(e){
   $('#expirydate')
+      .datepicker('show');
+});
+
+$('#expirydate1')
+    .datepicker({
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        dateFormat: 'dd/mm/yy',
+        todayHighlight: true,
+        orientation: "top auto",
+        autoclose: true
+
+    })
+    .on('changeDate', function(e) {
+        $('#expirydate1').datepicker('hide');
+
+    });
+
+$('#cal2').click( function(e){
+  $('#expirydate1')
       .datepicker('show');
 });
 
@@ -790,3 +1105,16 @@ $('#selfilterby').on('change', function(){
   $('#filterby').val($(this).val());
   $('.searchItemForm').submit();
 });
+
+//Sidenav
+function openNav() {
+  $("#canNav").css("width","250px");
+  $("#canNav").show();
+  $("#main").css("marginLeft","250px");
+}
+
+function closeNav() {
+    $("#canNav").css("width","0px");
+    $("#canNav").hide();
+    $("#main").css("marginLeft","0px");
+}

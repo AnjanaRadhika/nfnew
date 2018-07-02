@@ -9,7 +9,6 @@
 		<?php
 		} } ?>
 		<li class="sidebar-nav"> <a href="home.php?action=mywishlist"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> My Favorites</a></li>
-		<li class="sidebar-nav"> <a href="home.php?action=newwish"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Add a new Tag</a></li>
 		<li class="sidebar-nav"> <a href="home.php?action=change"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Change Password</a></li>
 		<li class="sidebar-nav"> <a href="home.php?action=profile"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Update Profile</a></li>
 		<?php

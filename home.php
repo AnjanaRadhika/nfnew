@@ -14,15 +14,25 @@
   <link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<script type="text/javascript">
+		window.addEventListener("beforeunload", function (event) {
+		  document.body.style.cursor = 'wait';
+		  setTimeout(function(){document.body.style.cursor = 'default';},3000);
+		});
+	</script>
   </head>
 
   <body>
 
 		<!--Header -->
-		<?php include('nav.php'); ?>
-
+		<?php include('nav.php');
+		if(empty($_GET)) {?>
+			<div class="col scrollmessage">
+			<h6>“Every time you buy organic, you’re persuading more farmers to grow organic.” </h6>
+			</div>
+		<?php } ?>
     <!--Section Start-->
-    <section class="container">
+    <section id="main" class="container">
 			<?php
 			if(array_key_exists('action',$_GET) && empty($_SESSION) &&
 							($_GET['action'] == 'myposts' || $_GET['action'] == 'userlist' || $_GET['action'] == 'site'
@@ -139,9 +149,6 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript">
-
-	</script>
  	<?php
 		if(!empty($script)) {
 			echo $script;

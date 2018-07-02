@@ -15,17 +15,17 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="basic-addon1">+91</span>
                     </div>
-						        <input type="tel" class="form-control " name="phone" placeholder="Phone" maxlength="10" required>
+						        <input type="tel" class="form-control " name="phone" placeholder="Phone" maxlength="10" required autocomplete="nope" />
             </div>
 					</div>
 					<div class="form-row">
             <div class="form-group col-md-12">
-						        <input type="text" class="form-control " name="email" placeholder="Email" data-validation="email" data-validation-error-msg="You did not enter a valid e-mail" maxlength="40" required>
+						        <input type="text" class="form-control " name="email" placeholder="Email" data-validation="email" data-validation-error-msg="You did not enter a valid e-mail" maxlength="40" required autocomplete="nope" />
             </div>
 					</div>
 					<div class="form-row">
             <div class="form-group col-md-12">
-						        <input type="text" class="form-control " name="subject" placeholder="Subject" maxlength="75" required>
+						        <input type="text" class="form-control " name="subject" placeholder="Subject" maxlength="75" required autocomplete="nope" />
             </div>
 					</div>
           <div class="form-row">

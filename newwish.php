@@ -8,7 +8,7 @@ if($link = OpenCon()) {
 <div class="col-md-6">
   <div class="content-box">
         <form id="wishForm" class="wishForm" method="post" role="form">
-          <h3>New Item Tag</h3><br />
+          <h3>Add New Favorite</h3><br />
           <div id="addwishmsg">
 
           </div><hr />

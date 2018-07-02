@@ -29,7 +29,7 @@ footer {
 		bottom:0;
 }
 .navbar-header {
-	width: 40%;
+	width: 35%;
 }
 .navbar {
 	display: -webkit-flex; /* Safari */
@@ -105,10 +105,14 @@ ul.dropdown-menu hr {
 	left:10%;
 }
 #logo{
-	height:50px;
-	width:50px;
+	height:30px;
+	width:30px;
 }
 
+.toplinks>li>a:hover {
+    color: white!important;
+		text-decoration: none;
+}
 .navbar-dark .navbar-nav > .active > a,
 .navbar-dark .navbar-nav > .active > a:hover,
 .navbar-dark .navbar-nav > .active > a:focus {
@@ -865,9 +869,107 @@ span#cal, span#cal1 {
 	border: 1px solid darkgray;
 	box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
 }
+.scrollmessage {
+ height: 25px;
+ overflow: hidden;
+ position: relative;
+}
+.scrollmessage h6 {
+ color: limegreen;
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ margin: 0;
+ line-height: 25px;
+ text-align: center;
+ /* Starting position */
+ -moz-transform:translateX(100%);
+ -webkit-transform:translateX(100%);
+ transform:translateX(100%);
+ /* Apply animation to this element */
+ -moz-animation: scrollmessage 20s linear infinite;
+ -webkit-animation: scrollmessage 20s linear infinite;
+ animation: scrollmessage 20s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes scrollmessage {
+ 0%   { -moz-transform: translateX(100%); }
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes scrollmessage {
+ 0%   { -webkit-transform: translateX(100%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes scrollmessage {
+ 0%   {
+ -moz-transform: translateX(100%); /* Firefox bug fix */
+ -webkit-transform: translateX(100%); /* Firefox bug fix */
+ transform: translateX(100%);
+ }
+ 100% {
+ -moz-transform: translateX(-100%); /* Firefox bug fix */
+ -webkit-transform: translateX(-100%); /* Firefox bug fix */
+ transform: translateX(-100%);
+ }
+}
+#opendiv,#canNav {display:none; visibility:hidden;}
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 0px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+#canNav hr {
+		background-color: #ccc;
+}
+#canNav a.nav-link {
+	border: 1px solid #ccc;
+	color: white;
+}
+#canNav a.nav-link:hover {
+	 color:rgb(255, 255, 255, 150);
+	 font-weight: bold;
+	 background-color: green;
+}
 /*
 	Media Queries
 */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
 @media screen and (max-width: 992px) {
 	section {
 		padding-top: 7%;
@@ -909,6 +1011,7 @@ span#cal, span#cal1 {
 		-webkit-text-size-adjust:80%;
 		font-size:80%;
 	}
+	#opendiv, #canNav {display:none; visibility:hidden;}
 }
 @media only screen and (max-width: 768px) {
 	#itmimg {
@@ -935,9 +1038,11 @@ span#cal, span#cal1 {
 		height: 35px;
 		width: 35px;
 	}
-	#head {display:none; visibility:hidden;}
-	div.leftNav, div.releted-content {display:none; visibility:hidden;}
+	#head {font-size:100%;}
+	#opendiv,#canNav {display:block; visibility:visible;}
+	div.leftNav, div.releted-content,  #topNav {display:none; visibility:hidden;}
 	.table { width: 100%;}
+	tr.hide-row { display:table-row; visibility:visible;}
 	tr td.hide-col	{ display:none; visibility:hidden; }
 	.input-group .form-control {
 			display: block;
@@ -970,8 +1075,10 @@ span#cal, span#cal1 {
 		height: 25px;
 		width: 30px;
 	}
-	#head {display:none; visibility:hidden;}
-	div.leftNav, div.releted-content {display:none; visibility:hidden;}
+	#head {font-size:100%;}
+	#opendiv,#canNav {display:block; visibility:visible;}
+	div.leftNav, div.releted-content,  #topNav {display:none; visibility:hidden;}
+	tr.hide-row { display:table-row; visibility:visible;}
 	tr td.hide-col	{ display:none; visibility:hidden; }
 	.input-group .form-control {
 				display: block;
@@ -1005,9 +1112,11 @@ span#cal, span#cal1 {
 		height: 35px;
 		width: 35px;
 	}
-	#head {display:none; visibility:hidden;}
-	div.leftNav, div.releted-content {display:none; visibility:hidden;}
-	tr td.hide-col, #head	{ display:none; visibility:hidden; }
+	#head {font-size:100%;}
+	#opendiv,#canNav {display:block; visibility:visible;}
+	div.leftNav, div.releted-content, #topNav {display:none; visibility:hidden;}
+	tr.hide-row { display:table-row; visibility:visible;}
+	tr td.hide-col	{ display:none; visibility:hidden; }
 	.input-group .form-control {
 				display: block;
 				width:95%;

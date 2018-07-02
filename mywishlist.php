@@ -70,6 +70,7 @@ function getInterval($createddate) {
  <div id="wishlist" class="col-lg-6 col-md-6 col-sm-6">
    <div class="content-box">
        <h3>My Favorites</h3><br />
+       <a class="btn btn-success" href="home.php?action=newwish"><i class="fa fa-magic" aria-hidden="true"></i> Add New Favorite to the List</a>
        <hr />
        <form id="homeSearch" action="home.php?action=search" method="post">
          <input type="hidden" id="itemsearch" name="itemsearch" value="" />
@@ -145,10 +146,53 @@ function getInterval($createddate) {
      </ul>
    </div>
  </div>
- </div>
+
+ <div class="modal modal-open fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+   <div class="modal-dialog popup">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Delete entry</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">X</span>
+        </button>
+      </div>
+       <div class="modal-body">
+
+    <div class="alert alert-danger"><i class="fa fa-warning"></i> Are you sure you want to remove from the list?</div>
+    <input id="hdnwishid" type="hidden" value="" />
+   </div>
+     <div class="modal-footer ">
+     <button id="delbutton" type="button" class="btn btn-success" ><i class="fa fa-ok-sign"></i> Yes</button>
+     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> No</button>
+   </div>
+     </div>
+ <!-- /.modal-content -->
+</div>
+</div>
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript">
-function goToSearch(wishdesc) {
+$('.delwishbtn').click(function(e){
+  e.preventDefault();
+  $('#hdnwishid').val($(this).data('wish'));
+});
+//Remove Wishlist
+$('#delbutton').click(function(e){
+      e.preventDefault();
+      var wishid =$('#hdnwishid').val();
+      $.ajax({
+        url: 'delwishlist.php?wishid='+wishid,
+        type: 'GET',
+        dataType: 'HTML'
+      }).done(function(res){
+        $('#delete').modal('hide');
+        $('#msgdiv').find('#msg').html(res);
+        $('#msgdiv').modal('show');
+      });
+});
+
+function goToSearch(wishdesc, location) {
   $('#itemsearch').val(wishdesc);
+  $('#location').val(location);
   $('#homeSearch').submit();
 }
 </script>

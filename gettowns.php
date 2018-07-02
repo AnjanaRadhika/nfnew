@@ -1,15 +1,15 @@
 <?php
 include('db_connection.php');
 if($link = OpenCon()) {
-  if(!empty($_POST["districtname"])) {
-  	$query ="SELECT distinct taluk FROM pincodes WHERE districtname = '" . $_POST["districtname"]."'";
+  if(!empty($_POST["district_id"])) {
+  	$query ="SELECT * FROM towns WHERE districtid = '" . $_POST["district_id"]."'";
   	$results = runQuery($link,$query);
   ?>
-  	<option value="">Select District</option>
+  	<option value="">Select Town</option>
   <?php
   	foreach($results as $town) {
   ?>
-  	<option value="<?php echo $town["taluk"]; ?>"><?php echo $town["taluk"]; ?></option>
+  	<option value="<?php echo $town["townid"]; ?>"><?php echo $town["townname"]; ?></option>
   <?php
   	}
   }

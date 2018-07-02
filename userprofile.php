@@ -121,9 +121,9 @@ if($link = OpenCon()) {
                <input id="phonevalid"  name="phonevalid" type="hidden" value="1"/>
                <input type="hidden" id="phone" name="phone" value="<?php echo $user['contactno'];?>" />
                <div class="input-group" onKeyUp="$('#phone').val($('#tel1').val() + $('#tel2').val() + $('#tel3').val())">
-                       <input type="tel" id="tel1" class="form-control" value="<?php echo substr($user['contactno'],0,3);?>" size="3" maxlength="3" >-
-                       <input type="tel" id="tel2" class="form-control" value="<?php echo substr($user['contactno'],3,3);?>" size="3" maxlength="3" >-
-                       <input type="tel" id="tel3" class="form-control" value="<?php echo substr($user['contactno'],6,4);?>" size="4" maxlength="4" >
+                       <input type="tel" id="tel1" class="form-control" value="<?php echo substr($user['contactno'],0,3);?>" size="3" maxlength="3" autocomplete='nope' />-
+                       <input type="tel" id="tel2" class="form-control" value="<?php echo substr($user['contactno'],3,3);?>" size="3" maxlength="3" autocomplete='nope' />-
+                       <input type="tel" id="tel3" class="form-control" value="<?php echo substr($user['contactno'],6,4);?>" size="4" maxlength="4" autocomplete='nope' />
                        <div class="invalid-feedback">
                          The phone number needs to be verified.
                        </div>
@@ -140,8 +140,8 @@ if($link = OpenCon()) {
       <div class="form-row">
         <div class="form-group col-md-12">
           <label for="address">Address </label>
-          <input type="text" id="address" class="form-control " name="address1" placeholder="Address Line1" value="<?php echo $user['address1'];?>"> <br />
-          <input type="text" class="form-control " name="address2" placeholder="Address Line2" value="<?php echo $user['address2'];?>" >
+          <input type="text" id="address" class="form-control " name="address1" placeholder="Address Line1" value="<?php echo $user['address1'];?>" autocomplete='nope' /> <br />
+          <input type="text" class="form-control " name="address2" placeholder="Address Line2" value="<?php echo $user['address2'];?>" autocomplete='nope' />
         </div>
       </div>
       <div class="form-row">
@@ -192,20 +192,20 @@ if($link = OpenCon()) {
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="town">Town / Village </label>
-          <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" value="<?php echo $user['town'];?>">
+          <input type="text" class="form-control ui-autocomplete-input" name="town" id="town" placeholder="Town / Village" value="<?php echo $user['town'];?>" autocomplete='nope' />
           <div class="invalid-feedback col-md-6">
             Please enter the Town / Village.
           </div>
         </div>
         <div class="form-group col-md-6">
           <label for="nhood">Neighbourhood </label>
-          <input type="text" class="form-control ui-autocomplete-input" name="nhood" id="nhood" placeholder="Neighbourhood" value="<?php echo $user['nhood'];?>">
+          <input type="text" class="form-control ui-autocomplete-input" name="nhood" id="nhood" placeholder="Neighbourhood" value="<?php echo $user['nhood'];?>" autocomplete='nope' />
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="zipcode">Zipcode </label>
-          <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" value="<?php echo $user['zipcode'];?>">
+          <input type="Number" class="form-control ui-autocomplete-input" name="zipcode" id="zipcode" placeholder="Zipcode" value="<?php echo $user['zipcode'];?>" autocomplete='nope' />
           <div class="invalid-feedback col-md-6">
             Please enter the zipcode.
           </div>

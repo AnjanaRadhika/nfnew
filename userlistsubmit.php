@@ -43,11 +43,11 @@
                         <form class='form editfrm' id='editfrm' method='post'>
                             <div class='input-group'>
                              <input type='hidden' name='edituserid' id='editfrmid' value='".$user['id']."' >
-                             <input class='form-control' type='text' name='editusername' id='editfrmname' placeholder='Full Name *' value='".$user['username']."' required>
+                             <input class='form-control' type='text' name='editusername' id='editfrmname' placeholder='Full Name *' value='".$user['username']."' required autocomplete='nope' />
                             </div>
                             <br />
                             <div class='input-group'>
-                             <input class='form-control' type='text' name='edituseremail' id='editfrmemail' placeholder='Email *' value='".$user['email']."' required>
+                             <input class='form-control' type='text' name='edituseremail' id='editfrmemail' placeholder='Email *' value='".$user['email']."' required autocomplete='nope' />
                             </div>
                             <br />
                             <div class='input-group'>
@@ -77,9 +77,9 @@
                             <input id='phonevalid'  name='phonevalid' type='hidden' value='1'/>
                             <input type='hidden' id='phone' name='phone' size='10' maxlength='10' value='".$user['contactno']."' />
                             <div class='input-group' >
-                                    <input type='tel' id='tel1' class='form-control tel' value='".substr($user['contactno'],0,3)."' placeholder='999' size='3' maxlength='3' required='required' >-
-                                    <input type='tel' id='tel2' class='form-control tel' value='".substr($user['contactno'],3,3)."' placeholder='999' size='3' maxlength='3' required='required' >-
-                                    <input type='tel' id='tel3' class='form-control tel' value='".substr($user['contactno'],6,4)."' placeholder='9999' size='4' maxlength='4' required='required' >
+                                    <input type='tel' id='tel1' class='form-control tel' value='".substr($user['contactno'],0,3)."' placeholder='999' size='3' maxlength='3' required='required' autocomplete='nope' />-
+                                    <input type='tel' id='tel2' class='form-control tel' value='".substr($user['contactno'],3,3)."' placeholder='999' size='3' maxlength='3' required='required' autocomplete='nope' />-
+                                    <input type='tel' id='tel3' class='form-control tel' value='".substr($user['contactno'],6,4)."' placeholder='9999' size='4' maxlength='4' required='required' autocomplete='nope' />
                                     <div class='invalid-feedback'>
                                       The phone number needs to be verified.
                                     </div>
@@ -92,8 +92,8 @@
                                     </span>
                             </div>
                             <br />
-                            <input type='text' id='address' class='form-control ' name='address1' placeholder='Address Line1' value='".$user['address1']."'> <br />
-                            <input type='text' class='form-control ' name='address2' placeholder='Address Line2' value='".$user['address2']."'> <br />
+                            <input type='text' id='address' class='form-control ' name='address1' placeholder='Address Line1' value='".$user['address1']."' autocomplete='nope' /> <br />
+                            <input type='text' class='form-control ' name='address2' placeholder='Address Line2' value='".$user['address2']."' autocomplete='nope' /> <br />
                             <input type='hidden' id='state' name='state' value='".$user['stateid']."' />
                             <select form='editfrm' id='state-list' class='form-control custom-select' onChange='getDistrict(this.value);' required>
                                 <option value=''>Select State</option>";
@@ -117,11 +117,10 @@
                                   } }
                             $html = $html ."</select>
                             <br /><br />
-                            <input type='text' class='form-control ui-autocomplete-input' name='town' id='town' placeholder='Town / Village' value='".$user['town']."' required><br />
-                            <input type='text' class='form-control ui-autocomplete-input' name='nhood' id='nhood' placeholder='Neighbourhood' value='".$user['nhood']."'><br />
-                            <input type='Number' class='form-control ui-autocomplete-input' name='zipcode' id='zipcode' placeholder='Zipcode' value='".$user['zipcode']."' required><br />
+                            <input type='text' class='form-control ui-autocomplete-input' name='town' id='town' placeholder='Town / Village' value='".$user['town']."' required autocomplete='nope' /><br />
+                            <input type='text' class='form-control ui-autocomplete-input' name='nhood' id='nhood' placeholder='Neighbourhood' value='".$user['nhood']."' autocomplete='nope' /><br />
+                            <input type='Number' class='form-control ui-autocomplete-input' name='zipcode' id='zipcode' placeholder='Zipcode' value='".$user['zipcode']."' required autocomplete='nope' /><br />
                             <input id='editfrmupdate' type='submit' class='btn' style='width: 50%;' value='Update' />
-                            <input id='editfrmclose' type='submit' class='btn' style='width: 50%;' value='Cancel' />
                         </form>
                         <!-- Verify Phone Number -->
                         <div id='verifydiv' class='modal modal-open fade' tabindex='-1' role='dialog' aria-labelledby='msgdiv' aria-hidden='true'>

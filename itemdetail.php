@@ -137,7 +137,7 @@
                     <h6 align="left">quantity : </h5>
                   </div>
                   <div class="col">
-                    <h6 align="left"><span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".$item['sellorbuy']?></span></h5>
+                    <h6 align="left"><span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".($item['sellorbuy']=='To Buy'?'Needed':$item['sellorbuy']) ?></span></h5>
                   </div>
                 </div>
                 <div class="row">
