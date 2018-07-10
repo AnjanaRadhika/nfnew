@@ -1,7 +1,7 @@
 <!-- Site Maintanence Adding new Category and Measurement -->
 <?php
 include('db_connection.php');
-$query=$type="";
+$query=$type=$query1="";
 if($link = OpenCon()) {
   if(isset($_POST)) {
     if(array_key_exists('newValue', $_POST) && array_key_exists('type', $_POST)) {
@@ -25,6 +25,7 @@ if($link = OpenCon()) {
             $query = "INSERT INTO `policy`(`updatedate`, `version`) VALUES(STR_TO_DATE('"
     				. mysqli_real_escape_string($link, $_POST['newValue']) ."', '%e/%c/%Y'), '"
               . mysqli_real_escape_string($link, $_POST['newValue1']) ."')";
+            $query1="UPDATE `users` SET `viewpolicy` = 0";
           } else if($_POST['type'] == 'District') {
               if(array_key_exists('optValue', $_POST) && !empty($_POST['optValue'])) {
                   $query = "INSERT INTO `districts`(`districtname`, `stateid`)
@@ -52,7 +53,7 @@ if($link = OpenCon()) {
     }
 
     if($type=='Policy') {
-        if(mysqli_query($link, $query)) {
+        if(mysqli_query($link, $query) && mysqli_query($link, $query1)) {
           $html = "<p class='alert alert-success'>
             Policy update completed!
           </p>";

@@ -83,6 +83,21 @@ function isFavItem($userid, $itemid) {
     return false;
   }
 }
+
+function getDistrict($did) {
+  if(!empty($did)){
+    if($link = OpenCon()) {
+      $query ="SELECT * FROM districts where districtid = ".$did;
+      $results2 = runQuery($link,$query);
+      CloseCon($link);
+    }
+    foreach($results2 as $district){
+        return $district['districtname'];
+    }
+  } else {
+    return '';
+  }
+}
 ?>
    <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="row">
@@ -159,8 +174,8 @@ function isFavItem($userid, $itemid) {
                             $pagestyle = $cur == 1 ? "" : "display:none"; ?>
                           <div id="page<?php echo $cur ?>" class="row itemlist" style="<?php echo $pagestyle ?>">
                       <?php  }  ?>
-                              <div id="itmimg" class="col-md-3">
-                                <div class="card"><div id="tag"><div class="<?php echo $item['sellorbuy']=='For Sale'? 'bg-success' : 'bg-danger'; ?>" id="price">
+                              <div id="itmimg" class="col-md-3 card">
+                                <div id="tag"><div class="<?php echo $item['sellorbuy']=='For Sale'? 'bg-success' : 'bg-danger'; ?>" id="price">
                                   <span><?php echo $item['sellorbuy'] ?></span>
                                   </div></div>
                                   <a href=<?php echo $url ?> target="_blank" >
@@ -174,7 +189,9 @@ function isFavItem($userid, $itemid) {
                                       <?php } ?>
                                       <h2 class="title-small"><a href=<?php echo $url ?> target="_blank" onclick="popup(this.href);"><strong> <?php echo $item["itemname"] ?></strong></a></h2>
                                       <h2 class="title-small"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; <?php echo $item["contactperson"] ?> @ <?php echo $item["contactno"] ?></h2>
-                                      <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["town"] ?></em></small></p>
+                                      <p class="card-text text-center"><i class="fa fa-map-marker"></i><small class="text-time"><em><?php echo $item["town"] ?></em></small>
+                                      <span><small class="text-time"><em><?php echo $item["nhood"] ?></em></small></span>
+                                      <span><small class="text-time"><em><?php echo getDistrict($item['districtid'])?></em></small></span></p>
                                     </div>
 
                                     <?php if(!empty($_SESSION)) {
@@ -185,7 +202,6 @@ function isFavItem($userid, $itemid) {
                                                     <div> <button class="btn btnaddwish badge badge-pill badge-danger" data-toggle="modal" data-item=<?php echo $item['itemid'];  ?> ><i id="icoheart" class="fa fa-heart-o"></i> Add to Favorites</button> </div>
                                   <?php } } } ?>
                                   </div>
-                                </div>
                               </div>
                         <?php if(($itemcount == $itemsperpage) && ($rowcount != $itemsperpage)) {
                                 $cur++;

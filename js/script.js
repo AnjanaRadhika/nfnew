@@ -9,7 +9,9 @@ $(document).ajaxStart(function() {
 //To reset the modal forms on closing or dismissing
 $('body').on('hidden.bs.modal', '.modal', function () {
     $(this).find('.alert-danger').text('');
-    $(this).find('form')[0].reset();
+    if( $(this).find('form')[0]) {
+      $(this).find('form')[0].reset();
+    }
 });
 
 $("#signuppassword, #newpassword").bind("keyup", function () {
@@ -1117,4 +1119,33 @@ function closeNav() {
     $("#canNav").css("width","0px");
     $("#canNav").hide();
     $("#main").css("marginLeft","0px");
+}
+
+$('#accept,#noaccept').click(function(e) {
+  if(e.target.id=="noaccept") {
+      removeCookie("PHPSESSID");
+      window.location="http://"+$('#hosturl').val() + "/home.php?logout=1";
+  } else {
+      $.ajax({
+    	type: "POST",
+    	url: "accept.php",
+    	success: function(res){
+        if(res=="Failure") {
+          removeCookie("PHPSESSID");
+          window.location="http://"+$('#hosturl').val() + "/home.php?logout=1";
+        }
+    	}
+    });
+  }
+  $('#termsofusediv1').modal('hide');
+});
+
+function removeCookie(cookieName)
+{
+    cookieValue = "";
+    cookieLifetime = -1;
+    var date = new Date();
+    date.setTime(date.getTime()+(cookieLifetime*24*60*60*1000));
+    var expires = "; expires="+date.toGMTString();
+    document.cookie = cookieName+"="+JSON.stringify(cookieValue)+expires+"; path=/";
 }

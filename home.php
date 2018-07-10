@@ -152,9 +152,6 @@
  	<?php
 		if(!empty($script)) {
 			echo $script;
-			session_unset();
-			session_destroy();
-			exit();
 		}
 	?>
   </body>

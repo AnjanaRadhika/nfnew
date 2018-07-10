@@ -134,7 +134,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <h6 align="left">quantity : </h5>
+                    <h6 align="left">Quantity : </h5>
                   </div>
                   <div class="col">
                     <h6 align="left"><span><?php echo $item['quantity'];?>&nbsp;<?php echo getUnit($item['measurementid'])." ".($item['sellorbuy']=='To Buy'?'Needed':$item['sellorbuy']) ?></span></h5>
@@ -142,7 +142,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <h6 align="left">contact person : </h6>
+                    <h6 align="left">Contact Person : </h6>
                   </div>
                   <div class="col">
                     <h6 align="left"> <span><?php echo $item['contactperson'];?> </span></h6>
@@ -150,7 +150,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                      <h6 align="left">contact number : </h6>
+                      <h6 align="left">Contact Number : </h6>
                   </div>
                   <div class="col">
                       <h6 align="left"><span><?php echo $item['contactno'];?> </span></h6>
@@ -158,7 +158,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                      <h6 align="left">price range : </h6>
+                      <h6 align="left">Price Range : </h6>
                   </div>
                   <div class="col">
                       <h6 align="left"><span><?php echo '&#8377'. ' '. $item['pricerange'];?> </span></h6>
@@ -166,7 +166,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <h6 align="left">available from :</h6>
+                    <h6 align="left">Available From :</h6>
                   </div>
                   <div class="col">
                     <h6 align="left"><span><?php echo date_format(date_create($item['effectivedate']), 'd/m/Y');?> </span></h6>
@@ -174,7 +174,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <h6 align="right">till : </h6>
+                    <h6 align="right">Till : </h6>
                   </div>
                   <div class="col">
                     <h6 align="left"><span><?php echo date_format(date_create($item['expirydate']), 'd/m/Y');?> </span></h6>
@@ -182,7 +182,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <h6 align="left">address : </h6>
+                    <h6 align="left">Address : </h6>
                   </div>
                   <div class="col">
                     <h6 align="left"><?php echo $item['town']."  ". $item['nhood'];?></h6>

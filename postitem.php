@@ -39,7 +39,7 @@ if(!empty($results3)) {
     }
 }
 ?>
-    <div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="col-lg-6 col-md-6">
       <div class="content-box">
     		<h3>Submit Advertisement</h3><br />
         <div id="successmessage">
@@ -129,14 +129,14 @@ if(!empty($results3)) {
               <div class="form-group col-md-4">
                 <label for="expiry">Effective Date</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="effectivedate" id="effectivedate"/>
+                  <input type="text" class="form-control" name="effectivedate" id="effectivedate" autocomplete="off" />
                   <div class="input-group-addon dateicon"><span id="cal1"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                 </div>
               </div>
               <div class="form-group col-md-4">
                 <label for="expiry">Expiry Date *</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="expirydate" id="expirydate" required />
+                  <input type="text" class="form-control" name="expirydate" id="expirydate" required autocomplete="off" />
                   <div class="input-group-addon dateicon"><span id="cal"><i class="fa fa-calendar"></i></span>&nbsp;</div>
                 </div>
               </div>

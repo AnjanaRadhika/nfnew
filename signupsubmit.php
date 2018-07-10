@@ -25,11 +25,16 @@
 			$headers .= "From: support@neighbourhoodfarmers.com" . "\\r\
 			" . "Reply-to: support@neighbourhoodfarmers.com";
 
-			$message = "<div class='container' style='background:whitesmoke'><br>Hello <strong>{$name}</strong>,<br><br> Welcome to NeighbourhoodFarmers.com You can login with: {$email} and your the password you entered.".
-				"Before you can use your account you must activate it! you can activate here:
+			$message = "<div class='container' style='background:whitesmoke'><br>Hello <strong>{$name}</strong>,<br><br> Welcome to NeighbourhoodFarmers.com! Thanks so much for joining us!".
+				" <p>You can login with: {$email} and your the password you entered.".
+				"Before you can use your account you need to activate your neighbourhoodfarmer's account! Please click below link to procced with the activation process.
+				</p>
 				<a href='http://".$hosturl."/activate.php?".urlencode(base64_encode("key=".$name."&email=".$email))
 				."'>http://".$hosturl."/activate.php?".urlencode(base64_encode("key=".$name."&email=".$email))
-				."</a><br><br>Thanks & Regards,<br>support@NeighbourhoodFarmers.com </div>";
+				."</a><br><br><p>
+				If at any point of time, you would like to delete your profile from neighbourhoodfarmer's 'Delete Profile' option is provided in 'Update Profile' page.
+				For any issues or concerns, kindly contact administrator at <a href="mailto:admin@neighbourhoodfarmers.com">admin@neighbourhoodfarmers.com</a>
+				</p>Thanks & Regards,<br>support@NeighbourhoodFarmers.com </div>";
 
 			$subject = "Your NeighbourhoodFarmers.com Account";
 

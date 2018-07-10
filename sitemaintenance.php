@@ -426,7 +426,9 @@ if($link = OpenCon()) {
                         <thead>
                           <th>Version</th>
                           <th>Date</th>
-                          <?php foreach($results4 as $pver) { ?>
+                          <?php
+                          if(!empty(results4)) {
+                          foreach($results4 as $pver) { ?>
                               <tr>
                                 <td>
                                   <?php echo date_format(date_create($pver['updatedate']), 'd/m/Y'); ?>
@@ -435,7 +437,7 @@ if($link = OpenCon()) {
                                   <?php echo $pver['version'];?>
                                 </td>
                               </tr>
-                          <?php } ?>
+                          <?php }} ?>
                         </thead>
                       </table>
                    </div><br />

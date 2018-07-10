@@ -88,7 +88,7 @@ if($link = OpenCon()) {
   	CloseCon($link);
 }
  ?>
-<div id="updateprofile" class="col-lg-6 col-md-6 col-sm-6">
+<div id="updateprofile" class="col-lg-6 col-md-6">
   <div class="content-box">
     <h3>Update Profile</h3><br />
     <div id="successmessage">

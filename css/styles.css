@@ -19,7 +19,7 @@ section {
    padding-bottom:0;   /* Height of the footer */
 }
 footer {
-    height:7%;
+    height:3em;
     background-color:mediumseagreen;
     text-align:center;
 		z-index: 3;
@@ -434,15 +434,30 @@ textarea{
 	background-color:white;
 	border: 5px solid #3e8e41;
 }
-#termsofusediv .modal-body {
-  overflow-y: auto;
+#termsofusediv .modal-body,#termsofusediv1 .modal-body {
+	-webkit-overflow-scrolling: touch !important;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	overflow: hidden;
 }
+
 iframe {
-	position: relative;
-	overflow-y: auto;
-	overflow-x: auto;
-	max-height: 100%;
-	max-width: 100%;
+	width: 100%;
+	height: 450px;
+	border: 0;
+
+	-ms-transform: scale(1.0);
+	-moz-transform: scale(1.0);
+	-o-transform: scale(1.0);
+	-webkit-transform: scale(1.0);
+	transform: scale(1.0);
+
+	-ms-transform-origin: 0 0;
+	-moz-transform-origin: 0 0;
+	-o-transform-origin: 0 0;
+	-webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
 }
 .vertical-align-helper {
 	left: 10%;
@@ -778,6 +793,7 @@ ul#myPager {
 .itemimage {
 	height:150px;
 	width:100%;
+	padding:0px;
 }
 .carouselimage {
 	height: 45%;
@@ -859,15 +875,16 @@ span#cal, span#cal1 {
 }
 
 /* item image in itemlist page */
-#itmimg {
-	padding-bottom: 2%;
-}
-.card:hover {
+#itmimg:hover {
 	box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
 }
-.card {
+#itmimg {
 	border: 1px solid darkgray;
 	box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+	margin: 2%;
+}
+#itmimg.card {
+	padding: 0px!important;
 }
 .scrollmessage {
  height: 25px;
@@ -970,21 +987,13 @@ span#cal, span#cal1 {
   .sidenav a {font-size: 18px;}
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1160px) {
 	section {
 		padding-top: 7%;
 		padding-bottom: 0;
 	}
 	.navbar {
 		font-size: 95%;
-	}
-	footer {
-		font-size: 95%;
-		position:relative!important;
-		top:0px;
-		height:12%;
-		max-height:100%;
-		padding-bottom:0px;
 	}
 	.vertical-align-helper {
 		left: 0;
@@ -1015,8 +1024,7 @@ span#cal, span#cal1 {
 }
 @media only screen and (max-width: 768px) {
 	#itmimg {
-		width: 200px;
-		height: 300px;
+		margin:10%;
 	}
 	section {
 		padding-bottom: 7%;
@@ -1057,8 +1065,7 @@ span#cal, span#cal1 {
 }
 @media only screen and (max-width: 420px) {
 	#itmimg {
-		width: 200px;
-		height: 300px;
+		margin:10%;
 	}
 	section {
 		padding-bottom: 2%;
@@ -1067,7 +1074,7 @@ span#cal, span#cal1 {
 		font-size: 75%;
 		position:relative!important;
 		top:0px;
-		height:12%;
+		height:6em;
 		max-height:100%;
 		padding-bottom:0px;
 	}
@@ -1092,16 +1099,15 @@ span#cal, span#cal1 {
 		font-size:80%;
 	}
 }
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 350px) {
 	#itmimg {
-		width: 200px;
-		height: 300px;
+		margin:10%;
 	}
 	footer {
 		font-size: 65%;
 		position:relative!important;
 		top:0px;
-		height:12%;
+		height:6em;
 		max-height:100%;
 		padding-bottom:0px;
 	}

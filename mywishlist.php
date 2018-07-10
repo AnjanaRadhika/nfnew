@@ -67,7 +67,7 @@ function getInterval($createddate) {
 }
  ?>
 
- <div id="wishlist" class="col-lg-6 col-md-6 col-sm-6">
+ <div id="wishlist" class="col-lg-6 col-md-6">
    <div class="content-box">
        <h3>My Favorites</h3><br />
        <a class="btn btn-success" href="home.php?action=newwish"><i class="fa fa-magic" aria-hidden="true"></i> Add New Favorite to the List</a>

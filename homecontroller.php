@@ -12,7 +12,7 @@
 		    $_SESSION['last_activity'] = time(); //this was the moment of last activity.
 		}
 	}
-	$error=$script=$forgotpwderror=$loginerror=$hash="";
+	$error=$script=$forgotpwderror=$loginerror=$hash=$query="";
 
 	if($link = OpenCon()) {
 		if(isset($_POST)) {
@@ -83,7 +83,7 @@
 						$loginerror .= '<div class="alert-danger" >Password is required.</div>';
 						$_SESSION['signedin'] = false;
 					} else {
-						$query = "SELECT `id`, `activate`, `password`, `username`, `role` FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['username'])
+						$query = "SELECT `id`, `activate`, `password`, `username`, `role`, `viewpolicy` FROM `users` WHERE `email` = '".mysqli_real_escape_string($link, $_POST['username'])
 									."'";
 						$result = mysqli_query($link, $query);
 						if(mysqli_num_rows($result) > 0) {
@@ -95,9 +95,10 @@
 									$_SESSION['email'] = $_POST['username'];
                   $_SESSION['id'] = $row['id'];
                   $_SESSION['role'] = $row['role'];
+                  $_SESSION['viewpolicy'] = $row['viewpolicy'];
 									$_SESSION['signedin'] = true;
                   $_SESSION['last_activity'] = time(); //your last activity was now, having logged in.
-                  $_SESSION['expire_time'] = 60*60; //expire time in seconds: three hours (you must change this)
+                  $_SESSION['expire_time'] = 60*60; //expire time in seconds: 1 hour (you must change this)
 								} else {
 									$loginerror .= '<div class="alert-danger">Invalid credentials. Please try again.</div>';
 									$_SESSION['signedin'] = false;
@@ -129,11 +130,21 @@
 			 }
 		 } else if(isset($_SESSION['signedin'])) {
 			 if($_SESSION['signedin'] === true) {
-				 echo("<script>console.log('signed in')</script>");
+				 if($_SESSION['viewpolicy'] === '0') {
+           $script =  "<script>
+            $('#termsofusediv1').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $('#termsofusediv1').modal('show');
+           </script>"; // Show modal
+           session_write_close();
+         }
 			 } else {
 					$script =  "<script>$('#signindiv').modal('show')</script>"; // Show modal
 			 }
 		 }
+
 		CloseCon($link);
 	}
 ?>
